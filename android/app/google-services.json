@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "491301068432",
+    "firebase_url": "https://bantay-sarai-1.firebaseio.com",
+    "project_id": "bantay-sarai-1",
+    "storage_bucket": "bantay-sarai-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491301068432:android:dc8f96add3d080d1de4215",
+        "android_client_info": {
+          "package_name": "com.sarai.bantay_sarai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491301068432-u4362gae2a3j612ch842j54c30kb2km4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy2evMxG1R-Eqpr-9mCiB6lAKvCN_6s5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491301068432-u4362gae2a3j612ch842j54c30kb2km4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
