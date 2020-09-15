@@ -51,6 +51,7 @@ flutter:
     - assets/logos/dost-pcaarrd-uplb.png
     - assets/logos/sarai.png
     - assets/logos/sarai_logo.png
+    - assets/images/farmer.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

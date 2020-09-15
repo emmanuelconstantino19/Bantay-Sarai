@@ -6,6 +6,8 @@ import 'package:bantay_sarai/screens/navigation_view.dart';
 import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/screens/login_screen.dart';
+import 'package:bantay_sarai/screens/first_screen.dart';
+import 'package:bantay_sarai/screens/farmer_login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       auth: AuthService(),
       db: Firestore.instance,
       child: MaterialApp(
-        title: "Travel Budget App",
+        title: "Bantay Sarai",
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
@@ -40,7 +42,7 @@ class HomeController extends StatelessWidget {
       builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
-          return signedIn ? Home() : LoginScreen();
+          return signedIn ? Home() : FirstScreen();
         }
         return CircularProgressIndicator();
       },
