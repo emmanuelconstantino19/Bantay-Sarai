@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   User user = User("","","","","","","","");
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   final List<Widget> _children = [
     HomeView(),
     ExplorePage(),
@@ -32,39 +32,87 @@ class _HomeState extends State<Home> {
         // space to fit everything.
         child: ListView(
           // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.symmetric(vertical:40.0, horizontal: 10.0),
           children: <Widget>[
             FutureBuilder(
             future: _getProfileData(),
             builder: (context, snapshot) {
-              return UserAccountsDrawerHeader(
-                decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.green, Colors.blue])),
-                //accountEmail: Text('project.sarai.ph@gmail.com'), // Displays email of user
-                accountName: Text(user.firstName + ' ' + user.middleName + ' ' + user.lastName),
-                currentAccountPicture: CircleAvatar(
-                  child: Text(
-                    user.firstName.substring(0,1), // Displays first letter of email
-                    style: TextStyle(fontSize: 40.00),
+//              return UserAccountsDrawerHeader(
+//                decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.green, Colors.blue])),
+//                //accountEmail: Text('project.sarai.ph@gmail.com'), // Displays email of user
+//                accountName: Text(user.firstName + ' ' + user.middleName + ' ' + user.lastName),
+//                accountEmail: Text('0917-***-****'),
+//                currentAccountPicture: CircleAvatar(
+//                  child: Text(
+//                    user.firstName.substring(0,1), // Displays first letter of email
+//                    style: TextStyle(fontSize: 40.00),
+//                  ),
+//                ),
+//              );
+                return ListTile(
+                  leading: Icon(
+                    Icons.account_circle,
+                    color: Colors.blue,
+                    size: 50.0,
                   ),
-                ),
-              );
+                  title: Text(user.firstName + ' ' + user.lastName, style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text('0916-***-****')
+                );
             }
             ),
+            SizedBox(height:25),
             ListTile(
-              title: Text('Manage Farms'),
-              trailing: Icon(Icons.collections_bookmark),
+              title: Text('FARMER PROFILE', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
             ),
             ListTile(
-              title: Text('About Us'),
-              trailing: Icon(Icons.info),
+              title: Text('MGA FARMS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
             ),
             ListTile(
-              title: Text('Enable Passcode'),
-              trailing: Icon(Icons.lock),
+              title: Text('MGA CROPS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
             ),
             ListTile(
-              title: Text('Log Out'),
-              trailing: Icon(Icons.exit_to_app),
+              title: Text('MGA RECORDS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+            ),
+            SizedBox(height: 20),
+            ListTile(
+              title: Text('MGA MAPA', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+            ),
+            ListTile(
+              title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18
+              )),
+            ),
+//            ListTile(
+//              title: Text('Log Out'),
+//              trailing: Icon(Icons.exit_to_app),
+//              onTap: () async {
+//                try {
+//                  AuthService auth = Provider.of(context).auth;
+//                  await auth.signOut();
+//                  print("Signed Out!");
+//                } catch (e) {
+//                  print (e);
+//                }
+//              },
+//            ),
+            SizedBox(height:25),
+            InkWell(
+              child: Container(
+                height: 50,
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.black,
+                    boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(1.0, 1.0),
+                        blurRadius: 5.0,
+                      ),
+                    ]
+                ),
+                child: Center(
+                  child: Text("MAG-LOGOUT", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                ),
+              ),
               onTap: () async {
                 try {
                   AuthService auth = Provider.of(context).auth;
@@ -75,12 +123,31 @@ class _HomeState extends State<Home> {
                 }
               },
             ),
+            SizedBox(height:20),
+            Container(
+              height: 50,
+              margin: EdgeInsets.symmetric(horizontal: 25),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.green,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(1.0, 1.0),
+                      blurRadius: 5.0,
+                    ),
+                  ]
+              ),
+              child: Center(
+                child: Text("ABOUT BANTAY SARAI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+              ),
+            ),
 
           ],
         ),
       ),
       appBar: AppBar(
-        title: Text("Bantay Sarai"),
+        backgroundColor: Colors.green[700],
+        title: Text("BANTAY SARAI"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
