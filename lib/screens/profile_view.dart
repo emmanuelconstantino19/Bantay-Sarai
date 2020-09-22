@@ -50,7 +50,6 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget displayUserInformation(context, snapshot) {
     final authData = snapshot.data;
-    var date = new DateTime.fromMillisecondsSinceEpoch(authData.metadata.creationTimestamp);
 
     return Column(
       children: <Widget>[
@@ -134,7 +133,7 @@ class _ProfileViewState extends State<ProfileView> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Created: ${DateFormat('MM/dd/yyyy').format(
-                            date)}", style: TextStyle(fontSize: 20),),
+                            authData.metadata.creationTime)}", style: TextStyle(fontSize: 20),),
                       ),
                       RaisedButton(
                         child: Text("Edit User"),

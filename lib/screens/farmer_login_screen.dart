@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/Animation/FadeAnimation.dart';
+import 'package:bantay_sarai/widgets/provider_widget.dart';
 
 class FarmerLoginScreen extends StatefulWidget {
   @override
@@ -13,9 +14,40 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
   final TextEditingController codeControl = new TextEditingController();
   final TextEditingController contactnumberControl = new TextEditingController();
 
-  String phoneNo, verificationId, smsCode;
 
-  bool codeSent = false;
+  final formKey = GlobalKey<FormState>();
+  String _warning;
+
+
+  bool validate() {
+//    final form = formKey.currentState;
+//    form.save();
+//    if (form.validate()) {
+//      form.save();
+//      return true;
+//    } else {
+//      return false;
+//    }
+    return true;
+  }
+
+  void submit(_phone) async {
+    if (validate()) {
+      try {
+        final auth = Provider.of(context).auth;
+        var result = await auth.createUserWithPhone(_phone, context);
+        if (_phone == "" || result == "error") {
+          setState(() {
+            _warning = "Your phone number could not be validated";
+          });
+        }
+      } catch (e) {
+        setState(() {
+          _warning = e.message;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,42 +111,53 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                           ),
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.local_phone,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: "Contact Number",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none
+                              Form(
+                                child: Container(
+                                  key: formKey,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                   ),
-                                  controller: contactnumberControl,
+                                  child: TextField(
+                                    style: TextStyle(fontSize:20),
+                                    decoration: InputDecoration(
+//                                      prefixIcon: Icon(
+//                                        Icons.local_phone,
+//                                        color: Colors.grey,
+//                                      ),
+                                        prefixIcon: SizedBox(
+                                          child: Center(
+                                            widthFactor: 0.0,
+                                            child: Text('+63', style: TextStyle(fontSize:20)),
+                                          ),
+                                        ),
+                                        //hintText: "Contact Number",
+                                        //hintStyle: TextStyle(color: Colors.grey),
+                                        border: InputBorder.none
+                                    ),
+                                    controller: contactnumberControl,
+                                  ),
                                 ),
                               ),
-                              codeSent ? Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.lock,
-                                        color: Colors.grey,
-                                      ),
-                                      hintText: "OTP Code",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none
-                                  ),
-                                  controller: codeControl,
-                                ),
-                              ) : Container(),
+
+//                              codeSent ? Container(
+//                                padding: EdgeInsets.all(10),
+//                                decoration: BoxDecoration(
+//                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+//                                ),
+//                                child: TextField(
+//                                  decoration: InputDecoration(
+//                                      prefixIcon: Icon(
+//                                        Icons.lock,
+//                                        color: Colors.grey,
+//                                      ),
+//                                      hintText: "OTP Code",
+//                                      hintStyle: TextStyle(color: Colors.grey),
+//                                      border: InputBorder.none
+//                                  ),
+//                                  controller: codeControl,
+//                                ),
+//                              ) : Container(),
                             ],
                           ),
                         )),
@@ -130,11 +173,13 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                                 color: Colors.lightGreen[700]
                             ),
                             child: Center(
-                              child: Text(codeSent ? "Login" : "Verify", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                              child: Text("Verify", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
                             ),
                           ),
                           onTap: () {
-                            codeSent ? AuthService().signInWithOTP(codeControl.text, verificationId):verifyPhone(contactnumberControl.text);
+                            submit('+63' + contactnumberControl.text);
+                            //codeSent ? AuthService().signInWithOTP(codeControl.text, verificationId):verifyPhone('+63' + contactnumberControl.text);
+
                           },
                         )
                         ),
@@ -153,33 +198,33 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
       ),
     );
   }
-  Future<void> verifyPhone(phoneNo) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
-    };
-
-    final PhoneVerificationFailed verificationfailed =
-        (AuthException authException) {
-      print('${authException.message}');
-    };
-
-    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-      this.verificationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
-    };
-
-    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-      this.verificationId = verId;
-    };
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneNo,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verified,
-        verificationFailed: verificationfailed,
-        codeSent: smsSent,
-        codeAutoRetrievalTimeout: autoTimeout);
-  }
+//  Future<void> verifyPhone(phoneNo) async {
+//    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+//      AuthService().signIn(authResult);
+//    };
+//
+//    final PhoneVerificationFailed verificationfailed =
+//        (AuthException authException) {
+//      print('${authException.message}');
+//    };
+//
+//    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+//      this.verificationId = verId;
+//      setState(() {
+//        this.codeSent = true;
+//      });
+//    };
+//
+//    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+//      this.verificationId = verId;
+//    };
+//
+//    await FirebaseAuth.instance.verifyPhoneNumber(
+//        phoneNumber: phoneNo,
+//        timeout: const Duration(seconds: 5),
+//        verificationCompleted: verified,
+//        verificationFailed: verificationfailed,
+//        codeSent: smsSent,
+//        codeAutoRetrievalTimeout: autoTimeout);
+//  }
 }

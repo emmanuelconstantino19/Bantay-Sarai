@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         home: HomeController(),
         routes: <String, WidgetBuilder>{
           '/home': (BuildContext context) => HomeController(),
+          '/farmerLogIn': (BuildContext context) => FarmerLoginScreen(),
         },
       ),
     );
