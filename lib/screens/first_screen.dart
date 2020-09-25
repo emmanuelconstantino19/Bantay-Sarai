@@ -79,10 +79,11 @@ class _FirstScreenState extends State<FirstScreen> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FarmerLoginScreen()),
-                        );
+//                        Navigator.push(
+//                          context,
+//                          MaterialPageRoute(builder: (context) => FarmerLoginScreen()),
+//                        );
+                        Navigator.of(context).pushReplacementNamed('/farmerLogIn');
                       },
                     )
                     ),
