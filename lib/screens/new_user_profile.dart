@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
+import 'package:bantay_sarai/models/User.dart';
+import 'package:bantay_sarai/screens/navigation_view.dart';
 
 class NewUserProfile extends StatefulWidget {
   @override
@@ -7,6 +9,7 @@ class NewUserProfile extends StatefulWidget {
 }
 
 class _NewUserProfileState extends State<NewUserProfile> {
+  User user = User("","","","","","","","");
   final TextEditingController _fnameControl = new TextEditingController();
   final TextEditingController _lnameControl = new TextEditingController();
   final TextEditingController _mnameControl = new TextEditingController();
@@ -20,7 +23,7 @@ class _NewUserProfileState extends State<NewUserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add Farm"),
+          title: Text("BAGONG FARMER PROFILE"),
           elevation: 1,
         ),
         body: SingleChildScrollView(
@@ -28,87 +31,109 @@ class _NewUserProfileState extends State<NewUserProfile> {
             child: Column(
               children: <Widget>[
                 TextField(
-                  controller: _fnameControl,
-                  autofocus: true,
-                  decoration: new InputDecoration(
-                      labelText: 'First Name'),
-                ),
-                TextField(
                   controller: _lnameControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Last Name'),
+                      labelText: 'Apelyido'),
+                ),
+                TextField(
+                  controller: _fnameControl,
+                  autofocus: true,
+                  decoration: new InputDecoration(
+                      labelText: 'Pangalan'),
                 ),
                 TextField(
                   controller: _mnameControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Middle Name'),
+                      labelText: 'Panggitnang Apelyido'),
                 ),
                 TextField(
                   controller: _bdayControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Date of birth'),
+                      labelText: 'Araw ng Kapangakan'),
                 ),
                 TextField(
                   controller: _placeControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Place of birth'),
+                      labelText: 'Lugar ng Kapanganakan'),
                 ),
                 TextField(
                   controller: _sexControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Sex'),
+                      labelText: 'Kasarian'),
                 ),
                 TextField(
                   controller: _isPWDControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Person with Disability [Y/N]'),
+                      labelText: 'Person with Disability (PWD) [Y/N]'),
                 ),
                 TextField(
                   controller: _mshipControl,
                   autofocus: true,
                   decoration: new InputDecoration(
-                      labelText: 'Membership'),
+                      labelText: 'Asosasyong Pangmagsasaka, Samahan o Kooperatiba [membership]'),
                 ),
-                SizedBox(height:10),
+                SizedBox(height:20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    RaisedButton(
-                      child: const Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontFamily: 'OpenSans',
+                    Expanded(
+                      child: InkWell(
+                        child: Container(
+                          height: 60,
+                          //margin: EdgeInsets.symmetric(horizontal: 50),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.black,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(1.0, 1.0),
+                                  blurRadius: 5.0,
+                                ),
+                              ]
+                          ),
+                          child: Center(
+                            child: Text("i-submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                          ),
                         ),
+                        onTap: () async {
+                          user.firstName = _fnameControl.text;
+                          user.lastName = _lnameControl.text;
+                          user.middleName = _mnameControl.text;
+                          user.birthDate = _bdayControl.text;
+                          user.placeOfBirth = _placeControl.text;
+                          user.sex = _sexControl.text;
+                          user.isPwd = _isPWDControl.text;
+                          user.membership = _mshipControl.text;
+                          setState(() {
+                            _fnameControl.text = user.firstName;
+                            _lnameControl.text = user.lastName;
+                            _mnameControl.text = user.middleName;
+                            _bdayControl.text = user.birthDate;
+                            _placeControl.text = user.placeOfBirth;
+                            _sexControl.text = user.sex;
+                            _isPWDControl.text = user.isPwd;
+                            _mshipControl.text = user.membership;
+
+                          });
+                          final uid =
+                              await Provider.of(context).auth.getCurrentUID();
+                          await Provider.of(context)
+                              .db
+                              .collection('userData')
+                              .document(uid)
+                              .setData(user.toJson());
+                              Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (BuildContext context) => Home()));
+                        },
                       ),
-                      color: Colors.blueGrey,
-                      padding: EdgeInsets.all(10.0),
-                      elevation: 3.0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      ),
-                      onPressed: () {
-//                        widget.farm.farmName = _farmNameController.text;
-//                        widget.farm.cropsPlanted = _cropsPlantedController.text;
-//                        widget.farm.annualIncome = _annualIncomeController.text;
-//                        widget.farm.location = _locationController.text;
-//                        widget.farm.farmSize = _farmSizeController.text;
-//                        widget.farm.farmType = _farmTypeController.text;
-//                        widget.farm.organicPractitioner = _organicPractitionerController.text;
-//                        widget.farm.farmOwnership = _farmOwnershipController.text;
-//                        Navigator.push(
-//                          context,
-//                          MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
-//                        );
-                      },
                     ),
+
                   ],
                 ),
 

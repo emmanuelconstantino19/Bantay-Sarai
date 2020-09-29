@@ -15,10 +15,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   User user = User("","","","","","","","");
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   final List<Widget> _children = [
-    HomeView(),
     ExplorePage(),
+    HomeView(),
     ProfileView(),
   ];
 
@@ -63,6 +63,10 @@ class _HomeState extends State<Home> {
             SizedBox(height:25),
             ListTile(
               title: Text('FARMER PROFILE', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                onTabTapped(2);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               title: Text('MGA FARMS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
@@ -148,21 +152,21 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         title: Text("BANTAY SARAI"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
+//        actions: <Widget>[
+//          IconButton(
+//            icon: Icon(Icons.add),
+//            onPressed: () {
+////              Navigator.push(
+////                context,
+////                MaterialPageRoute(builder: (context) => NewTripLocationView(trip: newTrip,)),
+////              );
 //              Navigator.push(
 //                context,
-//                MaterialPageRoute(builder: (context) => NewTripLocationView(trip: newTrip,)),
+//                MaterialPageRoute(builder: (context) => AddFarmView(farm: newFarm,)),
 //              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddFarmView(farm: newFarm,)),
-              );
-            },
-          ),
-        ],
+//            },
+//          ),
+//        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -174,8 +178,8 @@ class _HomeState extends State<Home> {
               title: new Text("Home"),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.explore),
-              title: new Text("Explore"),
+              icon: new Icon(Icons.cloud_circle),
+              title: new Text("SARAI Alerts"),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.account_circle),

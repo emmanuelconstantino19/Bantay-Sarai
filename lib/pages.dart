@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
+import 'package:bantay_sarai/screens/farm_view.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -79,28 +80,28 @@ class _ExplorePageState extends State<ExplorePage> {
                 },
               )
             ),
-            SizedBox(height: 20),
-            InkWell(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green[400],
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1.0, 1.0),
-                        blurRadius: 5.0,
-                      ),
-                    ]
-                ),
-                child: Center(
-                  child: Text("Mag-update ng Farmer Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                ),
-              ),
-              onTap: () {
-              },
-            ),
+//            SizedBox(height: 20),
+//            InkWell(
+//              child: Container(
+//                height: 50,
+//                margin: EdgeInsets.symmetric(horizontal: 25),
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(10),
+//                    color: Colors.green[400],
+//                    boxShadow: [
+//                      BoxShadow(
+//                        offset: const Offset(1.0, 1.0),
+//                        blurRadius: 5.0,
+//                      ),
+//                    ]
+//                ),
+//                child: Center(
+//                  child: Text("Mag-update ng Farmer Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+//                ),
+//              ),
+//              onTap: () {
+//              },
+//            ),
             SizedBox(height: 10),
             InkWell(
               child: Container(
@@ -121,6 +122,10 @@ class _ExplorePageState extends State<ExplorePage> {
                 ),
               ),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmView()),
+                );
               },
             ),
             SizedBox(height: 10),

@@ -53,6 +53,15 @@ flutter:
     - assets/logos/sarai.png
     - assets/logos/sarai_logo.png
     - assets/images/farmer.png
+    - assets/images/corn1.png
+    - assets/images/rice1.png
+    - assets/images/banana1.png
+    - assets/images/coconut1.png
+    - assets/images/cacao1.png
+    - assets/images/coffee1.png
+    - assets/images/soybean1.png
+    - assets/images/sugarcane1.png
+    - assets/images/tomato1.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

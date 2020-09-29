@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
               Text(farm['location']),
               Text(farm['farmSize']),
               Text(farm['farmType']),
-              Text(farm['organicPractitioner']=="Y" ? "Yes" : "No"),
+              Text(farm['organicPractitioner']),
               Text(farm['farmOwnership']),
             ],
           ),
