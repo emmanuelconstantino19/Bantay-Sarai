@@ -3,6 +3,7 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
+import 'package:bantay_sarai/screens/crop_view.dart';
 
 class FarmView extends StatefulWidget {
   @override
@@ -42,101 +43,71 @@ class _FarmViewState extends State<FarmView> {
                   }
               ),
             ),
-            Expanded(
-                child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                    child: Column(
-                      children: <Widget>[
-                        Center(
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: GestureDetector(
-                                        onTap:(){
-                                          print("Delete");
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(20.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                          ),
-                                          child: Icon(
-                                            Icons.highlight_off,
-                                          ),
-                                        ),
-                                      ),
+            FutureBuilder(
+                future: _getFarmData(),
+                builder: (context, snapshot) {
+                  if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                  return new Expanded(child: new ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index){
+                      String key = snapshot.data.keys.elementAt(index);
+                      return new Column(
+                        children: [
+                          InkWell(
+                            child: Stack(
+                              children: <Widget>[
+//                              Positioned(
+//                                top: 0,
+//                                right: 0,
+//                                child: GestureDetector(
+//                                  onTap:(){
+//                                    print("Delete");
+//                                  },
+//                                  child: Container(
+//                                    padding: EdgeInsets.all(20.0),
+//                                    decoration: BoxDecoration(
+//                                      borderRadius: BorderRadius.circular(8.0),
+//                                    ),
+//                                    child: Icon(
+//                                      Icons.highlight_off,
+//                                    ),
+//                                  ),
+//                                ),
+//                              ),
+                                Container(
+                                    alignment: Alignment.center,
+                                    child: Image(
+                                      image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
+                                      height: 170,
+                                      //width: double.infinity,
+                                      //fit: BoxFit.cover,
                                     ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      child: Image(
-                                        image: AssetImage('assets/images/corn1.png'),
-                                        height: 170,
-                                        //width: double.infinity,
-                                        //fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Container(
-                                        height: 170,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '1.4 ha',
-                                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0),
-                                        )),
-                                  ],
-                                ),
-                                Text('Palay (Rice)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-                                SizedBox(height:40),
-
-                                Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: GestureDetector(
-                                        onTap:(){
-                                          print("Delete");
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(20.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                          ),
-                                          child: Icon(
-                                            Icons.highlight_off,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      child: Image(
-                                        image: AssetImage('assets/images/rice1.png'),
-                                        height: 170,
-                                        //width: double.infinity,
-                                        //fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Container(
-                                        height: 170,
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '1.4 ha',
-                                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0),
-                                        )),
-                                  ],
-                                ),
-                                Text('Mais (Corn)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-                                SizedBox(height:40),
+                                  ),
+                                Container(
+                                    height: 170,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '${snapshot.data[key]} ha',
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0),
+                                    )),
                               ],
-                            )
-                        ),
-                      ],
-                    )
-                )
+                            ),
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CropView(crop: key, totalSize: snapshot.data[key].toString())),
+                              );
+                            },
+                          ),
+
+                          Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                          SizedBox(height:40),
+                        ],
+                      );
+                    },
+
+                  ));
+                }
             ),
             InkWell(
               child: Container(
@@ -166,6 +137,45 @@ class _FarmViewState extends State<FarmView> {
           ],
         )
     );
+  }
+
+  filipinoTerm(crop) {
+    Map cropTerms = {
+      'Banana':'Saging',
+      'Cacao':'Kakaw',
+      'Coconut' : 'Niyog',
+      'Coffee' : 'Kape',
+      'Corn' : 'Mais',
+      'Rice' : 'Palay',
+      'Soybean' : 'Soybean',
+      'Sugarcane' : 'Tubo',
+      'Tomato' : 'Kamatis'
+    };
+    return cropTerms[crop];
+  }
+
+
+
+  _getFarmData() async {
+    Map map1 = {};
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    await Provider.of(context)
+        .db
+        .collection('userData')
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+      result.documents.forEach((f) => (map1.containsKey(f.data['cropsPlanted'])) ? map1[f.data['cropsPlanted']] += double.parse(f.data['farmSize']) : map1[f.data['cropsPlanted']] = double.parse(f.data['farmSize']));
+    });
+
+//    var doc_ref = await Provider.of(context)
+//        .db
+//        .collection('userData')
+//        .document(uid)
+//        .collection('farms').getDocuments();
+//
+//    print(doc_ref.documents[1].documentID);
+
+    return map1;
   }
 
   _getUserData() async {

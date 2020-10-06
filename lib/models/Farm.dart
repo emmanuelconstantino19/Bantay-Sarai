@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 class Farm {
   String farmName;
   String cropsPlanted;
@@ -30,4 +31,15 @@ class Farm {
     'organicPractitioner': organicPractitioner,
     'farmOwnership': farmOwnership
   };
+
+  Farm.fromSnapshot(DocumentSnapshot snapshot) :
+        farmName = snapshot.data['farmName'],
+        cropsPlanted = snapshot.data['cropsPlanted'],
+        annualIncome = snapshot.data['annualIncome'],
+        location = snapshot.data['location'],
+        farmSize = snapshot.data['farmSize'],
+        farmType = snapshot.data['farmType'],
+        organicPractitioner = snapshot.data['organicPractitioner'],
+        farmOwnership = snapshot.data['farmOwnership'];
+
 }

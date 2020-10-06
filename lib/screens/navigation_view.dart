@@ -7,6 +7,7 @@ import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/pages.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
+import 'package:bantay_sarai/screens/sarai_alerts.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,8 +19,8 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     ExplorePage(),
-    HomeView(),
-    ProfileView(),
+    SaraiAlerts(),
+    ProfileScreen(),
   ];
 
   @override
@@ -150,7 +151,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.green[700],
+        backgroundColor: Colors.green,
         title: Text("BANTAY SARAI"),
 //        actions: <Widget>[
 //          IconButton(

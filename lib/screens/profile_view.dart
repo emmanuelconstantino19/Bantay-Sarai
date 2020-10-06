@@ -2,6 +2,356 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:bantay_sarai/models/User.dart';
+import 'package:bantay_sarai/widgets/custome_list_tile.dart';
+import 'package:bantay_sarai/widgets/small_button.dart';
+
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  User user = User("","","","","","","","");
+  final TextEditingController _fnameControl = new TextEditingController();
+  final TextEditingController _lnameControl = new TextEditingController();
+  final TextEditingController _mnameControl = new TextEditingController();
+  final TextEditingController _mshipControl = new TextEditingController();
+  final TextEditingController _bdayControl = new TextEditingController();
+  final TextEditingController _placeControl = new TextEditingController();
+  final TextEditingController _sexControl = new TextEditingController();
+  final TextEditingController _isPWDControl = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          child: Column(
+            children: <Widget>[
+              FutureBuilder(
+                future: Provider
+                    .of(context)
+                    .auth
+                    .getCurrentUser(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return displayUserInformation(context, snapshot);
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+      )
+    );
+  }
+
+  Widget displayUserInformation(context, snapshot) {
+    final authData = snapshot.data;
+
+    return Column(
+      children: <Widget>[
+        FutureBuilder(
+            future: _getProfileData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                _fnameControl.text = user.firstName;
+                _lnameControl.text = user.lastName;
+                _mnameControl.text = user.middleName;
+                _bdayControl.text = user.birthDate;
+                _placeControl.text = user.placeOfBirth;
+                _sexControl.text = user.sex;
+                _isPWDControl.text = user.isPwd;
+                _mshipControl.text = user.membership;
+
+                return SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0,vertical:20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Profile",
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+//                            Container(
+//                              height: 120.0,
+//                              width: 120.0,
+//                              decoration: BoxDecoration(
+//                                borderRadius: BorderRadius.circular(60.0),
+//                                boxShadow: [
+//                                  BoxShadow(
+//                                      blurRadius: 3.0,
+//                                      offset: Offset(0, 4.0),
+//                                      color: Colors.black38),
+//                                ],
+//                                image: DecorationImage(
+//                                  image: AssetImage(
+//                                    "assets/images/tomato1.png",
+//                                  ),
+//                                  fit: BoxFit.cover,
+//                                ),
+//
+//                              ),
+//                            ),
+//                            SizedBox(
+//                              width: 20.0,
+//                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  _fnameControl.text + " " + _lnameControl.text,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                Text(
+                                  authData.phoneNumber,
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                InkWell(
+                                  child: SmallButton(btnText: "Edit"),
+                                  onTap: () {
+                                    _userEditBottomSheet(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Text(
+                          "Account Details",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Card(
+                          elevation: 3.0,
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text('Place of birth: ' + _placeControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('Birthday: ' + _bdayControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('Sex: ' + _sexControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('Membership: ' + _mshipControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text('PWD: ' + _isPWDControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+
+            }
+        ),
+
+
+        //showSignOut(context, user.isAnonymous),
+      ],
+    );
+  }
+
+  _getProfileData() async {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    await Provider.of(context)
+        .db
+        .collection('userData')
+        .document(uid)
+        .get().then((result) {
+      user.firstName = result.data['firstName'];
+      user.lastName = result.data['lastName'];
+      user.middleName = result.data['middleName'];
+      user.birthDate = result.data['birthDate'];
+      user.placeOfBirth = result.data['placeOfBirth'];
+      user.sex = result.data['sex'];
+      user.isPwd = result.data['isPwd'];
+      user.membership = result.data['membership'];
+    });
+  }
+
+  void _userEditBottomSheet(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      barrierDismissible: false, // dialog is dismissible with a tap on the barrier
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Update Profile'),
+          content: Container(
+              child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        controller: _fnameControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'First Name'),
+                      ),
+                      TextField(
+                        controller: _lnameControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Last Name'),
+                      ),
+                      TextField(
+                        controller: _mnameControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Middle Name'),
+                      ),
+                      TextField(
+                        controller: _bdayControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Date of birth'),
+                      ),
+                      TextField(
+                        controller: _placeControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Place of birth'),
+                      ),
+                      TextField(
+                        controller: _sexControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Sex'),
+                      ),
+                      TextField(
+                        controller: _isPWDControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Person with Disability [Y/N]'),
+                      ),
+                      TextField(
+                        controller: _mshipControl,
+                        autofocus: true,
+                        decoration: new InputDecoration(
+                            labelText: 'Membership'),
+                      ),
+                    ],
+                  )
+              )
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel',
+                style: TextStyle(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            RaisedButton(
+              child: Text('Save'),
+              color: Colors.green,
+              textColor: Colors.white,
+              onPressed: () async {
+                user.firstName = _fnameControl.text;
+                user.lastName = _lnameControl.text;
+                user.middleName = _mnameControl.text;
+                user.birthDate = _bdayControl.text;
+                user.placeOfBirth = _placeControl.text;
+                user.sex = _sexControl.text;
+                user.isPwd = _isPWDControl.text;
+                user.membership = _mshipControl.text;
+                setState(() {
+                  _fnameControl.text = user.firstName;
+                  _lnameControl.text = user.lastName;
+                  _mnameControl.text = user.middleName;
+                  _bdayControl.text = user.birthDate;
+                  _placeControl.text = user.placeOfBirth;
+                  _sexControl.text = user.sex;
+                  _isPWDControl.text = user.isPwd;
+                  _mshipControl.text = user.membership;
+
+                });
+                final uid =
+                await Provider.of(context).auth.getCurrentUID();
+                await Provider.of(context)
+                    .db
+                    .collection('userData')
+                    .document(uid)
+                    .setData(user.toJson());
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+}
+
 
 class ProfileView extends StatefulWidget {
   @override
