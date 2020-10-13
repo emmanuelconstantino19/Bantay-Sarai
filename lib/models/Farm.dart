@@ -43,3 +43,43 @@ class Farm {
         farmOwnership = snapshot.data['farmOwnership'];
 
 }
+
+class FarmRecord {
+  String farmName;
+  String cropsPlanted;
+  String annualIncome;
+  String location;
+  String farmSize;
+  String farmType;
+  String organicPractitioner;
+  String farmOwnership;
+  DateTime plantedDate;
+  DateTime harvestingDate;
+
+
+  FarmRecord(
+      this.farmName,
+      this.cropsPlanted,
+      this.annualIncome,
+      this.location,
+      this.farmSize,
+      this.farmType,
+      this.organicPractitioner,
+      this.farmOwnership,
+      this.plantedDate,
+      this.harvestingDate
+      );
+
+  Map<String, dynamic> toJson() => {
+    'farmName': farmName,
+    'cropsPlanted': cropsPlanted,
+    'annualIncome': annualIncome,
+    'location': location,
+    'farmSize': farmSize,
+    'farmType': farmType,
+    'organicPractitioner': organicPractitioner,
+    'farmOwnership': farmOwnership,
+    'plantedDate': plantedDate,
+    'harvestingDate': harvestingDate,
+  };
+}
