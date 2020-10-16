@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                 return ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Colors.blue,
+                    color: Colors.green,
                     size: 50.0,
                   ),
                   title: Text(user.firstName + ' ' + user.lastName, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -100,50 +100,48 @@ class _HomeState extends State<Home> {
 //              },
 //            ),
             SizedBox(height:25),
-            InkWell(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1.0, 1.0),
-                        blurRadius: 5.0,
-                      ),
-                    ]
-                ),
-                child: Center(
-                  child: Text("MAG-LOGOUT", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.green[600])
+                  ),
+                  color: Colors.green[400],
+                  onPressed: () async {
+                    try {
+                      AuthService auth = Provider.of(context).auth;
+                      await auth.signOut();
+                      print("Signed Out!");
+                    } catch (e) {
+                      print (e);
+                    }
+                  },
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                  child: Text('MAG-LOGOUT',style:TextStyle(fontSize:15)),
                 ),
               ),
-              onTap: () async {
-                try {
-                  AuthService auth = Provider.of(context).auth;
-                  await auth.signOut();
-                  print("Signed Out!");
-                } catch (e) {
-                  print (e);
-                }
-              },
             ),
             SizedBox(height:20),
-            Container(
-              height: 50,
-              margin: EdgeInsets.symmetric(horizontal: 25),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.green,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(1.0, 1.0),
-                      blurRadius: 5.0,
-                    ),
-                  ]
-              ),
-              child: Center(
-                child: Text("ABOUT BANTAY SARAI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.green[600])
+                  ),
+                  color: Colors.white,
+                  onPressed: () {
+                  },
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Colors.green[600])),
+                ),
               ),
             ),
 
@@ -151,8 +149,20 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: Text("BANTAY SARAI"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Text('Bantay SARAI', style: TextStyle(color: Colors.white))
+            ),
+            Image.asset(
+              'assets/logos/dost-pcaarrd-uplb.png',
+              fit: BoxFit.contain,
+              height: 30,
+            ),
+
+          ],
+        ),
 //        actions: <Widget>[
 //          IconButton(
 //            icon: Icon(Icons.add),

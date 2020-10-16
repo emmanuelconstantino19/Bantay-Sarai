@@ -24,7 +24,8 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Harvesting data monitoring"),
+          title: Text("HARVESTING DATA"),
+          centerTitle: true,
           elevation: 1,
         ),
         body: SingleChildScrollView(
@@ -198,7 +199,8 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Harvesting data monitoring"),
+          title: Text("HARVESTING DATA"),
+          centerTitle: true,
           elevation: 1,
         ),
         body: SingleChildScrollView(

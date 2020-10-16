@@ -22,7 +22,8 @@ class _AddPlantingDataState extends State<AddPlantingData> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Planting data monitoring"),
+          title: Text("PLANTING DATA"),
+          centerTitle: true,
           elevation: 1,
         ),
         body: SingleChildScrollView(
@@ -224,7 +225,8 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Planting data monitoring"),
+          title: Text("PLANTING DATA"),
+          centerTitle: true,
           elevation: 1,
         ),
         body: SingleChildScrollView(

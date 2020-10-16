@@ -144,55 +144,49 @@ class _ExplorePageState extends State<ExplorePage> {
 //              },
 //            ),
             SizedBox(height: 10),
-            InkWell(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green[400],
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1.0, 1.0),
-                        blurRadius: 5.0,
-                      ),
-                    ]
-                ),
-                child: Center(
-                  child: Text("+ Magdagdag ng Farm", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.green[600])
+                  ),
+                  color: Colors.green[400],
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FarmView()),
+                    );
+                  },
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                  child: Text('+ Magdagdag ng Farm',style:TextStyle(fontSize:15)),
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FarmView()),
-                );
-              },
             ),
             SizedBox(height: 10),
-            InkWell(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 25),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green[400],
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1.0, 1.0),
-                        blurRadius: 5.0,
-                      ),
-                    ]
-                ),
-                child: Center(
-                  child: Text("+ Magdagdag ng Record", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:40.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      side: BorderSide(color: Colors.green[600])
+                  ),
+                  color: Colors.green[400],
+                  onPressed: () {
+                    buildAddRecordDialog(context);
+                  },
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                  child: Text('+ Magdagdag ng Record',style:TextStyle(fontSize:15)),
                 ),
               ),
-              onTap: () {
-                buildAddRecordDialog(context);
-              },
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
           ],
         )
       );
@@ -230,7 +224,7 @@ class _ExplorePageState extends State<ExplorePage> {
   buildAddRecordDialog(BuildContext context){
     return showDialog<String>(
       context: context,
-      barrierDismissible: false, // dialog is dismissible with a tap on the barrier
+      barrierDismissible: true, // dialog is dismissible with a tap on the barrier
       builder: (BuildContext context) {
         return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState){
@@ -238,89 +232,82 @@ class _ExplorePageState extends State<ExplorePage> {
                 //title: Text('Weather Forecast'),
                 shape: RoundedRectangleBorder(
                     borderRadius:
-                    BorderRadius.circular(20.0)),
+                    BorderRadius.circular(8.0)),
                 content: Container(
                     child: SingleChildScrollView(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Align(
-                              alignment: Alignment(1, 0),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.grey[300],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
+//                            Align(
+//                              alignment: Alignment(1, 0),
+//                              child: InkWell(
+//                                onTap: () {
+//                                  Navigator.pop(context);
+//                                },
+//                                child: Container(
+//                                  child: Icon(
+//                                    Icons.close,
+//                                    color: Colors.grey[300],
+//                                  ),
+//                                ),
+//                              ),
+//                            ),
+//                            SizedBox(height: 10),
                             Center(
                               child: Text(
                                 'Choose type of record',
-                                style: TextStyle(fontSize: 22, fontWeight:FontWeight.w600),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:20.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(color: Colors.blue[600])
+                                  ),
+                                  color: Colors.blue[400],
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => AddPlantingData()),
+                                    );
+                                  },
+                                  textColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                                  child: Text('Planting data',style:TextStyle(fontSize:15)),
+                                ),
                               ),
                             ),
                             SizedBox(height: 10),
-                            InkWell(
-                              child: Container(
-                                height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.blue,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(1.0, 1.0),
-                                        blurRadius: 5.0,
-                                      ),
-                                    ]
-                                ),
-                                child: Center(
-                                  child: Text("Planting data monitoring", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AddPlantingData()),
-                                );
-                              },
-                            ),
-                            SizedBox(height: 10),
-                            InkWell(
-                              child: Container(
-                                height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.green[400],
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(1.0, 1.0),
-                                        blurRadius: 5.0,
-                                      ),
-                                    ]
-                                ),
-                                child: Center(
-                                  child: Text("Harvesting data monitoring", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:20.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(color: Colors.green[600])
+                                  ),
+                                  color: Colors.green[400],
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => AddHarvestingData()),
+                                    );
+                                  },
+                                  textColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                                  child: Text('Harvesting data',style:TextStyle(fontSize:15)),
                                 ),
                               ),
-                              onTap: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AddHarvestingData()),
-                                );
-                              },
                             ),
-                            SizedBox(height: 10),
                           ],
                         )
                     )

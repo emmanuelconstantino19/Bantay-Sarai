@@ -18,24 +18,16 @@ class _CropViewState extends State<CropView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//        appBar: AppBar(
-//          //title: Text(""),
-//          elevation: 1,
-//        ),
+        appBar: AppBar(
+          title: Text("RECORDS"),
+          centerTitle: true,
+          //elevation: 0,
+          elevation: 1,
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height:40),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal:20),
-              child: InkWell(
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.grey,
-                ),
-                onTap: () {Navigator.pop(context);},
-              ),
-            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(

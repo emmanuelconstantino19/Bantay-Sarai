@@ -4,6 +4,7 @@ import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
 import 'package:bantay_sarai/screens/crop_view.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class FarmView extends StatefulWidget {
   @override
@@ -19,123 +20,204 @@ class _FarmViewState extends State<FarmView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("MGA FARMS"),
-          elevation: 1,
+          title: Text("FARMS"),
+          centerTitle: true,
+          backgroundColor: Colors.green,
+          elevation: 0,
         ),
-        body: Column(
+        body: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: FutureBuilder(
-                  future: _getUserData(),
-                  builder: (context, snapshot) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Divider(color:Colors.blue),
-                        Text('Pangalan: ' + user.lastName + ', ' + user.firstName, style: TextStyle(color:Colors.blue,fontWeight: FontWeight.bold, fontSize: 15)),
-                        Text('Bayan: ' + loc, style: TextStyle(color:Colors.blue,fontWeight: FontWeight.bold, fontSize: 15)),
-                        Text('Bilang ng Farms: ' + noOfFarms, style: TextStyle(color:Colors.blue,fontWeight: FontWeight.bold, fontSize: 15)),
-                        Text('Bilang / Mga Uri ng Crops: ' + noOfCrops, style: TextStyle(color:Colors.blue,fontWeight: FontWeight.bold, fontSize: 15)),
-                        Divider(color:Colors.blue),
-                      ],
-                    );
-                  }
+            ClipPath(
+              clipper: OvalBottomBorderClipper(),
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
               ),
             ),
-            FutureBuilder(
-                future: _getFarmData(),
-                builder: (context, snapshot) {
-                  if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
-                  return new Expanded(child: new ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index){
-                      String key = snapshot.data.keys.elementAt(index);
-                      return new Column(
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                FutureBuilder(
+                    future: _getUserData(),
+                    builder: (context, snapshot) {
+                      return Column(
                         children: [
-                          InkWell(
-                            child: Stack(
-                              children: <Widget>[
-//                              Positioned(
-//                                top: 0,
-//                                right: 0,
-//                                child: GestureDetector(
-//                                  onTap:(){
-//                                    print("Delete");
-//                                  },
-//                                  child: Container(
-//                                    padding: EdgeInsets.all(20.0),
-//                                    decoration: BoxDecoration(
-//                                      borderRadius: BorderRadius.circular(8.0),
-//                                    ),
-//                                    child: Icon(
-//                                      Icons.highlight_off,
-//                                    ),
-//                                  ),
-//                                ),
-//                              ),
-                                Container(
-                                    alignment: Alignment.center,
-                                    child: Image(
-                                      image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
-                                      height: 170,
-                                      //width: double.infinity,
-                                      //fit: BoxFit.cover,
+                          const SizedBox(height: 30),
+                          Text(
+                            "${user.firstName} ${user.lastName}",
+                            style: TextStyle(color:Colors.white,fontSize:22),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 5.0),
+                          Text(
+                            loc,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white70,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 30.0),
+                          Card(
+                            color: Colors.white,
+                            elevation: 0,
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 32.0,
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: Colors.green[600])
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          noOfFarms,
+                                          style: TextStyle(color:Colors.grey[600],fontSize:36),
+                                        ),
+                                        const SizedBox(height: 10.0),
+                                        Text(
+                                          "Farms",
+                                          style: TextStyle(color:Colors.green,fontSize:18),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                Container(
-                                    height: 170,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      '${snapshot.data[key]} ha',
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0),
-                                    )),
-                              ],
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          noOfCrops,
+                                          style: TextStyle(color:Colors.grey[600],fontSize:36),
+                                        ),
+                                        const SizedBox(height: 10.0),
+                                        Text(
+                                          "Crops",
+                                          style: TextStyle(color:Colors.green,fontSize:18),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => CropView(crop: key, totalSize: snapshot.data[key].toString())),
-                              );
-                            },
                           ),
-
-                          Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-                          SizedBox(height:40),
                         ],
                       );
-                    },
+                    }
+                  ),
+                  FutureBuilder(
+                    future: _getFarmData(),
+                    builder: (context, snapshot) {
+                      if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                      return new Expanded(child: new ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index){
+                          String key = snapshot.data.keys.elementAt(index);
+                          return new Column(
+                            children: [
+                              SizedBox(height:20),
+                              InkWell(
+                                child: Stack(
+                                  children: <Widget>[
+    //                              Positioned(
+    //                                top: 0,
+    //                                right: 0,
+    //                                child: GestureDetector(
+    //                                  onTap:(){
+    //                                    print("Delete");
+    //                                  },
+    //                                  child: Container(
+    //                                    padding: EdgeInsets.all(20.0),
+    //                                    decoration: BoxDecoration(
+    //                                      borderRadius: BorderRadius.circular(8.0),
+    //                                    ),
+    //                                    child: Icon(
+    //                                      Icons.highlight_off,
+    //                                    ),
+    //                                  ),
+    //                                ),
+    //                              ),
+                                    Container(
+                                        alignment: Alignment.center,
+                                        child: Image(
+                                          image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
+                                          height: 170,
+                                          //width: double.infinity,
+                                          //fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    Container(
+                                        height: 170,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '${snapshot.data[key]} ha',
+                                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0),
+                                        )),
+                                  ],
+                                ),
+                                onTap: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => CropView(crop: key, totalSize: snapshot.data[key].toString())),
+                                  );
+                                },
+                              ),
 
-                  ));
-                }
-            ),
-            InkWell(
-              child: Container(
-                height: 50,
-                margin: EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green[400],
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(1.0, 1.0),
-                        blurRadius: 5.0,
-                      ),
-                    ]
+                              Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                              SizedBox(height:20),
+                            ],
+                          );
+                        },
+
+                      ));
+                    }
                 ),
-                child: Center(
-                  child: Text("+ Magdagdag ng Farm", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                ),
+//                Container(
+//                  margin: EdgeInsets.symmetric(vertical: 10,horizontal:16.0),
+//                  child: SizedBox(
+//                    width: double.infinity,
+//                    child: RaisedButton(
+//                      shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(8.0),
+//                          side: BorderSide(color: Colors.green[600])
+//                      ),
+//                      color: Colors.green[400],
+//                      onPressed: () {
+//                        Navigator.push(
+//                          context,
+//                          MaterialPageRoute(builder: (context) => AddFarmView(farm: newFarm,)),
+//                        );
+//                      },
+//                      textColor: Colors.white,
+//                      padding: const EdgeInsets.symmetric(vertical:20.0),
+//                      child: Text('+ Magdagdag ng Farm',style:TextStyle(fontSize:15)),
+//                    ),
+//                  ),
+//                ),
+                ],
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddFarmView(farm: newFarm,)),
-                );
-              },
             ),
           ],
-        )
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddFarmView(farm: newFarm,)),
+            );
+          },
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ),
     );
   }
 
