@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/screens/finalize_farm.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddFarmView extends StatefulWidget {
   final Farm farm;
@@ -35,7 +36,7 @@ class _AddFarmViewState extends State<AddFarmView> {
                 children: <Widget>[
                   TextFormField(
                     validator: (val) => val.isEmpty ? 'field required' : null,
-                    autofocus: true,
+                    //autofocus: true,
                     decoration: new InputDecoration(
                         labelText: 'Farm name'),
                     controller: _farmNameController,
@@ -74,7 +75,8 @@ class _AddFarmViewState extends State<AddFarmView> {
                   ),
                   TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
-                      autofocus: true, keyboardType: TextInputType.number,
+                      //autofocus: true,
+                      keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                           labelText: 'Gross Annual Income Last Year'),
                       controller: _annualIncomeController
@@ -106,7 +108,7 @@ class _AddFarmViewState extends State<AddFarmView> {
                   ),
                   TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
-                      autofocus: true,
+                      //autofocus: true,
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                           labelText: 'Farm Size (ha)'),
@@ -199,40 +201,42 @@ class _AddFarmViewState extends State<AddFarmView> {
                     }).toList(),
                   ),
                   SizedBox(height:10),
-                  InkWell(
-                    child: Container(
-                      height: 50,
-                      margin: EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(1.0, 1.0),
-                              blurRadius: 5.0,
-                            ),
-                          ]
-                      ),
-                      child: Center(
-                        child: Text("Submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:40.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            side: BorderSide(color: Colors.lightGreen[700])
+                        ),
+                        color: Colors.lightGreen[700],
+                        onPressed: () {
+                          if(_formKey.currentState.validate()){
+                            widget.farm.farmName = _farmNameController.text;
+                            widget.farm.cropsPlanted = cropPlanted;
+                            widget.farm.annualIncome = _annualIncomeController.text;
+                            widget.farm.location = location;
+                            widget.farm.farmSize = _farmSizeController.text;
+                            widget.farm.farmType = farmType;
+                            widget.farm.organicPractitioner = _choice;
+                            widget.farm.farmOwnership = farmOwnership;
+                            FocusScopeNode currentFocus = FocusScope.of(context);
+
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
+                            );
+                          }
+                        },
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical:15.0),
+                        child: Text('Submit',style:TextStyle(fontSize:15)),
                       ),
                     ),
-                    onTap: () {
-                      if(_formKey.currentState.validate()){
-                        widget.farm.farmName = _farmNameController.text;
-                        widget.farm.cropsPlanted = cropPlanted;
-                        widget.farm.annualIncome = _annualIncomeController.text;
-                        widget.farm.location = location;
-                        widget.farm.farmSize = _farmSizeController.text;
-                        widget.farm.farmType = farmType;
-                        widget.farm.organicPractitioner = _choice;
-                        widget.farm.farmOwnership = farmOwnership;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
-                        );
-                      }
-                    },
                   ),
                 ],
               )

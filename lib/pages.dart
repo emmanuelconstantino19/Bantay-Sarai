@@ -98,8 +98,8 @@ class _ExplorePageState extends State<ExplorePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Colors.green)),
-                            Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.green)),
+                            Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Colors.lightGreen[700])),
+                            Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.lightGreen[700])),
                           ],
                         )
                     );
@@ -151,9 +151,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.green[600])
+                      side: BorderSide(color: Colors.lightGreen[700])
                   ),
-                  color: Colors.green[400],
+                  color: Colors.lightGreen[700],
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -174,9 +174,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.green[600])
+                      side: BorderSide(color: Colors.lightGreen[700])
                   ),
-                  color: Colors.green[400],
+                  color: Colors.lightGreen[700],
                   onPressed: () {
                     buildAddRecordDialog(context);
                   },

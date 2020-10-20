@@ -23,32 +23,27 @@ class _FirstScreenState extends State<FirstScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 80,),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-//                  InkWell(
-//                    child: Icon(
-//                      Icons.arrow_back,
-//                      color: Colors.white,
-//                    ),
-//                    onTap: () {Navigator.pop(context);},
-//                  ),
-                  SizedBox(height: 20,),
-                  Center(
-                    child: FadeAnimation(1, Text("BANTAY SARAI", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),)),
-                  ),
+            Container(
+              height: MediaQuery.of(context).size.height/2.5,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 20,),
+                    Center(
+                      child: FadeAnimation(1, Text("BANTAY SARAI", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),)),
+                    ),
 
-                  SizedBox(height: 10,),
-                  Center(
-                    child: FadeAnimation(1.3, Text("A Project SARAI App", style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),)),
-                  ),
-                ],
+                    SizedBox(height: 10,),
+                    Center(
+                      child: FadeAnimation(1.3, Text("A Project SARAI App", style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),)),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 80),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -59,33 +54,50 @@ class _FirstScreenState extends State<FirstScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
-                    FadeAnimation(1.6, InkWell(
-                      child: Container(
-                        height: 60,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.lightGreen[700],
-                            boxShadow: [
-                                BoxShadow(
-                                offset: const Offset(1.0, 1.0),
-                                blurRadius: 5.0,
-                              ),
-                            ]
-                        ),
-                        child: Center(
-                          child: Text("FARMER LOG IN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                    FadeAnimation(1.6, Container(
+                      height: 60,
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide(color: Colors.lightGreen[700])
+                          ),
+                          color: Colors.lightGreen[700],
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed('/farmerLogIn');
+                          },
+                          textColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical:15.0),
+                          child: Text('FARMER LOG IN',style:TextStyle(fontSize:15)),
                         ),
                       ),
-                      onTap: () {
-//                        Navigator.push(
-//                          context,
-//                          MaterialPageRoute(builder: (context) => FarmerLoginScreen()),
-//                        );
-                        Navigator.of(context).pushReplacementNamed('/farmerLogIn');
-                      },
-                    )
+                    ),
+                    ),
+
+                    SizedBox(height: 30,),
+
+                    FadeAnimation(1.6, Container(
+                      height: 60,
+                      margin: EdgeInsets.symmetric(horizontal: 50),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide(color: Colors.lightBlue[700])
+                          ),
+                          color: Colors.lightBlue[700],
+                          onPressed: () {
+                            //Navigator.of(context).pushReplacementNamed('/farmerLogIn');
+                          },
+                          textColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical:15.0),
+                          child: Text('AGRICULTURE OFFICE LOG IN',style:TextStyle(fontSize:15)),
+                        ),
+                      ),
+                    ),
                     ),
 
                     SizedBox(height: 30,),
@@ -94,44 +106,21 @@ class _FirstScreenState extends State<FirstScreen> {
                       child: Container(
                         height: 60,
                         margin: EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.lightBlue[700],
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(1.0, 1.0),
-                                blurRadius: 5.0,
-                              ),
-                            ]
-                        ),
-                        child: Center(
-                          child: Text("AGRICULTURE OFFICE LOG IN", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                        ),
-                      ),
-                      onTap: () {
-
-                      },
-                    )
-                    ),
-
-                    SizedBox(height: 30,),
-
-                    FadeAnimation(1.6, InkWell(
-                      child: Container(
-                        height: 60,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.orangeAccent[400],
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(1.0, 1.0),
-                                blurRadius: 5.0,
-                              ),
-                            ]
-                        ),
-                        child: Center(
-                          child: Text("VIEW LATEST SARAI ALERTS", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide(color: Colors.brown[400])
+                            ),
+                            color: Colors.brown[400],
+                            onPressed: () {
+                              //Navigator.of(context).pushReplacementNamed('/farmerLogIn');
+                            },
+                            textColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical:15.0),
+                            child: Text('VIEW LATEST SARAI ALERTS',style:TextStyle(fontSize:15)),
+                          ),
                         ),
                       ),
                       onTap: () {

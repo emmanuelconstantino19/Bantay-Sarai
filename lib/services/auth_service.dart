@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/screens/dashboard_screen.dart';
 import 'package:bantay_sarai/screens/login_screen.dart';
 import 'package:bantay_sarai/screens/navigation_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
 
@@ -24,26 +25,26 @@ class AuthService {
   }
 
   //Sign out
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  Future signOut() async {
+    await FirebaseAuth.instance.signOut();
+
   }
 
 
   Future createUserWithPhone(String phone, BuildContext context) async {
-    print("createUserWithPhone");
-    print(phone);
-    _firebaseAuth.verifyPhoneNumber(
+    await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 0),
         verificationCompleted: (AuthCredential authCredential) {
           _firebaseAuth.signInWithCredential(authCredential).then((AuthResult result){
             Navigator.of(context).pushReplacementNamed('/home');
           }).catchError((e) {
+            showToast('Verification Failed', Colors.red);
             return "error";
           });
         },
         verificationFailed: (AuthException exception) {
-          print('${exception.message}');
+          showToast('Verification Failed', Colors.red);
           return "error";
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
@@ -61,7 +62,7 @@ class AuthService {
                 FlatButton(
                   child: Text("submit"),
                   textColor: Colors.white,
-                  color: Colors.green,
+                  color: Colors.lightGreen[700],
                   onPressed: () {
                     var _credential = PhoneAuthProvider.getCredential(verificationId: verificationId,
                         smsCode: _codeController.text.trim());
@@ -70,6 +71,7 @@ class AuthService {
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
                     }).catchError((e) {
+                      showToast('Incorrect verificiation code', Colors.red);
                       return "error";
                     });
                   },
@@ -81,6 +83,17 @@ class AuthService {
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationId = verificationId;
         });
+  }
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
 

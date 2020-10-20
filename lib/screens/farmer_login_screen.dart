@@ -35,7 +35,8 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
     if (validate()) {
       try {
         final auth = Provider.of(context).auth;
-        var result = await auth.createUserWithPhone(_phone, context);
+        var result = await auth.createUserWithPhone('+63' + _phone, context);
+        print(result);
         if (_phone == "" || result == "error") {
           setState(() {
             _warning = "Your phone number could not be validated";
@@ -119,6 +120,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                                       border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                   ),
                                   child: TextField(
+                                    keyboardType: TextInputType.number,
                                     style: TextStyle(fontSize:20),
                                     decoration: InputDecoration(
 //                                      prefixIcon: Icon(
@@ -164,26 +166,26 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                         SizedBox(height: 40,),
 //                        FadeAnimation(1.5, Text("Don't have an account? Register", style: TextStyle(color: Colors.grey),)),
 //                        SizedBox(height: 40,),
-                        FadeAnimation(1.6, InkWell(
-                          child: Container(
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 50),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.lightGreen[700]
-                            ),
-                            child: Center(
-                              child: Text("Verify", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                        FadeAnimation(1.6, Container(
+                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  side: BorderSide(color: Colors.lightGreen[700])
+                              ),
+                              color: Colors.lightGreen[700],
+                              onPressed: () {
+                                submit(contactnumberControl.text);
+                              },
+                              textColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical:15.0),
+                              child: Text('Verify',style:TextStyle(fontSize:15)),
                             ),
                           ),
-                          onTap: () {
-                            submit('+63' + contactnumberControl.text);
-                            //codeSent ? AuthService().signInWithOTP(codeControl.text, verificationId):verifyPhone('+63' + contactnumberControl.text);
-
-                          },
-                        )
                         ),
-
+                        ),
                         SizedBox(height: 40,),
                         FadeAnimation(1.5, Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),)),
 
@@ -198,33 +200,4 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
       ),
     );
   }
-//  Future<void> verifyPhone(phoneNo) async {
-//    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-//      AuthService().signIn(authResult);
-//    };
-//
-//    final PhoneVerificationFailed verificationfailed =
-//        (AuthException authException) {
-//      print('${authException.message}');
-//    };
-//
-//    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-//      this.verificationId = verId;
-//      setState(() {
-//        this.codeSent = true;
-//      });
-//    };
-//
-//    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-//      this.verificationId = verId;
-//    };
-//
-//    await FirebaseAuth.instance.verifyPhoneNumber(
-//        phoneNumber: phoneNo,
-//        timeout: const Duration(seconds: 5),
-//        verificationCompleted: verified,
-//        verificationFailed: verificationfailed,
-//        codeSent: smsSent,
-//        codeAutoRetrievalTimeout: autoTimeout);
-//  }
 }

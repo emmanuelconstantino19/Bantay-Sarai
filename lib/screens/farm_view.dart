@@ -22,7 +22,6 @@ class _FarmViewState extends State<FarmView> {
         appBar: AppBar(
           title: Text("FARMS"),
           centerTitle: true,
-          backgroundColor: Colors.green,
           elevation: 0,
         ),
         body: Stack(
@@ -32,7 +31,7 @@ class _FarmViewState extends State<FarmView> {
               child: Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.lightGreen[700],
                 ),
               ),
             ),
@@ -70,7 +69,7 @@ class _FarmViewState extends State<FarmView> {
                             ),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(color: Colors.green[600])
+                                side: BorderSide(color: Colors.lightGreen[700])
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -86,7 +85,7 @@ class _FarmViewState extends State<FarmView> {
                                         const SizedBox(height: 10.0),
                                         Text(
                                           "Farms",
-                                          style: TextStyle(color:Colors.green,fontSize:18),
+                                          style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
                                         ),
                                       ],
                                     ),
@@ -101,7 +100,7 @@ class _FarmViewState extends State<FarmView> {
                                         const SizedBox(height: 10.0),
                                         Text(
                                           "Crops",
-                                          style: TextStyle(color:Colors.green,fontSize:18),
+                                          style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
                                         ),
                                       ],
                                     ),
@@ -138,14 +137,20 @@ class _FarmViewState extends State<FarmView> {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        Image(
-                                          image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
-                                          height: 100,
-                                          //width: double.infinity,
-                                          //fit: BoxFit.cover,
+                                        Expanded(
+                                          flex: 6,
+                                          child: Image(
+                                            image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
+                                          ),
                                         ),
-                                        Text('${snapshot.data[key]} ha', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-                                        Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold))
+                                        Expanded(
+                                          flex:2,
+                                          child: Text('${snapshot.data[key]} ha', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                        ),
+                                        Expanded(
+                                          flex:2,
+                                          child: Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold)),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -211,6 +216,7 @@ class _FarmViewState extends State<FarmView> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.lightGreen[700],
           onPressed: (){
             Navigator.push(
               context,

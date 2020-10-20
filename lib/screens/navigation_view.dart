@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                 return ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Colors.green,
+                    color: Colors.lightGreen[700],
                     size: 50.0,
                   ),
                   title: Text(user.firstName + ' ' + user.lastName, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -107,9 +107,9 @@ class _HomeState extends State<Home> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.green[600])
+                      side: BorderSide(color: Colors.lightGreen[700])
                   ),
-                  color: Colors.green[400],
+                  color: Colors.lightGreen[700],
                   onPressed: () async {
                     try {
                       AuthService auth = Provider.of(context).auth;
@@ -133,14 +133,14 @@ class _HomeState extends State<Home> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.green[600])
+                      side: BorderSide(color: Colors.lightGreen[700])
                   ),
                   color: Colors.white,
                   onPressed: () {
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical:15.0),
-                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Colors.green[600])),
+                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Colors.lightGreen[700])),
                 ),
               ),
             ),

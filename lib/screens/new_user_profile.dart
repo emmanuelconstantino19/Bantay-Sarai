@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
-import 'package:bantay_sarai/screens/navigation_view.dart';
+import 'package:bantay_sarai/main.dart';
 
 class NewUserProfile extends StatefulWidget {
   @override
@@ -129,7 +129,7 @@ class _NewUserProfileState extends State<NewUserProfile> {
                               .document(uid)
                               .setData(user.toJson());
                               Navigator.pushReplacement(
-                                context, MaterialPageRoute(builder: (BuildContext context) => Home()));
+                                context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
                         },
                       ),
                     ),
