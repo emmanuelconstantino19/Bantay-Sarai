@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   User user = User("","","","","","","","");
+  String contactNumber;
   int _currentIndex = 0;
   final List<Widget> _children = [
     ExplorePage(),
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
                     size: 50.0,
                   ),
                   title: Text(user.firstName + ' ' + user.lastName, style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text('0916-***-****')
+                  subtitle: Text(contactNumber)
                 );
             }
             ),
@@ -217,6 +218,13 @@ class _HomeState extends State<Home> {
       user.firstName = result.data['firstName'];
       user.lastName = result.data['lastName'];
       user.middleName = result.data['middleName'];
+    });
+
+    await Provider
+        .of(context)
+        .auth
+        .getCurrentUser().then((result){
+          contactNumber = result.phoneNumber;
     });
   }
 }
