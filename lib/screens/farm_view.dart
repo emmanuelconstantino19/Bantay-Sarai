@@ -239,7 +239,8 @@ class _FarmViewState extends State<FarmView> {
       'Rice' : 'Palay',
       'Soybean' : 'Soybean',
       'Sugarcane' : 'Tubo',
-      'Tomato' : 'Kamatis'
+      'Tomato' : 'Kamatis',
+      'Other Crop':''
     };
     return cropTerms[crop];
   }

@@ -304,7 +304,8 @@ class _CropViewState extends State<CropView> {
       'Rice' : 'Palay',
       'Soybean' : 'Soybean',
       'Sugarcane' : 'Tubo',
-      'Tomato' : 'Kamatis'
+      'Tomato' : 'Kamatis',
+      'Other Crop' : ''
     };
     return cropTerms[crop];
   }

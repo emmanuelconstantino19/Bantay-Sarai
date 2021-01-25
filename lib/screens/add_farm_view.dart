@@ -65,6 +65,7 @@ class _AddFarmViewState extends State<AddFarmView> {
                       'Soybean',
                       'Sugarcane',
                       'Tomato',
+                      'Other Crop'
                     ]
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -96,6 +97,7 @@ class _AddFarmViewState extends State<AddFarmView> {
                       });
                     },
                     items: <String>[
+                      'Bae, Laguna',
                       'Nagcarlan, Laguna',
                       'Pakil, Laguna',
                     ]

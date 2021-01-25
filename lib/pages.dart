@@ -19,12 +19,16 @@ class _ExplorePageState extends State<ExplorePage> {
 
   GoogleMapController _controller;
 
-  final CameraPosition _initialPosition = CameraPosition(target: LatLng(14.402397618883445, 121.44038200378418), zoom:12);
+  CameraPosition _initialPosition;
 
-  final List<Marker> markers = [Marker(position: LatLng(14.402397618883445, 121.44038200378418), markerId: MarkerId('1'))];
+  List<Marker> markers;
+
+  String location;
 
   addMarker(cordinate){
     int id = Random().nextInt(100);
+
+    print(cordinate);
 
     setState(() {
       markers.add(Marker(position: cordinate, markerId: MarkerId(id.toString())));
@@ -105,22 +109,27 @@ class _ExplorePageState extends State<ExplorePage> {
                     );
                 }
             ),
-            Expanded(
-              child: GoogleMap(
-                initialCameraPosition: _initialPosition,
-                mapType: MapType.hybrid,
-                onMapCreated: (controller){
-                  setState(() {
-                    _controller = controller;
-                  });
-                },
-                markers: markers.toSet(),
-                onTap: (cordinate){
-                  _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
-                  addMarker(cordinate);
-                },
-              )
-            ),
+          FutureBuilder(
+              future: _getLocation(),
+              builder: (context,snapshot) {
+                if(location==null) return Center(child: CircularProgressIndicator());
+                return Expanded(
+                    child: GoogleMap(
+                      initialCameraPosition: _initialPosition,
+                      mapType: MapType.hybrid,
+                      onMapCreated: (controller){
+                        setState(() {
+                          _controller = controller;
+                        });
+                      },
+                      markers: markers.toSet(),
+                      onTap: (cordinate){
+                        _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
+                        addMarker(cordinate);
+                      },
+                    )
+                );
+              }),
 //            SizedBox(height: 20),
 //            InkWell(
 //              child: Container(
@@ -191,6 +200,35 @@ class _ExplorePageState extends State<ExplorePage> {
         )
       );
   }
+
+  _getLocation() async {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    await Provider.of(context)
+        .db
+        .collection('userData')
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+          if(result.documents.length==0){
+            location="Luzon";
+            _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:6);
+            markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
+          }else{
+            location = result.documents[0].data['location'];
+            if(location=="Pakil, Laguna"){
+              _initialPosition = CameraPosition(target: LatLng(14.402397618883445, 121.44038200378418), zoom:12);
+              markers = [Marker(position: LatLng(14.402397618883445, 121.44038200378418), markerId: MarkerId('1'))];
+            }else if(location=="Bae, Laguna"){
+              _initialPosition = CameraPosition(target: LatLng(14.130610546629763, 121.25636536628008), zoom:12);
+              markers = [Marker(position: LatLng(14.130610546629763, 121.25636536628008), markerId: MarkerId('1'))];
+            }else if(location=="Nagcarlan, Laguna"){
+              _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:12);
+              markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
+              print('Here in Bae');
+            }
+          }
+    });
+  }
+
   _getProfileData() async {
     final uid = await Provider.of(context).auth.getCurrentUID();
     await Provider.of(context)
