@@ -218,6 +218,44 @@ class _CropViewState extends State<CropView> {
                                                   ],
                                                 ),
                                               ),
+                                              onLongPress: () {
+                                                if(recordSnapshot.data.documents[0]['plantedDate'] != null){
+                                                  showModalBottomSheet<void>(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return Container(
+                                                          height: 50,
+                                                          color: Colors.white,
+                                                          child: ElevatedButton(
+                                                            child: const Text('DELETE ENTRY'),
+                                                            style: ButtonStyle(
+                                                                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                    RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.zero,
+                                                                    )
+                                                                )
+                                                            ),
+                                                            onPressed: () async {
+                                                              final uid = await Provider.of(context).auth.getCurrentUID();
+                                                              var farmId = snapshot.data.documents[0].documentID;
+                                                              var recordId = recordSnapshot.data.documents[0].documentID;
+                                                              Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').document(recordId)
+                                                                  .updateData({
+                                                                "plantedDate":null
+                                                              }).then((result){
+                                                                print("Deleted entry");
+                                                              }).catchError((onError){
+                                                                print("onError");
+                                                              });
+                                                              Navigator.pop(context);
+                                                            },
+                                                          )
+                                                      );
+                                                    },
+                                                  );
+                                                }
+                                              },
                                               onTap: () {
                                                 if(recordSnapshot.data.documents[0]['plantedDate'] == null){
                                                   Navigator.push(
@@ -264,6 +302,44 @@ class _CropViewState extends State<CropView> {
                                                   ],
                                                 ),
                                               ),
+                                              onLongPress: () {
+                                                if(recordSnapshot.data.documents[0]['harvestDate'] != null) {
+                                                  showModalBottomSheet<void>(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return Container(
+                                                          height: 50,
+                                                          color: Colors.white,
+                                                          child: ElevatedButton(
+                                                            child: const Text('DELETE ENTRY'),
+                                                            style: ButtonStyle(
+                                                                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                    RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.zero,
+                                                                    )
+                                                                )
+                                                            ),
+                                                            onPressed: () async {
+                                                              final uid = await Provider.of(context).auth.getCurrentUID();
+                                                              var farmId = snapshot.data.documents[0].documentID;
+                                                              var recordId = recordSnapshot.data.documents[0].documentID;
+                                                              Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').document(recordId)
+                                                                  .updateData({
+                                                                "harvestDate":null
+                                                              }).then((result){
+                                                                print("Deleted entry");
+                                                              }).catchError((onError){
+                                                                print("onError");
+                                                              });
+                                                              Navigator.pop(context);
+                                                            },
+                                                          )
+                                                      );
+                                                    },
+                                                  );
+                                                }
+                                              },
                                               onTap: () {
                                                 if(recordSnapshot.data.documents[0]['harvestDate'] == null){
                                                   Navigator.push(
