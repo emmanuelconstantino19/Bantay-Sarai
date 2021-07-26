@@ -132,7 +132,7 @@ class _FarmViewState extends State<FarmView> {
                                 },
                                 child: Card(
                                   child: Container(
-                                    margin: EdgeInsets.all(4.0),
+                                    margin: EdgeInsets.all(20.0),
                                     color: Colors.white,
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -144,12 +144,22 @@ class _FarmViewState extends State<FarmView> {
                                           ),
                                         ),
                                         Expanded(
-                                          flex:2,
-                                          child: Text('${snapshot.data[key]} ha', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                          child: Container(
+//                                              color: Colors.red,
+                                              child: FittedBox(
+                                                fit: BoxFit.fill,
+                                                child: Text('${snapshot.data[key]} ha', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                              )
+                                          ),
                                         ),
                                         Expanded(
-                                          flex:2,
-                                          child: Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold)),
+                                          child: Container(
+//                                              color: Colors.red,
+                                              child: FittedBox(
+                                                fit: BoxFit.fill,
+                                                child: Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold)),
+                                              )
+                                          ),
                                         ),
                                       ],
                                     ),

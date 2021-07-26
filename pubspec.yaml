@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^7.1.1
 
 dev_dependencies:
+  flutter_native_splash: ^0.3.2
   flutter_test:
     sdk: flutter
 
@@ -73,6 +74,8 @@ flutter:
     - assets/images/soybean1_light.png
     - assets/images/sugarcane1_light.png
     - assets/images/tomato1_light.png
+    - assets/images/other crop1.png
+    - assets/images/other crop1_light.png
     - assets/icons/raindrop.png
     - assets/weather_underground/0.png
     - assets/weather_underground/1.png
@@ -124,6 +127,11 @@ flutter:
     - assets/weather_underground/47.png
     - assets/weather_underground/na.png
   #  - images/a_dot_ham.jpeg
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/logos/bantay_sarai_logo.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
