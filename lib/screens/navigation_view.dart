@@ -3,11 +3,13 @@ import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/screens/home_view.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
 import 'package:bantay_sarai/screens/profile_view.dart';
+import 'package:bantay_sarai/screens/farm_view.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/pages.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/screens/sarai_alerts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -66,26 +68,53 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text('FARMER PROFILE', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
-                onTabTapped(2);
                 Navigator.pop(context);
+                onTabTapped(2);
               },
             ),
             ListTile(
               title: Text('MGA FARMS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmView()),
+                );
+              },
             ),
             ListTile(
               title: Text('MGA CROPS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmView()),
+                );
+              },
             ),
             ListTile(
               title: Text('MGA RECORDS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FarmView()),
+                );
+              },
             ),
             SizedBox(height: 20),
             ListTile(
               title: Text('MGA MAPA', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                onTabTapped(0);
+              },
             ),
             ListTile(
-              title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18
-              )),
+              title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                showToast('Under construction', Colors.grey[700]);
+              },
             ),
 //            ListTile(
 //              title: Text('Log Out'),
@@ -138,6 +167,7 @@ class _HomeState extends State<Home> {
                   ),
                   color: Colors.white,
                   onPressed: () {
+                    showToast('Under construction', Colors.grey[700]);
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical:15.0),
@@ -226,5 +256,16 @@ class _HomeState extends State<Home> {
         .getCurrentUser().then((result){
           contactNumber = result.phoneNumber;
     });
+  }
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
