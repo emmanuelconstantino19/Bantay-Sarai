@@ -20,6 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _placeControl = new TextEditingController();
   final TextEditingController _sexControl = new TextEditingController();
   final TextEditingController _isPWDControl = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -248,57 +249,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text('Update Profile'),
           content: Container(
               child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _fnameControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'First Name'),
-                      ),
-                      TextField(
-                        controller: _lnameControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Last Name'),
-                      ),
-                      TextField(
-                        controller: _mnameControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Middle Name'),
-                      ),
-                      TextField(
-                        controller: _bdayControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Date of birth'),
-                      ),
-                      TextField(
-                        controller: _placeControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Place of birth'),
-                      ),
-                      TextField(
-                        controller: _sexControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Sex'),
-                      ),
-                      TextField(
-                        controller: _isPWDControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Person with Disability [Y/N]'),
-                      ),
-                      TextField(
-                        controller: _mshipControl,
-                        autofocus: true,
-                        decoration: new InputDecoration(
-                            labelText: 'Membership'),
-                      ),
-                    ],
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'First Name'),
+                            controller: _fnameControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Last Name'),
+                            controller: _lnameControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Middle Name'),
+                            controller: _mnameControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Date of birth'),
+                            controller: _bdayControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Place of birth'),
+                            controller: _placeControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Sex'),
+                            controller: _sexControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Person with Disability [Y/N]'),
+                            controller: _isPWDControl,
+                          ),
+                          TextFormField(
+                            validator: (val) => val.isEmpty ? 'field required' : null,
+                            autofocus: true,
+                            decoration: new InputDecoration(
+                                labelText: 'Membership'),
+                            controller: _mshipControl,
+                          ),
+                        ],
+                      )
                   )
               )
           ),
@@ -316,33 +328,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.green,
               textColor: Colors.white,
               onPressed: () async {
-                user.firstName = _fnameControl.text;
-                user.lastName = _lnameControl.text;
-                user.middleName = _mnameControl.text;
-                user.birthDate = _bdayControl.text;
-                user.placeOfBirth = _placeControl.text;
-                user.sex = _sexControl.text;
-                user.isPwd = _isPWDControl.text;
-                user.membership = _mshipControl.text;
-                setState(() {
-                  _fnameControl.text = user.firstName;
-                  _lnameControl.text = user.lastName;
-                  _mnameControl.text = user.middleName;
-                  _bdayControl.text = user.birthDate;
-                  _placeControl.text = user.placeOfBirth;
-                  _sexControl.text = user.sex;
-                  _isPWDControl.text = user.isPwd;
-                  _mshipControl.text = user.membership;
+                if(_formKey.currentState.validate()){
+                  user.firstName = _fnameControl.text;
+                  user.lastName = _lnameControl.text;
+                  user.middleName = _mnameControl.text;
+                  user.birthDate = _bdayControl.text;
+                  user.placeOfBirth = _placeControl.text;
+                  user.sex = _sexControl.text;
+                  user.isPwd = _isPWDControl.text;
+                  user.membership = _mshipControl.text;
+                  setState(() {
+                    _fnameControl.text = user.firstName;
+                    _lnameControl.text = user.lastName;
+                    _mnameControl.text = user.middleName;
+                    _bdayControl.text = user.birthDate;
+                    _placeControl.text = user.placeOfBirth;
+                    _sexControl.text = user.sex;
+                    _isPWDControl.text = user.isPwd;
+                    _mshipControl.text = user.membership;
 
-                });
-                final uid =
-                await Provider.of(context).auth.getCurrentUID();
-                await Provider.of(context)
-                    .db
-                    .collection('userData')
-                    .document(uid)
-                    .setData(user.toJson());
-                Navigator.of(context).pop();
+                  });
+                  final uid =
+                  await Provider.of(context).auth.getCurrentUID();
+                  await Provider.of(context)
+                      .db
+                      .collection('userData')
+                      .document(uid)
+                      .setData(user.toJson());
+                  Navigator.of(context).pop();
+                }
               },
             )
           ],
