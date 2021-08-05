@@ -130,7 +130,7 @@ flutter:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/logos/bantay_sarai_logo.png
+  image: assets/logos/new_splash.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
