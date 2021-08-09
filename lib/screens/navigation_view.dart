@@ -180,11 +180,20 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.lightGreen[700]),
+        backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            Image.asset(
+              'assets/logos/bantay_sarai_header.png',
+              fit: BoxFit.contain,
+//              height: 30,
+            width:110,
+            ),
             Expanded(
-              child: Text('Bantay SARAI', style: TextStyle(color: Colors.white))
+              //child: Text('Bantay SARAI', style: TextStyle(color: Colors.white))
+              child: Container(),
             ),
             Image.asset(
               'assets/logos/dost-pcaarrd-uplb.png',
