@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/screens/home_view.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
+import 'package:bantay_sarai/screens/other_apps.dart';
 import 'package:bantay_sarai/screens/profile_view.dart';
 import 'package:bantay_sarai/screens/farm_view.dart';
 import 'package:bantay_sarai/models/Farm.dart';
@@ -114,6 +115,15 @@ class _HomeState extends State<Home> {
               title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 showToast('Under construction', Colors.grey[700]);
+              },
+            ),
+            ListTile(
+              title: Text('IBANG SARAI APPS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OtherApps()),
+                );
               },
             ),
 //            ListTile(
