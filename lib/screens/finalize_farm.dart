@@ -5,7 +5,7 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FinalizeFarm extends StatelessWidget {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
 
   final Farm farm;
   FinalizeFarm({Key key, @required this.farm}) : super(key: key);
@@ -35,7 +35,7 @@ class FinalizeFarm extends StatelessWidget {
                   onPressed: () async {
                     // save data to firebase
                     final uid = await Provider.of(context).auth.getCurrentUID();
-                    await db.collection("userData").document(uid).collection("farms").add(farm.toJson());
+                    await db.collection("userData").doc(uid).collection("farms").add(farm.toJson());
                     showToast('Successfully Added Farm!', Colors.grey[700]);
                     Navigator.of(context).popUntil((route) => route.isFirst);
                   },

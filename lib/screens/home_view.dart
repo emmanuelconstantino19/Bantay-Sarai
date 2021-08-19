@@ -27,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
 
   Stream<QuerySnapshot> getUsersTripsStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('userData').document(uid).collection('farms').snapshots();
+    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').snapshots();
   }
 
   Widget buildTripCard(BuildContext context, DocumentSnapshot farm) {

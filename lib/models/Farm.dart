@@ -33,14 +33,14 @@ class Farm {
   };
 
   Farm.fromSnapshot(DocumentSnapshot snapshot) :
-        farmName = snapshot.data['farmName'],
-        cropsPlanted = snapshot.data['cropsPlanted'],
-        annualIncome = snapshot.data['annualIncome'],
-        location = snapshot.data['location'],
-        farmSize = snapshot.data['farmSize'],
-        farmType = snapshot.data['farmType'],
-        organicPractitioner = snapshot.data['organicPractitioner'],
-        farmOwnership = snapshot.data['farmOwnership'];
+        farmName = snapshot['farmName'],
+        cropsPlanted = snapshot['cropsPlanted'],
+        annualIncome = snapshot['annualIncome'],
+        location = snapshot['location'],
+        farmSize = snapshot['farmSize'],
+        farmType = snapshot['farmType'],
+        organicPractitioner = snapshot['organicPractitioner'],
+        farmOwnership = snapshot['farmOwnership'];
 
 }
 

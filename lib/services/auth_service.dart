@@ -9,19 +9,30 @@ class AuthService {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Stream<String> get onAuthStateChanged =>
-      _firebaseAuth.onAuthStateChanged.map(
-            (FirebaseUser user) => user?.uid,
-      );
+  //Stream<String> get onAuthStateChanged =>
+//      _firebaseAuth.authStateChanges.map(
+//            (user) => user?.uid,
+//      );
+
+  Stream<User> get onAuthStateChanged => _firebaseAuth.authStateChanges();
+
+//  Stream<String> get onAuthStateChanged{
+//    FirebaseAuth.instance
+//      .authStateChanges()
+//      .listen((User user) {
+//        return user?.uid;
+//      });
+//  }
+
 
   // GET UID
   Future<String> getCurrentUID() async {
-    return (await _firebaseAuth.currentUser()).uid;
+    return (_firebaseAuth.currentUser).uid;
   }
 
   // GET CURRENT USER
   Future getCurrentUser() async {
-    return await _firebaseAuth.currentUser();
+    return _firebaseAuth.currentUser;
   }
 
   //Sign out
@@ -32,22 +43,26 @@ class AuthService {
 
 
   Future createUserWithPhone(String phone, BuildContext context) async {
+    print(phone);
     await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 0),
-        verificationCompleted: (AuthCredential authCredential) {
-          _firebaseAuth.signInWithCredential(authCredential).then((AuthResult result){
+        verificationCompleted: (AuthCredential authCredential) async {
+          print("COMPLETED");
+          await _firebaseAuth.signInWithCredential(authCredential).then((result){
             Navigator.of(context).pushReplacementNamed('/home');
           }).catchError((e) {
             showToast('Verification Failed', Colors.red);
             return "error";
           });
         },
-        verificationFailed: (AuthException exception) {
+        verificationFailed: (exception) {
+          print("ERROR");
           showToast('Verification Failed', Colors.red);
           return "error";
         },
         codeSent: (String verificationId, [int forceResendingToken]) {
+          print("CODE");
           final _codeController = TextEditingController();
           showDialog(
             context: context,
@@ -63,10 +78,10 @@ class AuthService {
                   child: Text("submit"),
                   textColor: Colors.white,
                   color: Colors.lightGreen[700],
-                  onPressed: () {
-                    var _credential = PhoneAuthProvider.getCredential(verificationId: verificationId,
+                  onPressed: () async {
+                    var _credential = PhoneAuthProvider.credential(verificationId: verificationId,
                         smsCode: _codeController.text.trim());
-                    _firebaseAuth.signInWithCredential(_credential).then((AuthResult result){
+                    await _firebaseAuth.signInWithCredential(_credential).then((result){
                       //Navigator.of(context).pushReplacementNamed('/home');
                       Navigator.of(context)
                           .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
@@ -103,7 +118,7 @@ class AuthService {
   }
 
   signInWithOTP(smsCode, verId) {
-    AuthCredential authCreds = PhoneAuthProvider.getCredential(
+    AuthCredential authCreds = PhoneAuthProvider.credential(
         verificationId: verId, smsCode: smsCode);
     signIn(authCreds);
   }

@@ -1,4 +1,4 @@
-class User {
+class FUser {
   String lastName;
   String firstName;
   String middleName;
@@ -8,7 +8,7 @@ class User {
   String isPwd;
   String membership;
 
-  User(this.lastName,this.firstName,this.middleName,this.birthDate,this.placeOfBirth,this.sex,this.isPwd,this.membership);
+  FUser(this.lastName,this.firstName,this.middleName,this.birthDate,this.placeOfBirth,this.sex,this.isPwd,this.membership);
 
   Map<String, dynamic> toJson() => {
     'lastName': lastName,

@@ -11,7 +11,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  User user = User("","","","","","","","");
+  FUser user = FUser("","","","","","","","");
   final TextEditingController _fnameControl = new TextEditingController();
   final TextEditingController _lnameControl = new TextEditingController();
   final TextEditingController _mnameControl = new TextEditingController();
@@ -227,16 +227,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
+        .doc(uid)
         .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
-      user.birthDate = result.data['birthDate'];
-      user.placeOfBirth = result.data['placeOfBirth'];
-      user.sex = result.data['sex'];
-      user.isPwd = result.data['isPwd'];
-      user.membership = result.data['membership'];
+      user.firstName = result['firstName'];
+      user.lastName = result['lastName'];
+      user.middleName = result['middleName'];
+      user.birthDate = result['birthDate'];
+      user.placeOfBirth = result['placeOfBirth'];
+      user.sex = result['sex'];
+      user.isPwd = result['isPwd'];
+      user.membership = result['membership'];
     });
   }
 
@@ -353,8 +353,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await Provider.of(context)
                       .db
                       .collection('userData')
-                      .document(uid)
-                      .setData(user.toJson());
+                      .doc(uid)
+                      .set(user.toJson());
                   Navigator.of(context).pop();
                 }
               },
@@ -373,7 +373,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  User user = User("","","","","","","","");
+  FUser user = FUser("","","","","","","","");
   final TextEditingController _fnameControl = new TextEditingController();
   final TextEditingController _lnameControl = new TextEditingController();
   final TextEditingController _mnameControl = new TextEditingController();
@@ -526,16 +526,16 @@ class _ProfileViewState extends State<ProfileView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
+        .doc(uid)
         .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
-      user.birthDate = result.data['birthDate'];
-      user.placeOfBirth = result.data['placeOfBirth'];
-      user.sex = result.data['sex'];
-      user.isPwd = result.data['isPwd'];
-      user.membership = result.data['membership'];
+      user.firstName = result['firstName'];
+      user.lastName = result['lastName'];
+      user.middleName = result['middleName'];
+      user.birthDate = result['birthDate'];
+      user.placeOfBirth = result['placeOfBirth'];
+      user.sex = result['sex'];
+      user.isPwd = result['isPwd'];
+      user.membership = result['membership'];
     });
   }
 
@@ -640,8 +640,8 @@ class _ProfileViewState extends State<ProfileView> {
                 await Provider.of(context)
                     .db
                     .collection('userData')
-                    .document(uid)
-                    .setData(user.toJson());
+                    .doc(uid)
+                    .set(user.toJson());
                 Navigator.of(context).pop();
               },
             )

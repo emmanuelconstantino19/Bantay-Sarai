@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bantay_sarai/Animation/FadeAnimation.dart';
 import 'package:bantay_sarai/screens/farmer_login_screen.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -33,12 +32,12 @@ class _FirstScreenState extends State<FirstScreen> {
                   children: <Widget>[
                     SizedBox(height: 20,),
                     Center(
-                      child: FadeAnimation(1, Text("BANTAY SARAI", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),)),
+                      child: Text("BANTAY SARAI", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),),
                     ),
 
                     SizedBox(height: 10,),
                     Center(
-                      child: FadeAnimation(1.3, Text("A Project SARAI App", style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),)),
+                      child: Text("A Project SARAI App", style: TextStyle(color: Colors.white, fontSize: 18, fontStyle: FontStyle.italic),),
                     ),
                   ],
                 ),
@@ -54,7 +53,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    FadeAnimation(1.6, Container(
+                    Container(
                       height: 60,
                       margin: EdgeInsets.symmetric(horizontal: 50),
                       child: SizedBox(
@@ -74,11 +73,11 @@ class _FirstScreenState extends State<FirstScreen> {
                         ),
                       ),
                     ),
-                    ),
+
 
                     SizedBox(height: 30,),
 
-                    FadeAnimation(1.6, Container(
+                    Container(
                       height: 60,
                       margin: EdgeInsets.symmetric(horizontal: 50),
                       child: SizedBox(
@@ -98,11 +97,11 @@ class _FirstScreenState extends State<FirstScreen> {
                         ),
                       ),
                     ),
-                    ),
+
 
                     SizedBox(height: 30,),
 
-                    FadeAnimation(1.6, InkWell(
+                    InkWell(
                       child: Container(
                         height: 60,
                         margin: EdgeInsets.symmetric(horizontal: 50),
@@ -126,11 +125,11 @@ class _FirstScreenState extends State<FirstScreen> {
                       onTap: () {
 
                       },
-                    )
                     ),
 
+
                     SizedBox(height: 40,),
-                    FadeAnimation(1.5, Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),)),
+                    Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),),
 
                   ],
                 ),

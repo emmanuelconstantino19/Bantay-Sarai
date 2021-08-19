@@ -12,7 +12,7 @@ class FarmView extends StatefulWidget {
 }
 
 class _FarmViewState extends State<FarmView> {
-  User user = User("","","","","","","","");
+  FUser user = FUser("","","","","","","","");
   final newFarm = new Farm(null, null, null, null, null, null, null, null);
   String loc = '', noOfFarms = '', noOfCrops = '';
 
@@ -263,9 +263,9 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-      result.documents.forEach((f) => (map1.containsKey(f.data['cropsPlanted'])) ? map1[f.data['cropsPlanted']] += double.parse(f.data['farmSize']) : map1[f.data['cropsPlanted']] = double.parse(f.data['farmSize']));
+        .doc(uid)
+        .collection('farms').get().then((result) {
+      result.docs.forEach((f) => (map1.containsKey(f['cropsPlanted'])) ? map1[f['cropsPlanted']] += double.parse(f['farmSize']) : map1[f['cropsPlanted']] = double.parse(f['farmSize']));
     });
 
 //    var doc_ref = await Provider.of(context)
@@ -285,22 +285,22 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
+        .doc(uid)
         .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
+      user.firstName = result['firstName'];
+      user.lastName = result['lastName'];
+      user.middleName = result['middleName'];
     });
 
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-            result.documents.forEach((f) => cropList.add(f.data['cropsPlanted']));
+        .doc(uid)
+        .collection('farms').get().then((result) {
+            result.docs.forEach((f) => cropList.add(f['cropsPlanted']));
             noOfCrops = cropList.toSet().toList().length.toString();
-            noOfFarms = result.documents.length.toString();
-            loc = result.documents[0].data['location'];
+            noOfFarms = result.docs.length.toString();
+            loc = result.docs[0]['location'];
         });
 
   }

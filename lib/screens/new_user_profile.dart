@@ -9,7 +9,7 @@ class NewUserProfile extends StatefulWidget {
 }
 
 class _NewUserProfileState extends State<NewUserProfile> {
-  User user = User("","","","","","","","");
+  FUser user = FUser("","","","","","","","");
   final TextEditingController _fnameControl = new TextEditingController();
   final TextEditingController _lnameControl = new TextEditingController();
   final TextEditingController _mnameControl = new TextEditingController();
@@ -138,8 +138,8 @@ class _NewUserProfileState extends State<NewUserProfile> {
                                 await Provider.of(context)
                                     .db
                                     .collection('userData')
-                                    .document(uid)
-                                    .setData(user.toJson());
+                                    .doc(uid)
+                                    .set(user.toJson());
                                 Navigator.pushReplacement(
                                     context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
                               }

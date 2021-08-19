@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/services/auth_service.dart';
-import 'package:bantay_sarai/Animation/FadeAnimation.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 
 class FarmerLoginScreen extends StatefulWidget {
@@ -35,8 +34,10 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
     if (validate()) {
       try {
         final auth = Provider.of(context).auth;
+        print("TRYING TO SUBMIT");
         var result = await auth.createUserWithPhone('+63' + _phone, context);
         print(result);
+        print("after");
         if (_phone == "" || result == "error") {
           setState(() {
             _warning = "Your phone number could not be validated";
@@ -83,7 +84,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                   ),
                   SizedBox(height: 10,),
                   Center(
-                    child:FadeAnimation(1.3, Text("FARMER LOG IN", style: TextStyle(color: Colors.lightGreen[700], fontSize: 30, fontWeight: FontWeight.bold),)),
+                    child:Text("FARMER LOG IN", style: TextStyle(color: Colors.lightGreen[700], fontSize: 30, fontWeight: FontWeight.bold),),
                   )
 
                 ],
@@ -100,7 +101,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                     padding: EdgeInsets.all(30),
                     child: Column(
                       children: <Widget>[
-                        FadeAnimation(1.4, Container(
+                        Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
@@ -162,11 +163,11 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
 //                              ) : Container(),
                             ],
                           ),
-                        )),
+                        ),
                         SizedBox(height: 40,),
 //                        FadeAnimation(1.5, Text("Don't have an account? Register", style: TextStyle(color: Colors.grey),)),
 //                        SizedBox(height: 40,),
-                        FadeAnimation(1.6, Container(
+                        Container(
                           margin: EdgeInsets.symmetric(horizontal: 50),
                           child: SizedBox(
                             width: double.infinity,
@@ -185,9 +186,8 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                             ),
                           ),
                         ),
-                        ),
                         SizedBox(height: 40,),
-                        FadeAnimation(1.5, Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),)),
+                        Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),),
 
                       ],
                     ),

@@ -91,7 +91,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
     };
 
     var response =
-    await http.get(apiData[location]);
+    await http.get(Uri.parse(apiData[location]));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
