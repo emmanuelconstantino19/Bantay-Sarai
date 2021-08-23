@@ -9,6 +9,95 @@ class FirstScreen extends StatefulWidget {
 class _FirstScreenState extends State<FirstScreen> {
   @override
   Widget build(BuildContext context) {
+
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          // we will give media query height
+          // double.infinity make it big as my parent allows
+          // while MediaQuery make it big as per the screen
+          color:Colors.white,
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+          child: Column(
+            // even space distribution
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/logos/bantay_sarai_header.png")
+                    )
+                ),
+              ),
+
+              Column(
+                children: <Widget>[
+                  // the login button
+                  // MaterialButton(
+                  //   minWidth: double.infinity,
+                  //   height: 60,
+                  //   onPressed: () {
+                  //     //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
+                  //   },
+                  //   // defining the shape
+                  //   shape: RoundedRectangleBorder(
+                  //     side: BorderSide(
+                  //       color: Colors.black
+                  //     ),
+                  //     borderRadius: BorderRadius.circular(50)
+                  //   ),
+                  //   child: Text(
+                  //     "Login",
+                  //     style: TextStyle(
+                  //       fontWeight: FontWeight.w600,
+                  //       fontSize: 18
+                  //     ),
+                  //   ),
+                  // ),
+                  // creating the signup button
+                  // SizedBox(height:20),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 30),
+                    child: MaterialButton(
+                      minWidth: double.infinity,
+                      height: 50,
+                      onPressed: (){
+                        Navigator.of(context).pushReplacementNamed('/farmerLogIn');
+                      },
+                      color: Color(0xFF369d34),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)
+                      ),
+                      child: Text(
+                        "Get Started",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height:20),
+                  Text('© 2021 - Project SARAI')
+
+                ],
+              )
+
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+
     return Scaffold(
       body: Container(
         width: double.infinity,

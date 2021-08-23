@@ -53,6 +53,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -64,29 +65,35 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 30,),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/rice_banner.jpg"),
+                  fit: BoxFit.cover,
+                ),
+                // gradient: LinearGradient(
+                //     //colors: [orangeColors, orangeLightColors],
+                //     colors: [Color(0xFF369d34),Color(0xFF369d34)],
+                //     end: Alignment.bottomCenter,
+                //     begin: Alignment.topCenter),
+                // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40),bottomRight: Radius.circular(40))
+              ),
+              child: Stack(
                 children: <Widget>[
-//                  InkWell(
-//                    child: Icon(
-//                      Icons.arrow_back,
-//                      color: Colors.white,
-//                    ),
-//                    onTap: () {Navigator.pop(context);},
-//                  ),
-                  SizedBox(height: 20,),
+                  // Positioned(
+                  //   bottom: 20,
+                  //     right: 20,
+                  //     child: Text(
+                  //   "Login",
+                  //   style: TextStyle(color: Colors.white,fontSize: 20),
+                  // )),
                   Center(
                     child: Container(
-                        height: 150, child: Image(image: AssetImage('assets/images/farmer.png'))),
+                        margin: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Image.asset("assets/logos/bantay_sarai_header_white.png")
+                    ),
                   ),
-                  SizedBox(height: 10,),
-                  Center(
-                    child:Text("FARMER LOG IN", style: TextStyle(color: Colors.lightGreen[700], fontSize: 30, fontWeight: FontWeight.bold),),
-                  )
-
                 ],
               ),
             ),
@@ -102,21 +109,22 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                     child: Column(
                       children: <Widget>[
                         Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 30),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              boxShadow: [BoxShadow(
-                                  color: Color.fromRGBO(0,128,0, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10)
-                              )]
+                              border: Border.all(color: Color(0xFF369d34)),
+//                              boxShadow: [BoxShadow(
+//                                  color: Color.fromRGBO(0,128,0, .3),
+//                                  blurRadius: 20,
+//                                  offset: Offset(0, 10)
+//                              )]
                           ),
                           child: Column(
                             children: <Widget>[
                               Form(
                                 child: Container(
                                   key: formKey,
-                                  padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                   ),
@@ -128,6 +136,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
 //                                        Icons.local_phone,
 //                                        color: Colors.grey,
 //                                      ),
+                                        contentPadding: EdgeInsets.all(15.0),
                                         prefixIcon: SizedBox(
                                           child: Center(
                                             widthFactor: 0.0,
@@ -168,24 +177,46 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
 //                        FadeAnimation(1.5, Text("Don't have an account? Register", style: TextStyle(color: Colors.grey),)),
 //                        SizedBox(height: 40,),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 50),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(color: Colors.lightGreen[700])
-                              ),
-                              color: Colors.lightGreen[700],
-                              onPressed: () {
-                                submit(contactnumberControl.text);
-                              },
-                              textColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical:15.0),
-                              child: Text('Verify',style:TextStyle(fontSize:15)),
-                            ),
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      child: MaterialButton(
+                        minWidth: double.infinity,
+                        height: 50,
+                        onPressed: (){
+                          submit(contactnumberControl.text);
+                        },
+                        color: Color(0xFF369d34),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)
+                        ),
+                        child: Text(
+                          "Verify",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18
                           ),
                         ),
+                      ),
+                    ),
+//                        Container(
+//                          margin: EdgeInsets.symmetric(horizontal: 50),
+//                          child: SizedBox(
+//                            width: double.infinity,
+//                            child: RaisedButton(
+//                              shape: RoundedRectangleBorder(
+//                                  borderRadius: BorderRadius.circular(30.0),
+//                                  side: BorderSide(color: Colors.lightGreen[700])
+//                              ),
+//                              color: Colors.lightGreen[700],
+//                              onPressed: () {
+//                                submit(contactnumberControl.text);
+//                              },
+//                              textColor: Colors.white,
+//                              padding: const EdgeInsets.symmetric(vertical:15.0),
+//                              child: Text('Verify',style:TextStyle(fontSize:15)),
+//                            ),
+//                          ),
+//                        ),
                         SizedBox(height: 40,),
                         Text("© 2017-2021 - Project SARAI", style: TextStyle(color: Colors.grey),),
 

@@ -55,6 +55,7 @@ flutter:
   assets:
     - assets/images/rice_banner.jpg
     - assets/logos/bantay_sarai_header.png
+    - assets/logos/bantay_sarai_header_white.png
     - assets/logos/dost-pcaarrd-uplb.png
     - assets/logos/sarai.png
     - assets/logos/sarai_logo.png

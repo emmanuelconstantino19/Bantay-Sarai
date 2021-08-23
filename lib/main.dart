@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         title: "Bantay Sarai",
         theme: ThemeData(
           primarySwatch: Colors.green,
-          primaryColor: Colors.lightGreen[700],
+          primaryColor: Color(0xFF369d34),
         ),
         home: HomeController(),
         routes: <String, WidgetBuilder>{

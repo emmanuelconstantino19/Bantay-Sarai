@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                 return ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Colors.lightGreen[700],
+                    color: Color(0xFF369d34),
                     size: 50.0,
                   ),
                   title: Text(user.firstName + ' ' + user.lastName, style: TextStyle(fontWeight: FontWeight.bold)),
@@ -68,14 +68,14 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height:25),
             ListTile(
-              title: Text('FARMER PROFILE', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              title: Text('FARMER PROFILE', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 Navigator.pop(context);
                 onTabTapped(2);
               },
             ),
             ListTile(
-              title: Text('MGA FARMS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              title: Text('MGA FARMS', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 Navigator.pop(context);
                 Navigator.push(
@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('MGA CROPS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              title: Text('MGA CROPS', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 Navigator.pop(context);
                 Navigator.push(
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('MGA RECORDS', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              title: Text('MGA RECORDS', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 Navigator.pop(context);
                 Navigator.push(
@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('DAMAGE REPORTING', style: TextStyle(color:Colors.green[700],fontWeight:FontWeight.bold,fontSize: 18)),
+              title: Text('DAMAGE REPORTING', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
                 Navigator.pop(context);
                 Navigator.push(
@@ -159,9 +159,9 @@ class _HomeState extends State<Home> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightGreen[700])
+                      side: BorderSide(color: Color(0xFF369d34))
                   ),
-                  color: Colors.lightGreen[700],
+                  color: Color(0xFF369d34),
                   onPressed: () async {
                     try {
                       AuthService auth = Provider.of(context).auth;
@@ -185,7 +185,7 @@ class _HomeState extends State<Home> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightGreen[700])
+                      side: BorderSide(color: Color(0xFF369d34))
                   ),
                   color: Colors.white,
                   onPressed: () {
@@ -193,7 +193,7 @@ class _HomeState extends State<Home> {
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical:15.0),
-                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Colors.lightGreen[700])),
+                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Color(0xFF369d34))),
                 ),
               ),
             ),
@@ -202,7 +202,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.lightGreen[700]),
+        iconTheme: IconThemeData(color: Color(0xFF369d34)),
         backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

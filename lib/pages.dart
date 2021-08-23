@@ -41,56 +41,6 @@ class _ExplorePageState extends State<ExplorePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-//            Row(
-//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//              crossAxisAlignment: CrossAxisAlignment.baseline,
-//              textBaseline: TextBaseline.alphabetic,
-//              children: <Widget>[
-//                FadeAnimation(1, Text('Farms', style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold, fontSize: 25),)),
-//                SizedBox(width: 5,),
-//                InkWell(
-//                  child: Text("View All",
-//                  style: TextStyle(color: Colors.grey[600], decoration: TextDecoration.underline,)),
-//                  onTap: () {print("haha");},
-//                ),
-//              ],
-//            ),
-//            SizedBox(height: 20,),
-//            Container(
-//              height: 50,
-//              child: Row(
-//                children: [
-//                  Container(
-//                    //margin: EdgeInsets.only(right: 10),
-//                    child:MaterialButton(
-//                      minWidth: 0,
-//                      onPressed: () {
-//                        //_addPlantation(context);
-//                      },
-//                      elevation: 2.0,
-//                      color:Colors.blue,
-//                      child: Icon(
-//                        Icons.add,
-//                        color: Colors.white,
-//                      ),
-//                      shape: CircleBorder(),
-//                    ),
-//                  ),
-//                  Expanded(
-//                    child: ListView(
-//                      scrollDirection: Axis.horizontal,
-//                      children: <Widget>[
-//                        FadeAnimation(1, makeCategory(isActive: true, title: 'Farm1')),
-//                        FadeAnimation(1.3, makeCategory(isActive: false, title: 'Farm2')),
-//                        FadeAnimation(1.4, makeCategory(isActive: false, title: 'Farm3')),
-//                        FadeAnimation(1.5, makeCategory(isActive: false, title: 'Farm4')),
-//                        FadeAnimation(1.6, makeCategory(isActive: false, title: 'Farm5')),
-//                      ],
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
             SizedBox(height: 10,),
             FutureBuilder(
                 future: _getProfileData(),
@@ -101,8 +51,8 @@ class _ExplorePageState extends State<ExplorePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Colors.lightGreen[700])),
-                            Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Colors.lightGreen[700])),
+                            Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
+                            Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
                           ],
                         )
                     );
@@ -129,28 +79,6 @@ class _ExplorePageState extends State<ExplorePage> {
                     )
                 );
               }),
-//            SizedBox(height: 20),
-//            InkWell(
-//              child: Container(
-//                height: 50,
-//                margin: EdgeInsets.symmetric(horizontal: 25),
-//                decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(10),
-//                    color: Colors.green[400],
-//                    boxShadow: [
-//                      BoxShadow(
-//                        offset: const Offset(1.0, 1.0),
-//                        blurRadius: 5.0,
-//                      ),
-//                    ]
-//                ),
-//                child: Center(
-//                  child: Text("Mag-update ng Farmer Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-//                ),
-//              ),
-//              onTap: () {
-//              },
-//            ),
             SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:40.0),
@@ -159,9 +87,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightGreen[700])
+                      side: BorderSide(color: Color(0xFF369d34))
                   ),
-                  color: Colors.lightGreen[700],
+                  color: Color(0xFF369d34),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -182,9 +110,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightGreen[700])
+                      side: BorderSide(color: Color(0xFF369d34))
                   ),
-                  color: Colors.lightGreen[700],
+                  color: Color(0xFF369d34),
                   onPressed: () {
                     buildAddRecordDialog(context);
                   },
@@ -369,11 +297,11 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 }
 
-class PastTripsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.orange,
-    );
-  }
-}
+//class PastTripsPage extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      color: Colors.orange,
+//    );
+//  }
+//}

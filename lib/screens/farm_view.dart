@@ -31,7 +31,7 @@ class _FarmViewState extends State<FarmView> {
               child: Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.lightGreen[700],
+                  color: Color(0xFF369d34),
                 ),
               ),
             ),
@@ -226,7 +226,7 @@ class _FarmViewState extends State<FarmView> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightGreen[700],
+          backgroundColor: Color(0xFF369d34),
           onPressed: (){
             Navigator.push(
               context,

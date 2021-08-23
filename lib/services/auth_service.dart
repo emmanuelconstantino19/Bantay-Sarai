@@ -74,10 +74,9 @@ class AuthService {
                 children: <Widget>[TextField(controller: _codeController)],
               ),
               actions: <Widget>[
-                FlatButton(
-                  child: Text("submit"),
-                  textColor: Colors.white,
-                  color: Colors.lightGreen[700],
+                MaterialButton(
+//                  minWidth: double.infinity,
+//                  height: 50,
                   onPressed: () async {
                     var _credential = PhoneAuthProvider.credential(verificationId: verificationId,
                         smsCode: _codeController.text.trim());
@@ -90,7 +89,36 @@ class AuthService {
                       return "error";
                     });
                   },
-                )
+                  color: Color(0xFF369d34),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)
+                  ),
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18
+                    ),
+                  ),
+                ),
+//                FlatButton(
+//                  child: Text("submit"),
+//                  textColor: Colors.white,
+//                  color: Colors.lightGreen[700],
+//                  onPressed: () async {
+//                    var _credential = PhoneAuthProvider.credential(verificationId: verificationId,
+//                        smsCode: _codeController.text.trim());
+//                    await _firebaseAuth.signInWithCredential(_credential).then((result){
+//                      //Navigator.of(context).pushReplacementNamed('/home');
+//                      Navigator.of(context)
+//                          .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+//                    }).catchError((e) {
+//                      showToast('Incorrect verificiation code', Colors.red);
+//                      return "error";
+//                    });
+//                  },
+//                )
               ],
             ),
           );
