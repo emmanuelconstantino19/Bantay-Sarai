@@ -133,16 +133,16 @@ class _ExplorePageState extends State<ExplorePage> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
-        .collection('farms').get().then((result) {
-          if(result.docs.length==0){
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+          if(result.documents.length==0){
             print("HERE");
             location="Luzon";
             _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:6);
             markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
           }else{
             print("here location");
-            location = result.docs[0]['location'];
+            location = result.documents[0].data['location'];
             if(location=="Pakil, Laguna"){
               _initialPosition = CameraPosition(target: LatLng(14.402397618883445, 121.44038200378418), zoom:12);
               markers = [Marker(position: LatLng(14.402397618883445, 121.44038200378418), markerId: MarkerId('1'))];
@@ -163,11 +163,11 @@ class _ExplorePageState extends State<ExplorePage> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
+        .document(uid)
         .get().then((result) {
-      user.firstName = result['firstName'];
-      user.lastName = result['lastName'];
-      user.middleName = result['middleName'];
+      user.firstName = result.data['firstName'];
+      user.lastName = result.data['lastName'];
+      user.middleName = result.data['middleName'];
     });
   }
 

@@ -14,25 +14,19 @@ class AuthService {
 //            (user) => user?.uid,
 //      );
 
-  Stream<User> get onAuthStateChanged => _firebaseAuth.authStateChanges();
-
-//  Stream<String> get onAuthStateChanged{
-//    FirebaseAuth.instance
-//      .authStateChanges()
-//      .listen((User user) {
-//        return user?.uid;
-//      });
-//  }
-
+  Stream<String> get onAuthStateChanged =>
+      _firebaseAuth.onAuthStateChanged.map(
+            (FirebaseUser user) => user?.uid,
+      );
 
   // GET UID
   Future<String> getCurrentUID() async {
-    return (_firebaseAuth.currentUser).uid;
+    return (await _firebaseAuth.currentUser()).uid;
   }
 
   // GET CURRENT USER
   Future getCurrentUser() async {
-    return _firebaseAuth.currentUser;
+    return await _firebaseAuth.currentUser();
   }
 
   //Sign out
@@ -78,7 +72,7 @@ class AuthService {
 //                  minWidth: double.infinity,
 //                  height: 50,
                   onPressed: () async {
-                    var _credential = PhoneAuthProvider.credential(verificationId: verificationId,
+                    var _credential = PhoneAuthProvider.getCredential(verificationId: verificationId,
                         smsCode: _codeController.text.trim());
                     await _firebaseAuth.signInWithCredential(_credential).then((result){
                       //Navigator.of(context).pushReplacementNamed('/home');
@@ -146,7 +140,7 @@ class AuthService {
   }
 
   signInWithOTP(smsCode, verId) {
-    AuthCredential authCreds = PhoneAuthProvider.credential(
+    AuthCredential authCreds = PhoneAuthProvider.getCredential(
         verificationId: verId, smsCode: smsCode);
     signIn(authCreds);
   }

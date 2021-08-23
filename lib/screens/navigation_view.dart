@@ -274,7 +274,7 @@ class _HomeState extends State<Home> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
+        .document(uid)
         .get().then((result) {
       user.firstName = result['firstName'];
       user.lastName = result['lastName'];

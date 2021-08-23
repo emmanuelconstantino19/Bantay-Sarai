@@ -59,7 +59,7 @@ class _CropViewState extends State<CropView> {
                 builder: (context, snapshot) {
                   if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
                   return new Expanded(child: new ListView.builder(
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data.documents.length,
                     itemBuilder: (BuildContext context, int index){
                       return new Column(
                         children: [
@@ -67,19 +67,19 @@ class _CropViewState extends State<CropView> {
                         child: ListTile(
                             contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                             title:
-                            Text('${snapshot.data.docs[index]['farmName']} (${snapshot.data.docs[index]['farmSize']} ha)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
+                            Text('${snapshot.data.documents[index]['farmName']} (${snapshot.data.documents[index]['farmSize']} ha)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 SizedBox(height:10),
                                 StreamBuilder<QuerySnapshot>(
-                                    stream: getRecordStreamSnapshots(context,snapshot.data.docs[index].id),
+                                    stream: getRecordStreamSnapshots(context,snapshot.data.documents[index].documentID),
                                     builder: (context,recordSnapshot){
                                       if(!recordSnapshot.hasData) return Center(child: CircularProgressIndicator());
 
                                       //when nothing is set yet
-                                      if(recordSnapshot.data.docs.length == 0){
+                                      if(recordSnapshot.data.documents.length == 0){
                                         return Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
@@ -121,7 +121,7 @@ class _CropViewState extends State<CropView> {
                                                 onTap: () {
                                                   Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.docs[index]['farmName'],cropPlanted:snapshot.data.docs[index]['cropsPlanted'], farmID: snapshot.data.docs[index].id , recordID: null )),
+                                                    MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID, recordID: null )),
                                                   );
                                                 },
                                               )
@@ -169,7 +169,7 @@ class _CropViewState extends State<CropView> {
 //                                                  Scaffold.of(context).showSnackBar(snackBar);
                                                   Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.docs[index]['farmName'],cropPlanted:snapshot.data.docs[index]['cropsPlanted'], farmID: snapshot.data.docs[index].id , recordID: null )),
+                                                    MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: null )),
                                                   );
 
                                                 },
@@ -207,7 +207,7 @@ class _CropViewState extends State<CropView> {
                                                     ),
                                                     Center(
                                                       child: Text(
-                                                        (recordSnapshot.data.docs[0]['plantedDate'] != null) ? DateFormat('MM/dd/yyyy').format(recordSnapshot.data.docs[0]['plantedDate'].toDate()) : '+ Add Entry',
+                                                        (recordSnapshot.data.documents[0]['plantedDate'] != null) ? DateFormat('MM/dd/yyyy').format(recordSnapshot.data.documents[0]['plantedDate'].toDate()) : '+ Add Entry',
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
                                                             fontSize: 18,
@@ -219,7 +219,7 @@ class _CropViewState extends State<CropView> {
                                                 ),
                                               ),
                                               onLongPress: () {
-                                                if(recordSnapshot.data.docs[0]['plantedDate'] != null){
+                                                if(recordSnapshot.data.documents[0]['plantedDate'] != null){
                                                   showModalBottomSheet<void>(
                                                     context: context,
                                                     builder: (BuildContext context) {
@@ -238,10 +238,10 @@ class _CropViewState extends State<CropView> {
                                                             ),
                                                             onPressed: () async {
                                                               final uid = await Provider.of(context).auth.getCurrentUID();
-                                                              var farmId = snapshot.data.docs[0].id;
-                                                              var recordId = recordSnapshot.data.docs[0].id;
-                                                              FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').doc(recordId)
-                                                                  .update({
+                                                              var farmId = snapshot.data.documents[0].documentID;
+                                                              var recordId = recordSnapshot.data.documents[0].documentID;
+                                                              Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').document(recordId)
+                                                                  .updateData({
                                                                 "plantedDate":null
                                                               }).then((result){
                                                                 print("Deleted entry");
@@ -257,10 +257,10 @@ class _CropViewState extends State<CropView> {
                                                 }
                                               },
                                               onTap: () {
-                                                if(recordSnapshot.data.docs[0]['plantedDate'] == null){
+                                                if(recordSnapshot.data.documents[0]['plantedDate'] == null){
                                                   Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.docs[index]['farmName'],cropPlanted:snapshot.data.docs[index]['cropsPlanted'], farmID: snapshot.data.docs[index].id , recordID: recordSnapshot.data.docs[0].id)),
+                                                    MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
                                                   );
                                                 }
                                               },
@@ -291,7 +291,7 @@ class _CropViewState extends State<CropView> {
                                                     ),
                                                     Center(
                                                       child: Text(
-                                                        (recordSnapshot.data.docs[0]['harvestDate'] != null) ? DateFormat('MM/dd/yyyy').format(recordSnapshot.data.docs[0]['harvestDate'].toDate()) : '+ Add Entry',
+                                                        (recordSnapshot.data.documents[0]['harvestDate'] != null) ? DateFormat('MM/dd/yyyy').format(recordSnapshot.data.documents[0]['harvestDate'].toDate()) : '+ Add Entry',
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(
                                                             fontSize: 18,
@@ -303,7 +303,7 @@ class _CropViewState extends State<CropView> {
                                                 ),
                                               ),
                                               onLongPress: () {
-                                                if(recordSnapshot.data.docs[0]['harvestDate'] != null) {
+                                                if(recordSnapshot.data.documents[0]['harvestDate'] != null) {
                                                   showModalBottomSheet<void>(
                                                     context: context,
                                                     builder: (BuildContext context) {
@@ -322,10 +322,10 @@ class _CropViewState extends State<CropView> {
                                                             ),
                                                             onPressed: () async {
                                                               final uid = await Provider.of(context).auth.getCurrentUID();
-                                                              var farmId = snapshot.data.docs[0].id;
-                                                              var recordId = recordSnapshot.data.docs[0].id;
-                                                              FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').doc(recordId)
-                                                                  .update({
+                                                              var farmId = snapshot.data.documents[0].documentID;
+                                                              var recordId = recordSnapshot.data.documents[0].documentID;
+                                                              Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').document(recordId)
+                                                                  .updateData({
                                                                 "harvestDate":null
                                                               }).then((result){
                                                                 print("Deleted entry");
@@ -341,10 +341,10 @@ class _CropViewState extends State<CropView> {
                                                 }
                                               },
                                               onTap: () {
-                                                if(recordSnapshot.data.docs[0]['harvestDate'] == null){
+                                                if(recordSnapshot.data.documents[0]['harvestDate'] == null){
                                                   Navigator.push(
                                                     context,
-                                                    MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.docs[index]['farmName'],cropPlanted:snapshot.data.docs[index]['cropsPlanted'], farmID: snapshot.data.docs[index].id , recordID: recordSnapshot.data.docs[0].id)),
+                                                    MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
                                                   );
                                                 }
                                               },
@@ -398,12 +398,12 @@ class _CropViewState extends State<CropView> {
 
   Stream<QuerySnapshot> getFarmStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').where('cropsPlanted', isEqualTo: widget.crop).snapshots();
+    yield* Firestore.instance.collection('userData').document(uid).collection('farms').where('cropsPlanted', isEqualTo: widget.crop).snapshots();
   }
 
   Stream<QuerySnapshot> getRecordStreamSnapshots(BuildContext context, farmId) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').orderBy('plantedDate',descending: true).limit(1).snapshots();
+    yield* Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').orderBy('plantedDate',descending: true).limit(1).snapshots();
   }
 
   _getFarmData() async {

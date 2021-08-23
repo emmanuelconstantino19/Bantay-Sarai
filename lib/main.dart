@@ -12,11 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:bantay_sarai/models/User.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -24,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       auth: AuthService(),
-      db: FirebaseFirestore.instance,
+      db: Firestore.instance,
       child: MaterialApp(
         title: "Bantay Sarai",
         theme: ThemeData(
@@ -53,14 +49,14 @@ class _HomeControllerState extends State<HomeController> {
   @override
   Widget build(BuildContext context) {
     final AuthService auth = Provider.of(context).auth;
-    return StreamBuilder(
+    return StreamBuilder<String>(
       stream: auth.onAuthStateChanged,
-      builder: (context, AsyncSnapshot snapshot) {
+      builder: (context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final bool signedIn = snapshot.hasData;
           if(signedIn){
             return StreamBuilder(
-              stream: _getProfileData(context,snapshot.data.uid),
+              stream: _getProfileData(context,snapshot.data),
               builder: (context, snapshot) {
                 print(snapshot.connectionState);
                 if(snapshot.connectionState == ConnectionState.done) {
@@ -102,10 +98,10 @@ class _HomeControllerState extends State<HomeController> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
+        .document(uid)
         .get().then((result) {
-          user.firstName = result['firstName'];
-          user.lastName = result['lastName'];
+          user.firstName = result.data['firstName'];
+          user.lastName = result.data['lastName'];
     });
   }
 }
