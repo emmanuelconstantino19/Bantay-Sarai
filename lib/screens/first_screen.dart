@@ -26,14 +26,15 @@ class _FirstScreenState extends State<FirstScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(),
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/logos/bantay_sarai_header.png")
-                    )
-                ),
-              ),
+//              Container(
+//                height: MediaQuery.of(context).size.height / 3,
+//                decoration: BoxDecoration(
+//                    image: DecorationImage(
+//                        image: AssetImage("assets/logos/bantay_sarai_header.png")
+//                    )
+//                ),
+//              ),
+              Image.asset("assets/logos/bantay_sarai_header.png"),
 
               Column(
                 children: <Widget>[

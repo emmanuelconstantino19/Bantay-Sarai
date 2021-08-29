@@ -50,6 +50,7 @@ class _CropViewState extends State<CropView> {
                     'TOTAL: ${widget.totalSize} ha',
                     style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
+                  SizedBox(height:10),
                 ],
               ),
             ),

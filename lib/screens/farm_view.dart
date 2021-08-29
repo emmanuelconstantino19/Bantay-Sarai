@@ -263,9 +263,9 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
-        .collection('farms').get().then((result) {
-      result.docs.forEach((f) => (map1.containsKey(f['cropsPlanted'])) ? map1[f['cropsPlanted']] += double.parse(f['farmSize']) : map1[f['cropsPlanted']] = double.parse(f['farmSize']));
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+      result.documents.forEach((f) => (map1.containsKey(f['cropsPlanted'])) ? map1[f['cropsPlanted']] += double.parse(f['farmSize']) : map1[f['cropsPlanted']] = double.parse(f['farmSize']));
     });
 
 //    var doc_ref = await Provider.of(context)
@@ -285,22 +285,22 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
+        .document(uid)
         .get().then((result) {
-      user.firstName = result['firstName'];
-      user.lastName = result['lastName'];
-      user.middleName = result['middleName'];
+      user.firstName = result.data['firstName'];
+      user.lastName = result.data['lastName'];
+      user.middleName = result.data['middleName'];
     });
 
     await Provider.of(context)
         .db
         .collection('userData')
-        .doc(uid)
-        .collection('farms').get().then((result) {
-            result.docs.forEach((f) => cropList.add(f['cropsPlanted']));
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+            result.documents.forEach((f) => cropList.add(f['cropsPlanted']));
             noOfCrops = cropList.toSet().toList().length.toString();
-            noOfFarms = result.docs.length.toString();
-            loc = result.docs[0]['location'];
+            noOfFarms = result.documents.length.toString();
+            loc = result.documents[0]['location'];
         });
 
   }

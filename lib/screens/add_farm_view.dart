@@ -38,18 +38,21 @@ class _AddFarmViewState extends State<AddFarmView> {
                     validator: (val) => val.isEmpty ? 'field required' : null,
                     //autofocus: true,
                     decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
                         labelText: 'Farm name'),
                     controller: _farmNameController,
                   ),
+                  SizedBox(height:10),
                   DropdownButtonFormField<String>(
                     validator: (value) => value == null ? 'field required' : null,
-                    isExpanded: true,
                     value: cropPlanted,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black, fontSize:15),
-                    hint: Text('Crop Planted'),
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Crop Planted'),
                     onChanged: (String newValue) {
                       setState(() {
                         cropPlanted = newValue;
@@ -74,23 +77,27 @@ class _AddFarmViewState extends State<AddFarmView> {
                       );
                     }).toList(),
                   ),
+                  SizedBox(height:10),
                   TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
                       //autofocus: true,
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          fillColor: Colors.white,
+                          filled: true,
                           labelText: 'Gross Annual Income Last Year'),
                       controller: _annualIncomeController
                   ),
+                  SizedBox(height:10),
                   DropdownButtonFormField<String>(
                     validator: (value) => value == null ? 'field required' : null,
-                    isExpanded: true,
                     value: location,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black, fontSize:15),
-                    hint: Text('Location'),
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Location'),
                     onChanged: (String newValue) {
                       setState(() {
                         location = newValue;
@@ -108,23 +115,27 @@ class _AddFarmViewState extends State<AddFarmView> {
                       );
                     }).toList(),
                   ),
+                  SizedBox(height:10),
                   TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
                       //autofocus: true,
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
+                          border: OutlineInputBorder(),
+                          fillColor: Colors.white,
+                          filled: true,
                           labelText: 'Farm Size (ha)'),
                       controller: _farmSizeController
                   ),
+                  SizedBox(height:10),
                   DropdownButtonFormField<String>(
                     validator: (value) => value == null ? 'field required' : null,
-                    isExpanded: true,
                     value: farmType,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black, fontSize:15),
-                    hint: Text('Farm Type'),
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Farm Type'),
                     onChanged: (String newValue) {
                       setState(() {
                         farmType = newValue;
@@ -178,13 +189,12 @@ class _AddFarmViewState extends State<AddFarmView> {
                   ),
                   DropdownButtonFormField<String>(
                     validator: (value) => value == null ? 'field required' : null,
-                    isExpanded: true,
                     value: farmOwnership,
-                    icon: Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black, fontSize:15),
-                    hint: Text('Farm Ownership'),
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Farm Ownership'),
                     onChanged: (String newValue) {
                       setState(() {
                         farmOwnership = newValue;
@@ -203,43 +213,77 @@ class _AddFarmViewState extends State<AddFarmView> {
                     }).toList(),
                   ),
                   SizedBox(height:10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:40.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            side: BorderSide(color: Colors.lightGreen[700])
-                        ),
-                        color: Colors.lightGreen[700],
-                        onPressed: () {
-                          if(_formKey.currentState.validate()){
-                            widget.farm.farmName = _farmNameController.text;
-                            widget.farm.cropsPlanted = cropPlanted;
-                            widget.farm.annualIncome = _annualIncomeController.text;
-                            widget.farm.location = location;
-                            widget.farm.farmSize = _farmSizeController.text;
-                            widget.farm.farmType = farmType;
-                            widget.farm.organicPractitioner = _choice;
-                            widget.farm.farmOwnership = farmOwnership;
-                            FocusScopeNode currentFocus = FocusScope.of(context);
+                  Row(
+                    children: [
+                      Expanded(
+                        child:
+                        ElevatedButton(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text('Submit'),
+                          ),
+                          onPressed: () async {
+                            if(_formKey.currentState.validate()){
+                              widget.farm.farmName = _farmNameController.text;
+                              widget.farm.cropsPlanted = cropPlanted;
+                              widget.farm.annualIncome = _annualIncomeController.text;
+                              widget.farm.location = location;
+                              widget.farm.farmSize = _farmSizeController.text;
+                              widget.farm.farmType = farmType;
+                              widget.farm.organicPractitioner = _choice;
+                              widget.farm.farmOwnership = farmOwnership;
+                              FocusScopeNode currentFocus = FocusScope.of(context);
 
-                            if (!currentFocus.hasPrimaryFocus) {
-                              currentFocus.unfocus();
+                              if (!currentFocus.hasPrimaryFocus) {
+                                currentFocus.unfocus();
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
+                              );
                             }
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
-                            );
-                          }
-                        },
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical:15.0),
-                        child: Text('Submit',style:TextStyle(fontSize:15)),
+                          },
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+//                  Padding(
+//                    padding: const EdgeInsets.symmetric(horizontal:40.0),
+//                    child: SizedBox(
+//                      width: double.infinity,
+//                      child: RaisedButton(
+//                        shape: RoundedRectangleBorder(
+//                            borderRadius: BorderRadius.circular(30.0),
+//                            side: BorderSide(color: Colors.lightGreen[700])
+//                        ),
+//                        color: Colors.lightGreen[700],
+//                        onPressed: () {
+//                          if(_formKey.currentState.validate()){
+//                            widget.farm.farmName = _farmNameController.text;
+//                            widget.farm.cropsPlanted = cropPlanted;
+//                            widget.farm.annualIncome = _annualIncomeController.text;
+//                            widget.farm.location = location;
+//                            widget.farm.farmSize = _farmSizeController.text;
+//                            widget.farm.farmType = farmType;
+//                            widget.farm.organicPractitioner = _choice;
+//                            widget.farm.farmOwnership = farmOwnership;
+//                            FocusScopeNode currentFocus = FocusScope.of(context);
+//
+//                            if (!currentFocus.hasPrimaryFocus) {
+//                              currentFocus.unfocus();
+//                            }
+//                            Navigator.push(
+//                              context,
+//                              MaterialPageRoute(builder: (context) => FinalizeFarm(farm: widget.farm)),
+//                            );
+//                          }
+//                        },
+//                        textColor: Colors.white,
+//                        padding: const EdgeInsets.symmetric(vertical:15.0),
+//                        child: Text('Submit',style:TextStyle(fontSize:15)),
+//                      ),
+//                    ),
+//                  ),
                 ],
               )
             )
