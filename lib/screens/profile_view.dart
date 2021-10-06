@@ -21,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _sexControl = new TextEditingController();
   final TextEditingController _isPWDControl = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String loc = '', noOfFarms = '', noOfCrops = '';
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +199,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: Colors.grey,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.symmetric(vertical: 10),
                                   child: Text('PWD: ' + _isPWDControl.text, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('Number of farms: ' + noOfFarms, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('Crops: ' + noOfCrops, style: TextStyle(fontSize: 14),),
+                                ),
+                                Divider(
+                                  height: 10.0,
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text('Farm Location: ' + loc, style: TextStyle(fontSize: 14),),
                                 ),
                               ],
                             ),
@@ -223,6 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _getProfileData() async {
+    List<String> cropList = [];
     final uid = await Provider.of(context).auth.getCurrentUID();
     await Provider.of(context)
         .db
@@ -237,6 +263,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       user.sex = result.data['sex'];
       user.isPwd = result.data['isPwd'];
       user.membership = result.data['membership'];
+    });
+
+    await Provider.of(context)
+        .db
+        .collection('userData')
+        .document(uid)
+        .collection('farms').getDocuments().then((result) {
+      result.documents.forEach((f) => cropList.add(f['cropsPlanted']));
+      noOfCrops = cropList.toSet().toList().join(", ");
+      noOfFarms = result.documents.length.toString();
+      loc = result.documents[0]['location'];
     });
   }
 

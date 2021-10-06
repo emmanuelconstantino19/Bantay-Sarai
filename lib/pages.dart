@@ -37,94 +37,69 @@ class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
     return
-      Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10,),
-            FutureBuilder(
-                future: _getProfileData(),
-                builder: (context, snapshot) {
-                  return
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
-                            Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
-                          ],
-                        )
-                    );
-                }
-            ),
+      Stack(
+        children: [
           FutureBuilder(
               future: _getLocation(),
               builder: (context,snapshot) {
                 if(location==null) return Center(child: CircularProgressIndicator());
-                return Expanded(
-                    child: GoogleMap(
-                      initialCameraPosition: _initialPosition,
-                      mapType: MapType.hybrid,
-                      onMapCreated: (controller){
-                        setState(() {
-                          _controller = controller;
-                        });
-                      },
-                      markers: markers.toSet(),
-                      onTap: (cordinate){
-                        _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
-                        addMarker(cordinate);
-                      },
-                    )
+                return GoogleMap(
+                  initialCameraPosition: _initialPosition,
+                  mapType: MapType.normal,
+                  zoomControlsEnabled: false,
+                  onMapCreated: (controller){
+                    setState(() {
+                      _controller = controller;
+                    });
+                  },
+                  markers: markers.toSet(),
+                  onTap: (cordinate){
+                    _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
+                    addMarker(cordinate);
+                  },
                 );
               }),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal:40.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Color(0xFF369d34))
-                  ),
-                  color: Color(0xFF369d34),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FarmView()),
-                    );
-                  },
-                  textColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical:15.0),
-                  child: Text('+ Magdagdag ng Farm',style:TextStyle(fontSize:15)),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal:40.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Color(0xFF369d34))
-                  ),
-                  color: Color(0xFF369d34),
-                  onPressed: () {
-                    buildAddRecordDialog(context);
-                  },
-                  textColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical:15.0),
-                  child: Text('+ Magdagdag ng Record',style:TextStyle(fontSize:15)),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-          ],
-        )
+          FutureBuilder(
+              future: _getProfileData(),
+              builder: (context, snapshot) {
+                return
+                  Container(
+                    margin: EdgeInsets.all(16.0),
+//                      padding: EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                          color:  Colors.white.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(10),
+
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top:16.0,left:16.0),
+                            child: Image.asset(
+                              'assets/logos/half_lady_sarai.png',
+                              fit: BoxFit.contain,
+                              height: 70,
+                            ),
+                          ),
+                          SizedBox(width:10),
+                          RichText(
+                            text: TextSpan(
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[800]),
+                              children: [
+                                TextSpan(text:'Mabuhay,\n', style: TextStyle(fontSize:15)),
+                                TextSpan(text:user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20)),
+                              ]
+                            ),
+                          ),
+//                          Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Colors.black)),
+//                          Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
+                        ],
+                      )
+                  );
+              }
+          ),
+        ],
       );
   }
 

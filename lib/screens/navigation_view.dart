@@ -3,7 +3,7 @@ import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/screens/home_view.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
 import 'package:bantay_sarai/screens/other_apps.dart';
-import 'package:bantay_sarai/screens/damage_reporting/choose_crop.dart';
+import 'package:bantay_sarai/screens/damage_reporting/damage_reporting.dart';
 import 'package:bantay_sarai/screens/profile_view.dart';
 import 'package:bantay_sarai/screens/farm_view.dart';
 import 'package:bantay_sarai/models/Farm.dart';
@@ -12,6 +12,9 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/screens/sarai_alerts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:bantay_sarai/screens/add_planting_data.dart';
+import 'package:bantay_sarai/screens/add_harvesting_data.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -110,7 +113,7 @@ class _HomeState extends State<Home> {
 //                Navigator.pop(context);
 //                Navigator.push(
 //                  context,
-//                  MaterialPageRoute(builder: (context) => ChooseCrop()),
+//                  MaterialPageRoute(builder: (context) => DamageReporting()),
 //                );
                 showToast('Under construction', Colors.grey[700]);
               },
@@ -243,6 +246,43 @@ class _HomeState extends State<Home> {
 //        ],
       ),
       body: _children[_currentIndex],
+      floatingActionButton: Visibility(
+        child: SpeedDial(
+          child: Icon(Icons.add),
+          closedForegroundColor: Colors.white,
+          openForegroundColor: Color(0xFF369d34),
+          closedBackgroundColor: Color(0xFF369d34),
+          openBackgroundColor: Colors.white,
+          labelsStyle: TextStyle(fontSize: 18),
+//          controller: /* Your custom animation controller goes here */,
+          speedDialChildren: <SpeedDialChild>[
+            SpeedDialChild(
+              child: Icon(Icons.grass),
+              foregroundColor: Colors.white,
+              backgroundColor:Color(0xFF369d34),
+              label: 'Magdagdag ng Farm',
+              onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FarmView()),
+                  );
+              },
+              closeSpeedDialOnPressed: false,
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.event_note),
+              foregroundColor: Colors.white,
+              backgroundColor: Color(0xFF369d34),
+              label: 'Magdagdag ng Record',
+              onPressed: () {
+                buildAddRecordDialog(context);
+              },
+            ),
+            //  Your other SpeeDialChildren go here.
+          ],
+        ),
+        visible: _currentIndex==0,
+      ),
       bottomNavigationBar: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _currentIndex,
@@ -299,5 +339,113 @@ class _HomeState extends State<Home> {
         backgroundColor: color,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  buildAddRecordDialog(BuildContext context){
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: true, // dialog is dismissible with a tap on the barrier
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState){
+              return AlertDialog(
+                //title: Text('Weather Forecast'),
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.circular(8.0)),
+                content: Container(
+                    child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+//                            Align(
+//                              alignment: Alignment(1, 0),
+//                              child: InkWell(
+//                                onTap: () {
+//                                  Navigator.pop(context);
+//                                },
+//                                child: Container(
+//                                  child: Icon(
+//                                    Icons.close,
+//                                    color: Colors.grey[300],
+//                                  ),
+//                                ),
+//                              ),
+//                            ),
+//                            SizedBox(height: 10),
+                            Center(
+                              child: Text(
+                                'Choose type of record',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:20.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(color: Colors.blue[600])
+                                  ),
+                                  color: Colors.blue[400],
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => AddPlantingData()),
+                                    );
+                                  },
+                                  textColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                                  child: Text('Planting data',style:TextStyle(fontSize:15)),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal:20.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      side: BorderSide(color: Colors.green[600])
+                                  ),
+                                  color: Colors.green[400],
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => AddHarvestingData()),
+                                    );
+                                  },
+                                  textColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical:15.0),
+                                  child: Text('Harvesting data',style:TextStyle(fontSize:15)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    )
+                ),
+//                actions: <Widget>[
+//                  FlatButton(
+//                    child: Text('Close',
+//                      style: TextStyle(color: Colors.grey),
+//                    ),
+//                    onPressed: () {
+//                      Navigator.of(context).pop();
+//                    },
+//                  ),
+//                ],
+              );
+            }
+        );
+      },
+    );
   }
 }
