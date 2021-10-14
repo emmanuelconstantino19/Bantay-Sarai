@@ -110,12 +110,12 @@ class _HomeState extends State<Home> {
             ListTile(
               title: Text('DAMAGE REPORTING', style: TextStyle(color:Color(0xFF369d34),fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
-//                Navigator.pop(context);
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(builder: (context) => DamageReporting()),
-//                );
-                showToast('Under construction', Colors.grey[700]);
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DamageReporting()),
+                );
+//                showToast('Under construction', Colors.grey[700]);
               },
             ),
             SizedBox(height: 20),

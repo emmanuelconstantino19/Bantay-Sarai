@@ -7,6 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bantay_sarai/screens/damage_reporting/finalize_report.dart';
 
 class GetCoordinates extends StatefulWidget {
+  final List<String> selectedCrops;
+  final String causeOL, extentOL;
+  final DateTime dateOL, estimatedDOH;
+  GetCoordinates({Key key, @required this.selectedCrops, this.causeOL, this.dateOL, this.extentOL, this.estimatedDOH}) : super(key: key);
+
   @override
   _GetCoordinatesState createState() => _GetCoordinatesState();
 }
@@ -156,7 +161,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                       if(_image.where((element) => element == null).length==0){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FinalizeReport()),
+                          MaterialPageRoute(builder: (context) => FinalizeReport(selectedCrops: widget.selectedCrops, causeOL: widget.causeOL,dateOL: widget.dateOL,extentOL: widget.extentOL,estimatedDOH: widget.estimatedDOH, coordinates: _coordinates, images: _image)),
                         );
                       }
                       else{

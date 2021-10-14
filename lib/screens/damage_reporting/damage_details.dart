@@ -130,7 +130,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => GetCoordinates()),
+                        MaterialPageRoute(builder: (context) => GetCoordinates(selectedCrops: widget.selectedCrops, causeOL: cause,dateOL: _lossDate,extentOL: _extentOfLossController.text,estimatedDOH: _estimatedHarvestDate)),
                       );
                     },
                   ),
