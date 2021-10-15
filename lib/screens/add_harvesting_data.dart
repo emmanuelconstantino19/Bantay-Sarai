@@ -24,7 +24,7 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("HARVESTING DATA"),
+          title: Text("Harvesting Data"),
           centerTitle: true,
           elevation: 1,
         ),
@@ -241,7 +241,7 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("HARVESTING DATA"),
+          title: Text("Harvesting Data"),
           centerTitle: true,
           elevation: 1,
         ),

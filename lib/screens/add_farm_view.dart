@@ -24,7 +24,7 @@ class _AddFarmViewState extends State<AddFarmView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("ADD FARM"),
+          title: Text("Add Farm"),
           centerTitle: true,
           elevation: 1,
         ),

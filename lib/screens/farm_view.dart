@@ -20,7 +20,7 @@ class _FarmViewState extends State<FarmView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("FARMS"),
+          title: Text("Farms"),
           centerTitle: true,
           elevation: 0,
         ),

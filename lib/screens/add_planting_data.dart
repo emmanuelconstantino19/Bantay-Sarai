@@ -22,7 +22,7 @@ class _AddPlantingDataState extends State<AddPlantingData> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("PLANTING DATA"),
+          title: Text("Planting Data"),
           centerTitle: true,
           elevation: 1,
         ),
@@ -275,7 +275,7 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("PLANTING DATA"),
+          title: Text("Planting Data"),
           centerTitle: true,
           elevation: 1,
         ),
