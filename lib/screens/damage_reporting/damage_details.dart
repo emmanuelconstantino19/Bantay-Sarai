@@ -87,7 +87,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                   SizedBox(height:10),
                   TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
-                      keyboardType: TextInputType.number,
+//                      keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           fillColor: Colors.white,

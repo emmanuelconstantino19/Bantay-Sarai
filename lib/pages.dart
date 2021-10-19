@@ -45,7 +45,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 if(location==null) return Center(child: CircularProgressIndicator());
                 return GoogleMap(
                   initialCameraPosition: _initialPosition,
-                  mapType: MapType.normal,
+                  mapType: MapType.hybrid,
                   zoomControlsEnabled: false,
                   onMapCreated: (controller){
                     setState(() {
@@ -68,27 +68,27 @@ class _ExplorePageState extends State<ExplorePage> {
 //                      padding: EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                           color:  Colors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(100),
 
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top:16.0,left:16.0),
+                            padding: EdgeInsets.only(top:8.0,left:28.0),
                             child: Image.asset(
                               'assets/logos/half_lady_sarai.png',
                               fit: BoxFit.contain,
-                              height: 70,
+                              height: 60,
                             ),
                           ),
                           SizedBox(width:10),
                           RichText(
                             text: TextSpan(
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey[800]),
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),
                               children: [
-                                TextSpan(text:'Mabuhay,\n', style: TextStyle(fontSize:15)),
-                                TextSpan(text:user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20)),
+                                TextSpan(text:'Mabuhay,\n', style: TextStyle(fontSize:13)),
+                                TextSpan(text:user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:16)),
                               ]
                             ),
                           ),

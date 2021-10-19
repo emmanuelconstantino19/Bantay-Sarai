@@ -57,7 +57,12 @@ class _FinalizeReportState extends State<FinalizeReport> {
       'coordinate1': [widget.coordinates[0].latitude,widget.coordinates[0].longitude],
       'coordinate2': [widget.coordinates[1].latitude,widget.coordinates[1].longitude],
       'coordinate3': [widget.coordinates[2].latitude,widget.coordinates[2].longitude],
-      'coordinate4': [widget.coordinates[3].latitude,widget.coordinates[3].longitude]
+      'coordinate4': [widget.coordinates[3].latitude,widget.coordinates[3].longitude],
+      'causeOfLoss': widget.causeOL,
+      'dateOfLoss' : widget.dateOL,
+      'extentOfLoss': widget.extentOL,
+      'estimatedDOH' : widget.estimatedDOH,
+      'createdAt': FieldValue.serverTimestamp()
       });
     showToast('Successfully Added Report!', Colors.grey[700]);
     Navigator.of(context).popUntil((route) => route.isFirst);
