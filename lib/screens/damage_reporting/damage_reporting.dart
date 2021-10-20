@@ -161,6 +161,9 @@ class _DamageReportingState extends State<DamageReporting> {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             }
+            if (snapshot.data.length == 0){
+              return Center(child: Text("No reports uploaded yet", style: TextStyle(fontSize: 18),),);
+            }
             return ListView.builder(
               padding: const EdgeInsets.all(10.0),
               itemCount: snapshot.data.length,
@@ -176,9 +179,9 @@ class _DamageReportingState extends State<DamageReporting> {
                     thumbnail: Image.network(snapshot.data[index]['urls'][0]),
                     title: snapshot.data[index]['causeOfLoss'],
                     subtitle: 'Extent of loss is ${snapshot.data[index]['extentOfLoss']}.\n'
-                        'Estimated date of harvest is ${DateFormat('MMM dd, yyyy').format(snapshot.data[index]['estimatedDOH'].toDate())}',
+                        'Estimated date of harvest is ${DateFormat('MMMM dd, yyyy').format(snapshot.data[index]['estimatedDOH'].toDate())}',
                     author: 'Crops: ${snapshot.data[index]['crops'].join(', ')}',
-                    publishDate: DateFormat('MMM dd, yyyy').format(snapshot.data[index]['dateOfLoss'].toDate()),
+                    publishDate: DateFormat('MMMM dd, yyyy').format(snapshot.data[index]['dateOfLoss'].toDate()),
                     readDuration: '',
                   )
                 );

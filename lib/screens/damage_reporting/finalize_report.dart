@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class FinalizeReport extends StatefulWidget {
   final List<String> selectedCrops;
@@ -76,64 +77,145 @@ class _FinalizeReportState extends State<FinalizeReport> {
           centerTitle: true,
           elevation: 0,
         ),
-        body: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                DataTable(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              DataTable(
 //                  columnSpacing: 15,
-                  columns: [
-                    DataColumn(label: Text('Fields')),
-                    DataColumn(label: Text('Values')),
-                  ],
-                  rows: [
-                    DataRow(cells: [
-                      DataCell(Text("Selected Crops")),
-                      DataCell(Text(widget.selectedCrops.toString())),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Coordinates")),
-                      DataCell(Text(widget.coordinates.toString())),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Gross Annual Income Last Year")),
-                      DataCell(Text('haha')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Location")),
-                      DataCell(Text('haha')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Farm Size")),
-                      DataCell(Text('haha')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Farm Type")),
-                      DataCell(Text('haha')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Organic Practitioner")),
-                      DataCell(Text('haha')),
-                    ]),
-                    DataRow(cells: [
-                      DataCell(Text("Farm Ownership")),
-                      DataCell(Text('haha')),
-                    ]),
-                  ],
-                ),
-                Expanded(
-                    child: Container()
-                ),
-                ElevatedButton(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('Finish'),
+                columns: [
+                  DataColumn(label: Text('Fields')),
+                  DataColumn(label: Text('Values')),
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text("Selected Crops")),
+                    DataCell(Text(widget.selectedCrops.join(', '))),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text("Cause of loss")),
+                    DataCell(Text(widget.causeOL)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text("Date of loss")),
+                    DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.dateOL))),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text("Extent of Loss / Damage")),
+                    DataCell(Text(widget.extentOL)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text("Estimated date of harvest")),
+                    DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.estimatedDOH))),
+                  ]),
+                ],
+              ),
+              SizedBox(height:20),
+              Text('Images and Coordinates', style: TextStyle(fontWeight: FontWeight.bold,),),
+              SizedBox(height:10),
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          Image.file(widget.images[0], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 1'),
+                            subtitle: Text(
+                              widget.coordinates[0].longitude.toString() + ',' + widget.coordinates[0].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    // save data to firebase
-                    uploadPic(context);
-                  },
-                ),
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          Image.file(widget.images[1], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 2'),
+                            subtitle: Text(
+                              widget.coordinates[1].longitude.toString() + ',' + widget.coordinates[1].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          Image.file(widget.images[3], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 4'),
+                            subtitle: Text(
+                              widget.coordinates[3].longitude.toString() + ',' + widget.coordinates[3].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          Image.file(widget.images[2], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 3'),
+                            subtitle: Text(
+                              widget.coordinates[2].longitude.toString() + ',' + widget.coordinates[2].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(width:5),
+                  Expanded(
+                    child: ElevatedButton(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Finish'),
+                      ),
+                      onPressed: () {
+                        // save data to firebase
+                        uploadPic(context);
+                      },
+                    ),
+                  ),
+                  SizedBox(width:5),
+                ],
+              ),
+              SizedBox(height:10),
+
 //                RaisedButton(
 //                  child: Text("Finish"),
 //                  onPressed: () async {
@@ -144,8 +226,8 @@ class _FinalizeReportState extends State<FinalizeReport> {
 //                    Navigator.of(context).popUntil((route) => route.isFirst);
 //                  },
 //                ),
-              ],
-            )
+            ],
+          ),
         )
     );
   }

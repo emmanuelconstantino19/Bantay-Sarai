@@ -22,7 +22,10 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 
   Future getImage(index) async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    Position coordinates = await _determinePosition();
+    Position coordinates;
+    if(image!=null){
+      coordinates = await _determinePosition();
+    }
 
     setState(() {
       _coordinates[index] = coordinates;
@@ -87,72 +90,145 @@ class _GetCoordinatesState extends State<GetCoordinates> {
           centerTitle: true,
           elevation: 0,
         ),
-        body: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Get 1st image'),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          _image[0] == null
+                              ? Image.asset('assets/images/placeholder.jpg',height: 100,)
+                              : Image.file(_image[0], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 1'),
+                            subtitle: Text(
+                              _coordinates[0] == null ? 'No coordinates yet' : '[' + _coordinates[0].longitude.toString() + ',' + _coordinates[0].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                          TextButton.icon(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                            onPressed: () async {
+                              getImage(0);
+                            },
+                            label: const Text('ADD IMAGE'),
+                            icon: Icon(Icons.add_a_photo),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
                     ),
-                    onPressed: () async {
-                      getImage(0);
-                    },
                   ),
-                _image[0] == null
-                  ? Text('No image selected.')
-                  : Image.file(_image[0]),
-                _coordinates[0] == null
-                    ? Text('No coordinates yet.')
-                    : Text('[' + _coordinates[0].longitude.toString() + ',' + _coordinates[0].latitude.toString() + ']'),
-                  ElevatedButton(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Get 2nd image'),
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          _image[1] == null
+                              ? Image.asset('assets/images/placeholder.jpg',height: 100,)
+                              : Image.file(_image[1], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 2'),
+                            subtitle: Text(
+                              _coordinates[1] == null ? 'No coordinates yet' : '[' + _coordinates[1].longitude.toString() + ',' + _coordinates[1].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                          TextButton.icon(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                            onPressed: () async {
+                              getImage(1);
+                            },
+                            label: const Text('ADD IMAGE'),
+                            icon: Icon(Icons.add_a_photo),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      getImage(1);
-                    },
                   ),
-                  _image[1] == null
-                      ? Text('No image selected.')
-                      : Image.file(_image[1]),
-                  _coordinates[1] == null
-                      ? Text('No coordinates yet.')
-                      : Text('[' + _coordinates[1].longitude.toString() + ',' + _coordinates[1].latitude.toString() + ']'),
-                  ElevatedButton(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Get 3rd image'),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          _image[3] == null
+                              ? Image.asset('assets/images/placeholder.jpg',height: 100,)
+                              : Image.file(_image[3], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 4'),
+                            subtitle: Text(
+                              _coordinates[3] == null ? 'No coordinates yet' : '[' + _coordinates[3].longitude.toString() + ',' + _coordinates[3].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                          TextButton.icon(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                            onPressed: () async {
+                              getImage(3);
+                            },
+                            label: const Text('ADD IMAGE'),
+                            icon: Icon(Icons.add_a_photo),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      getImage(2);
-                    },
                   ),
-                  _image[2] == null
-                      ? Text('No image selected.')
-                      : Image.file(_image[2]),
-                  _coordinates[2] == null
-                      ? Text('No coordinates yet.')
-                      : Text('[' + _coordinates[2].longitude.toString() + ',' + _coordinates[2].latitude.toString() + ']'),
-                  ElevatedButton(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Get 4th image'),
+                  Expanded(
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                        children: [
+                          _image[2] == null
+                              ? Image.asset('assets/images/placeholder.jpg',height: 100,)
+                              : Image.file(_image[2], height:100),
+                          ListTile(
+//                                leading: Icon(Icons.mobile_friendly),
+                            title: const Text('Image 3'),
+                            subtitle: Text(
+                              _coordinates[2] == null ? 'No coordinates yet' : '[' + _coordinates[2].longitude.toString() + ',' + _coordinates[2].latitude.toString() + ']',
+                              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                            ),
+                          ),
+                          TextButton.icon(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                            onPressed: () async {
+                              getImage(2);
+                            },
+                            label: const Text('ADD IMAGE'),
+                            icon: Icon(Icons.add_a_photo),
+                          ),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      getImage(3);
-                    },
                   ),
-                  _image[3] == null
-                      ? Text('No image selected.')
-                      : Image.file(_image[3]),
-                  _coordinates[3] == null
-                      ? Text('No coordinates yet.')
-                      : Text('[' + _coordinates[3].longitude.toString() + ',' + _coordinates[3].latitude.toString() + ']'),
-                  ElevatedButton(
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(width:5),
+                  Expanded(child: ElevatedButton(
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text('Proceed'),
@@ -168,10 +244,12 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                         showToast('Please make sure all images are taken', Colors.red);
                       }
                     },
-                  ),
+                  ),),
+                  SizedBox(width:5),
                 ],
               ),
-            )
+            ],
+          ),
         )
     );
   }
