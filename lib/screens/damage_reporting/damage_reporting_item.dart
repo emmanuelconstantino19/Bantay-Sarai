@@ -4,6 +4,37 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
+class ImageDetails extends StatefulWidget {
+  final String imageUrl, heroTag;
+  ImageDetails({Key key, @required this.imageUrl, this.heroTag}) : super(key: key);
+
+  @override
+  _ImageDetailsState createState() => _ImageDetailsState();
+}
+
+class _ImageDetailsState extends State<ImageDetails> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Hero(
+            tag: widget.heroTag,
+            child: Image.network(
+              widget.imageUrl,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class DamageReportingItem extends StatefulWidget {
   final details;
   DamageReportingItem({Key key, @required this.details}) : super(key: key);
@@ -69,10 +100,50 @@ class _DamageReportingItemState extends State<DamageReportingItem> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                Image.network(widget.details['urls'][0],),
-                Image.network(widget.details['urls'][1],),
-                Image.network(widget.details['urls'][2],),
-                Image.network(widget.details['urls'][3],),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ImageDetails(imageUrl: widget.details['urls'][0], heroTag: 'imageHero',);
+                    }));
+                  },
+                  child: Hero(
+                    tag: 'imageHero',
+                    child: Image.network(widget.details['urls'][0],),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ImageDetails(imageUrl: widget.details['urls'][1], heroTag: 'imageHero2',);
+                    }));
+                  },
+                  child: Hero(
+                    tag: 'imageHero2',
+                    child: Image.network(widget.details['urls'][1],),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ImageDetails(imageUrl: widget.details['urls'][2], heroTag: 'imageHero3',);
+                    }));
+                  },
+                  child: Hero(
+                    tag: 'imageHero3',
+                    child: Image.network(widget.details['urls'][2],),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ImageDetails(imageUrl: widget.details['urls'][3], heroTag: 'imageHero4',);
+                    }));
+                  },
+                  child: Hero(
+                    tag: 'imageHero4',
+                    child: Image.network(widget.details['urls'][3],),
+                  ),
+                ),
                 //your widget items here
               ],
             ),

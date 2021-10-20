@@ -22,6 +22,8 @@ class FinalizeReport extends StatefulWidget {
 
 class _FinalizeReportState extends State<FinalizeReport> {
   final db = Firestore.instance;
+  int uploads = 0;
+  bool isUploading = false;
 
   void showToast(message, Color color) {
     print(message);
@@ -45,6 +47,9 @@ class _FinalizeReportState extends State<FinalizeReport> {
 
       downloadUrl = await taskSnapshot.ref.getDownloadURL();
       downloadUrls.add(downloadUrl);
+      setState(() {
+        uploads++;
+      });
     }
 
     createData(context,downloadUrls);
@@ -203,11 +208,16 @@ class _FinalizeReportState extends State<FinalizeReport> {
                     child: ElevatedButton(
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text('Finish'),
+                        child: Text(isUploading ? 'Please wait... Uploading ${uploads.toString()}/4 images' : 'Finish'),
                       ),
                       onPressed: () {
                         // save data to firebase
-                        uploadPic(context);
+                        setState(() {
+                          if(!isUploading){
+                            uploadPic(context);
+                          }
+                          isUploading = true;
+                        });
                       },
                     ),
                   ),

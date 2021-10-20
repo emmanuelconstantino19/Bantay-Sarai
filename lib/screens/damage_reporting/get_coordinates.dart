@@ -21,7 +21,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
   List<Position> _coordinates = [null,null,null,null];
 
   Future getImage(index) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
     Position coordinates;
     if(image!=null){
       coordinates = await _determinePosition();
