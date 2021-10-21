@@ -150,29 +150,31 @@ class _DamageReportingItemState extends State<DamageReportingItem> {
           ),
           DataTable(
 //                  columnSpacing: 15,
+            horizontalMargin: 0,
+            headingRowHeight: 0,
             columns: [
               DataColumn(label: Text('Fields')),
               DataColumn(label: Text('Values')),
             ],
             rows: [
               DataRow(cells: [
-                DataCell(Text("Selected Crops")),
+                DataCell(Text("Selected Crops", style: TextStyle(fontWeight: FontWeight.bold),)),
                 DataCell(Text(widget.details['crops'].join(','))),
               ]),
               DataRow(cells: [
-                DataCell(Text("Cause of loss")),
+                DataCell(Text("Cause of loss", style: TextStyle(fontWeight: FontWeight.bold))),
                 DataCell(Text(widget.details['causeOfLoss'])),
               ]),
               DataRow(cells: [
-                DataCell(Text("Date of loss")),
+                DataCell(Text("Date of loss", style: TextStyle(fontWeight: FontWeight.bold))),
                 DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['dateOfLoss'].toDate()))),
               ]),
               DataRow(cells: [
-                DataCell(Text("Extent of Loss / Damage")),
+                DataCell(Text("Extent of Loss / Damage", style: TextStyle(fontWeight: FontWeight.bold))),
                 DataCell(Text(widget.details['extentOfLoss'])),
               ]),
               DataRow(cells: [
-                DataCell(Text("Estimated date of harvest")),
+                DataCell(Text("Estimated date of harvest", style: TextStyle(fontWeight: FontWeight.bold))),
                 DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['estimatedDOH'].toDate()))),
               ]),
             ],
