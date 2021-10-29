@@ -7,8 +7,12 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/screens/farm_view.dart';
 import 'package:bantay_sarai/screens/add_planting_data.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ExplorePage extends StatefulWidget {
+  final Position myLocation;
+  ExplorePage({Key key, @required this.myLocation}) : super(key: key);
+
   @override
   _ExplorePageState createState() => _ExplorePageState();
 }
@@ -23,6 +27,14 @@ class _ExplorePageState extends State<ExplorePage> {
   List<Marker> markers;
 
   String location;
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    if(widget.myLocation!=null){
+//      _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:12);
+//    }
+//  }
 
   addMarker(cordinate){
     int id = Random().nextInt(100);
@@ -47,6 +59,10 @@ class _ExplorePageState extends State<ExplorePage> {
                   initialCameraPosition: _initialPosition,
                   mapType: MapType.hybrid,
                   zoomControlsEnabled: false,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  compassEnabled: true,
+                  trafficEnabled: true,
                   onMapCreated: (controller){
                     setState(() {
                       _controller = controller;
@@ -55,7 +71,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   markers: markers.toSet(),
                   onTap: (cordinate){
                     _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
-                    addMarker(cordinate);
+//                    addMarker(cordinate);
                   },
                 );
               }),
@@ -104,33 +120,44 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   _getLocation() async {
-    final uid = await Provider.of(context).auth.getCurrentUID();
-    await Provider.of(context)
-        .db
-        .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-          if(result.documents.length==0){
-            print("HERE");
-            location="Luzon";
-            _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:6);
+    if(widget.myLocation!=null){
+      location='Current Location';
+      _initialPosition = CameraPosition(bearing: 0, target: LatLng(widget.myLocation.latitude, widget.myLocation.longitude), zoom:17);
+      markers = [];
+      _controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          bearing: 0,
+          target: LatLng(widget.myLocation.latitude, widget.myLocation.longitude),
+          zoom: 17.0,
+        ),
+      ));
+    }
+    else{
+      final uid = await Provider.of(context).auth.getCurrentUID();
+      await Provider.of(context)
+          .db
+          .collection('userData')
+          .document(uid)
+          .collection('farms').getDocuments().then((result) {
+        if(result.documents.length==0){
+          location="Luzon";
+          _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:6);
+          markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
+        }else{
+          location = result.documents[0].data['location'];
+          if(location=="Pakil, Laguna"){
+            _initialPosition = CameraPosition(target: LatLng(14.402397618883445, 121.44038200378418), zoom:12);
+            markers = [Marker(position: LatLng(14.402397618883445, 121.44038200378418), markerId: MarkerId('1'))];
+          }else if(location=="Bae, Laguna"){
+            _initialPosition = CameraPosition(target: LatLng(14.130610546629763, 121.25636536628008), zoom:12);
+            markers = [Marker(position: LatLng(14.130610546629763, 121.25636536628008), markerId: MarkerId('1'))];
+          }else if(location=="Nagcarlan, Laguna"){
+            _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:12);
             markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
-          }else{
-            print("here location");
-            location = result.documents[0].data['location'];
-            if(location=="Pakil, Laguna"){
-              _initialPosition = CameraPosition(target: LatLng(14.402397618883445, 121.44038200378418), zoom:12);
-              markers = [Marker(position: LatLng(14.402397618883445, 121.44038200378418), markerId: MarkerId('1'))];
-            }else if(location=="Bae, Laguna"){
-              _initialPosition = CameraPosition(target: LatLng(14.130610546629763, 121.25636536628008), zoom:12);
-              markers = [Marker(position: LatLng(14.130610546629763, 121.25636536628008), markerId: MarkerId('1'))];
-            }else if(location=="Nagcarlan, Laguna"){
-              _initialPosition = CameraPosition(target: LatLng(14.14888901625053, 121.38876356184483), zoom:12);
-              markers = [Marker(position: LatLng(14.14888901625053, 121.38876356184483), markerId: MarkerId('1'))];
-              print('Here in Bae');
-            }
           }
-    });
+        }
+      });
+    }
   }
 
   _getProfileData() async {

@@ -15,6 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bantay_sarai/screens/add_planting_data.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,11 +26,53 @@ class _HomeState extends State<Home> {
   FUser user = FUser("","","","","","","","");
   String contactNumber;
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    ExplorePage(),
-    SaraiAlerts(),
-    ProfileScreen(),
-  ];
+  ExplorePage explore = ExplorePage(myLocation:null);
+  List<Widget> _children;
+
+  _HomeState() {
+    _children = [
+      explore,
+      SaraiAlerts(),
+      ProfileScreen(),
+    ];
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -247,38 +290,57 @@ class _HomeState extends State<Home> {
       ),
       body: _children[_currentIndex],
       floatingActionButton: Visibility(
-        child: SpeedDial(
-          child: Icon(Icons.add),
-          closedForegroundColor: Colors.white,
-          openForegroundColor: Color(0xFF369d34),
-          closedBackgroundColor: Color(0xFF369d34),
-          openBackgroundColor: Colors.white,
-          labelsStyle: TextStyle(fontSize: 18),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SpeedDial(
+              child: Icon(Icons.add),
+              closedForegroundColor: Colors.white,
+              openForegroundColor: Color(0xFF369d34),
+              closedBackgroundColor: Color(0xFF369d34),
+              openBackgroundColor: Colors.white,
+              labelsStyle: TextStyle(fontSize: 18),
 //          controller: /* Your custom animation controller goes here */,
-          speedDialChildren: <SpeedDialChild>[
-            SpeedDialChild(
-              child: Icon(Icons.grass),
-              foregroundColor: Colors.white,
-              backgroundColor:Color(0xFF369d34),
-              label: 'Magdagdag ng Farm',
-              onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FarmView()),
-                  );
-              },
-              closeSpeedDialOnPressed: false,
+              speedDialChildren: <SpeedDialChild>[
+                SpeedDialChild(
+                  child: Icon(Icons.grass),
+                  foregroundColor: Colors.white,
+                  backgroundColor:Color(0xFF369d34),
+                  label: 'Magdagdag ng Farm',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FarmView()),
+                    );
+                  },
+                  closeSpeedDialOnPressed: false,
+                ),
+                SpeedDialChild(
+                  child: Icon(Icons.event_note),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF369d34),
+                  label: 'Magdagdag ng Record',
+                  onPressed: () {
+                    buildAddRecordDialog(context);
+                  },
+                ),
+                //  Your other SpeeDialChildren go here.
+              ],
             ),
-            SpeedDialChild(
-              child: Icon(Icons.event_note),
-              foregroundColor: Colors.white,
-              backgroundColor: Color(0xFF369d34),
-              label: 'Magdagdag ng Record',
-              onPressed: () {
-                buildAddRecordDialog(context);
+            SizedBox(height:10),
+            FloatingActionButton(
+              onPressed: () async {
+                var temp = await _determinePosition();
+                setState(() {
+                  _children[0] = ExplorePage(myLocation: temp);
+                });
+                // Add your onPressed code here!
               },
+              child: const Icon(Icons.my_location),
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.blue,
             ),
-            //  Your other SpeeDialChildren go here.
           ],
         ),
         visible: _currentIndex==0,
