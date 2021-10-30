@@ -16,6 +16,7 @@ import 'package:bantay_sarai/screens/add_planting_data.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -169,12 +170,12 @@ class _HomeState extends State<Home> {
                 onTabTapped(0);
               },
             ),
-            ListTile(
-              title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
-              onTap: (){
-                showToast('Under construction', Colors.grey[700]);
-              },
-            ),
+//            ListTile(
+//              title: Text('MGA SETTINGS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+//              onTap: (){
+//                showToast('Under construction', Colors.grey[700]);
+//              },
+//            ),
             ListTile(
               title: Text('IBANG SARAI APPS', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
               onTap: (){
@@ -235,12 +236,12 @@ class _HomeState extends State<Home> {
                       side: BorderSide(color: Color(0xFF369d34))
                   ),
                   color: Colors.white,
-                  onPressed: () {
-                    showToast('Under construction', Colors.grey[700]);
+                  onPressed: () async {
+                    await launch('https://sarai.ph/about-us');
                   },
                   textColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical:15.0),
-                  child: Text('ABOUT BANTAY SARAI',style:TextStyle(fontSize:15,color:Color(0xFF369d34))),
+                  child: Text('ABOUT PROJECT SARAI',style:TextStyle(fontSize:15,color:Color(0xFF369d34))),
                 ),
               ),
             ),
@@ -331,9 +332,9 @@ class _HomeState extends State<Home> {
             SizedBox(height:10),
             FloatingActionButton(
               onPressed: () async {
-                var temp = await _determinePosition();
+                var currentCoordinates = await _determinePosition();
                 setState(() {
-                  _children[0] = ExplorePage(myLocation: temp);
+                  _children[0] = ExplorePage(myLocation: currentCoordinates);
                 });
                 // Add your onPressed code here!
               },

@@ -62,7 +62,7 @@ class OtherApps extends StatelessWidget {
 //                          ),
                       ],
                     ),
-                    Image.asset('assets/screenshots/Banatech.png'),
+                    Image.network('https://drive.google.com/uc?export=view&id=1BWKxxxHlMHohPAc_af8JZjWsQrOjej_Y'),
 //                      Image.asset('assets/card-sample-image-2.jpg'),
                   ],
                 ),
@@ -109,7 +109,7 @@ class OtherApps extends StatelessWidget {
 //                          ),
                       ],
                     ),
-                    Image.asset('assets/screenshots/CAPHE.png'),
+                    Image.network('https://drive.google.com/uc?export=view&id=1FrIbrsAjtCSC6OCRsEJMjSkRNZwcbUFA'),
 //                      Image.asset('assets/card-sample-image-2.jpg'),
                   ],
                 ),
@@ -156,7 +156,7 @@ class OtherApps extends StatelessWidget {
 //                          ),
                       ],
                     ),
-                    Image.asset('assets/screenshots/IPDAS.png'),
+                    Image.network('https://drive.google.com/uc?export=view&id=1IuT4oiKoNGFo9VVWNEbcdSRhgbvkMdlx'),
 //                      Image.asset('assets/card-sample-image-2.jpg'),
                   ],
                 ),
@@ -203,7 +203,54 @@ class OtherApps extends StatelessWidget {
 //                          ),
                       ],
                     ),
-                    Image.asset('assets/screenshots/SPIDTECH.png'),
+                    Image.network('https://drive.google.com/uc?export=view&id=1hHhTV6MRaJc10yAeKX71axXPKO-R3mB2'),
+//                      Image.asset('assets/card-sample-image-2.jpg'),
+                  ],
+                ),
+              ),
+              Card(
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.web),
+                      title: const Text('SARAi Knowledge Portal'),
+                      subtitle: Text(
+                        'SARAi Web Application',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Insert description here.',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.start,
+                      children: [
+                        TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                          onPressed: () async {
+                            await launch('https://sarai.ph/');
+                          },
+                          child: const Text('VISIT'),
+                        ),
+//                          TextButton(
+//                            style: ButtonStyle(
+//                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+//                            ),
+//                            onPressed: () {
+//                              // Perform some action
+//                            },
+//                            child: const Text('ACTION 2'),
+//                          ),
+                      ],
+                    ),
+                    Image.network('https://drive.google.com/uc?export=view&id=1n91Dkj8GkC9Fq17oQk3Y_i56wL_VY5nX'),
 //                      Image.asset('assets/card-sample-image-2.jpg'),
                   ],
                 ),
