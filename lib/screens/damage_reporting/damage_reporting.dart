@@ -3,6 +3,10 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/screens/damage_reporting/choose_crop.dart';
 import 'package:bantay_sarai/screens/damage_reporting/damage_reporting_item.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:bantay_sarai/widgets/provider_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class _ArticleDescription extends StatelessWidget {
   const _ArticleDescription({
@@ -136,15 +140,47 @@ class DamageReporting extends StatefulWidget {
 }
 
 class _DamageReportingState extends State<DamageReporting> {
-  _getDamageReportingData() async {
+  Stream<QuerySnapshot> getReportsStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    var result = await Provider.of(context)
-        .db
-        .collection('userData')
-        .document(uid)
-        .collection('damageReporting').getDocuments();
+    yield* Firestore.instance.collection('userData').document(uid).collection('damageReporting').snapshots();
+  }
 
-    return result.documents;
+  deleteReport(report) async {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    for(var index = 0 ; index < 4; index++){
+      var imageRef = await FirebaseStorage.instance.getReferenceFromUrl(report['urls'][index]);
+      imageRef.delete();
+    }
+    await Provider.of(context).db.collection('userData').document(uid).collection('damageReporting').document(report.documentID).delete();
+  }
+
+  Widget refreshBg() {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.only(right: 20.0),
+      color: Colors.red,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+          Text('DELETE', style: TextStyle(color:Colors.white,fontWeight: FontWeight.bold),)
+        ],
+      ),
+    );
+  }
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   @override
@@ -155,35 +191,65 @@ class _DamageReportingState extends State<DamageReporting> {
           centerTitle: true,
           elevation: 0,
         ),
-        body: FutureBuilder(
-          future: _getDamageReportingData(),
+        body: StreamBuilder(
+          stream: getReportsStreamSnapshots(context),
           builder: (content, snapshot){
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             }
-            if (snapshot.data.length == 0){
+            if (snapshot.data.documents.length == 0){
               return Center(child: Text("No reports uploaded yet", style: TextStyle(fontSize: 18),),);
             }
             return ListView.builder(
               padding: const EdgeInsets.all(10.0),
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DamageReportingItem(details: snapshot.data[index])),
+                return Dismissible(
+                  key: Key(snapshot.data.documents[index].documentID),
+                  onDismissed: (direction) {
+                    deleteReport(snapshot.data.documents[index]);
+                    showToast('Successfully deleted report.', Colors.green);
+                  },
+                  confirmDismiss: (DismissDirection direction) async {
+                    return await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Confirm"),
+                          content: const Text("Are you sure you want to delete this item?"),
+                          actions: <Widget>[
+                            FlatButton(
+                                onPressed: () => Navigator.of(context).pop(true),
+                                child: const Text("DELETE", style:TextStyle(color:Colors.red))
+                            ),
+                            FlatButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("CANCEL"),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                  child: CustomListItemTwo(
-                    thumbnail: Image.network(snapshot.data[index]['urls'][0]),
-                    title: snapshot.data[index]['causeOfLoss'],
-                    subtitle: 'Extent of loss is ${snapshot.data[index]['extentOfLoss']}.\n'
-                        'Estimated date of harvest is ${DateFormat('MMMM dd, yyyy').format(snapshot.data[index]['estimatedDOH'].toDate())}',
-                    author: 'Crops: ${snapshot.data[index]['crops'].join(', ')}',
-                    publishDate: DateFormat('MMMM dd, yyyy').format(snapshot.data[index]['dateOfLoss'].toDate()),
-                    readDuration: '',
-                  )
+                  direction: DismissDirection.endToStart,
+                  background: refreshBg(),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DamageReportingItem(details: snapshot.data.documents[index])),
+                        );
+                      },
+                      child: CustomListItemTwo(
+                        thumbnail: Image.network(snapshot.data.documents[index]['urls'][0]),
+                        title: snapshot.data.documents[index]['causeOfLoss'],
+                        subtitle: 'Extent of loss is ${snapshot.data.documents[index]['extentOfLoss']}.\n'
+                            'Estimated date of harvest is ${DateFormat('MMMM dd, yyyy').format(snapshot.data.documents[index]['estimatedDOH'].toDate())}',
+                        author: 'Crops: ${snapshot.data.documents[index]['crops'].join(', ')}',
+                        publishDate: DateFormat('MMMM dd, yyyy').format(snapshot.data.documents[index]['dateOfLoss'].toDate()),
+                        readDuration: '',
+                      )
+                  ),
                 );
               },
             );
