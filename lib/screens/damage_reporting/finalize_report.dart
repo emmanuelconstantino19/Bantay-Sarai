@@ -129,7 +129,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 1'),
                             subtitle: Text(
-                              widget.coordinates[0].longitude.toString() + ',' + widget.coordinates[0].latitude.toString() + ']',
+                              '[' + widget.coordinates[0].longitude.toStringAsFixed(3) + ', ' + widget.coordinates[0].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -148,7 +148,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 2'),
                             subtitle: Text(
-                              widget.coordinates[1].longitude.toString() + ',' + widget.coordinates[1].latitude.toString() + ']',
+                              '[' + widget.coordinates[1].longitude.toStringAsFixed(3) + ', ' + widget.coordinates[1].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -171,7 +171,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 4'),
                             subtitle: Text(
-                              widget.coordinates[3].longitude.toString() + ',' + widget.coordinates[3].latitude.toString() + ']',
+                              '[' + widget.coordinates[3].longitude.toStringAsFixed(3) + ', ' + widget.coordinates[3].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -190,7 +190,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 3'),
                             subtitle: Text(
-                              widget.coordinates[2].longitude.toString() + ',' + widget.coordinates[2].latitude.toString() + ']',
+                              '[' + widget.coordinates[2].longitude.toStringAsFixed(3) + ', ' + widget.coordinates[2].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),

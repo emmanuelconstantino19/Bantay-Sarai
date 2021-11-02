@@ -223,7 +223,7 @@ class OtherApps extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Insert description here.',
+                        'The SARAi Knowledge Portal offers a wide range of agricultural services on web and mobile platforms for its priority crops: rice, corn, banana, coconut, coffee, cacao, sugarcane, tomato, and soybean.',
                         style: TextStyle(color: Colors.black.withOpacity(0.6)),
                       ),
                     ),

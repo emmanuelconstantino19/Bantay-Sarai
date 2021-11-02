@@ -4,6 +4,8 @@ import 'package:bantay_sarai/screens/damage_reporting/damage_details.dart';
 
 import 'package:badges/badges.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class ChooseCrop extends StatefulWidget {
   @override
@@ -56,6 +58,17 @@ class _ChooseCropState extends State<ChooseCrop> {
     'cabbage': false,
   };
   List<String> selectedCrops = [];
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   Widget makeDismissible({Widget child}) => GestureDetector(
     behavior: HitTestBehavior.opaque,
@@ -2219,17 +2232,15 @@ class _ChooseCropState extends State<ChooseCrop> {
                               });
 
                               print(selectedCrops);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops)),
-                              );
-//                      if(_formKey.currentState.validate()){
-//                        Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
-//                        final uid = await Provider.of(context).auth.getCurrentUID();
-//                        await db.collection("userData").document(uid).collection("farms").document(farmChosen).collection("records").add(record.toJson());
-//                        Navigator.of(context).popUntil((route) => route.isFirst);
-//                      }
-
+                              if(selectedCrops.length==0){
+                                showToast('Please choose atleast 1 crop.', Colors.red);
+                              }
+                              else{
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops)),
+                                );
+                              }
                             },
                           ),
                         ),

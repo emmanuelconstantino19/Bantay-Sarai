@@ -142,7 +142,7 @@ class DamageReporting extends StatefulWidget {
 class _DamageReportingState extends State<DamageReporting> {
   Stream<QuerySnapshot> getReportsStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('userData').document(uid).collection('damageReporting').snapshots();
+    yield* Firestore.instance.collection('userData').document(uid).collection('damageReporting').orderBy('createdAt',descending: true).snapshots();
   }
 
   deleteReport(report) async {

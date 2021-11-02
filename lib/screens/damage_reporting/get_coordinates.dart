@@ -75,7 +75,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.BOTTOM,
         backgroundColor: color,
         textColor: Colors.white,
         fontSize: 16.0);
@@ -107,7 +107,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 1'),
                             subtitle: Text(
-                              _coordinates[0] == null ? 'No coordinates yet' : '[' + _coordinates[0].longitude.toString() + ',' + _coordinates[0].latitude.toString() + ']',
+                              _coordinates[0] == null ? 'No coordinates yet' : '[' + _coordinates[0].longitude.toStringAsFixed(3) + ', ' + _coordinates[0].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -138,7 +138,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 2'),
                             subtitle: Text(
-                              _coordinates[1] == null ? 'No coordinates yet' : '[' + _coordinates[1].longitude.toString() + ',' + _coordinates[1].latitude.toString() + ']',
+                              _coordinates[1] == null ? 'No coordinates yet' : '[' + _coordinates[1].longitude.toStringAsFixed(3) + ', ' + _coordinates[1].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -173,7 +173,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 4'),
                             subtitle: Text(
-                              _coordinates[3] == null ? 'No coordinates yet' : '[' + _coordinates[3].longitude.toString() + ',' + _coordinates[3].latitude.toString() + ']',
+                              _coordinates[3] == null ? 'No coordinates yet' : '[' + _coordinates[3].longitude.toStringAsFixed(3) + ', ' + _coordinates[3].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -204,7 +204,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 3'),
                             subtitle: Text(
-                              _coordinates[2] == null ? 'No coordinates yet' : '[' + _coordinates[2].longitude.toString() + ',' + _coordinates[2].latitude.toString() + ']',
+                              _coordinates[2] == null ? 'No coordinates yet' : '[' + _coordinates[2].longitude.toStringAsFixed(3) + ', ' + _coordinates[2].latitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
