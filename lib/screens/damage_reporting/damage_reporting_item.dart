@@ -96,7 +96,8 @@ class _DamageReportingItemState extends State<DamageReportingItem> {
               },
             ),
           ),
-          Expanded(
+          SizedBox(
+            height:150,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.details['urls'].length,
@@ -115,58 +116,6 @@ class _DamageReportingItemState extends State<DamageReportingItem> {
               },
             ),
           ),
-//          Expanded(
-//            child: ListView(
-//              scrollDirection: Axis.horizontal,
-//              children: <Widget>[
-//                GestureDetector(
-//                  onTap: () {
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                      return ImageDetails(imageUrl: widget.details['urls'][0], heroTag: 'imageHero',);
-//                    }));
-//                  },
-//                  child: Hero(
-//                    tag: 'imageHero',
-//                    child: Image.network(widget.details['urls'][0],),
-//                  ),
-//                ),
-//                GestureDetector(
-//                  onTap: () {
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                      return ImageDetails(imageUrl: widget.details['urls'][1], heroTag: 'imageHero2',);
-//                    }));
-//                  },
-//                  child: Hero(
-//                    tag: 'imageHero2',
-//                    child: Image.network(widget.details['urls'][1],),
-//                  ),
-//                ),
-//                GestureDetector(
-//                  onTap: () {
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                      return ImageDetails(imageUrl: widget.details['urls'][2], heroTag: 'imageHero3',);
-//                    }));
-//                  },
-//                  child: Hero(
-//                    tag: 'imageHero3',
-//                    child: Image.network(widget.details['urls'][2],),
-//                  ),
-//                ),
-//                GestureDetector(
-//                  onTap: () {
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                      return ImageDetails(imageUrl: widget.details['urls'][3], heroTag: 'imageHero4',);
-//                    }));
-//                  },
-//                  child: Hero(
-//                    tag: 'imageHero4',
-//                    child: Image.network(widget.details['urls'][3],),
-//                  ),
-//                ),
-//                //your widget items here
-//              ],
-//            ),
-//          ),
           DataTable(
 //                  columnSpacing: 15,
             horizontalMargin: 0,
