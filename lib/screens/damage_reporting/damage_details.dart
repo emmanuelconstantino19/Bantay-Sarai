@@ -13,7 +13,7 @@ class DamageDetails extends StatefulWidget {
 }
 
 class _DamageDetailsState extends State<DamageDetails> {
-  String cause, sizeUnit = 'sq m';
+  String cause, otherCause, sizeUnit = 'sq m';
   DateTime _lossDate, _estimatedHarvestDate;
   TextEditingController _extentOfLossController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -61,16 +61,52 @@ class _DamageDetailsState extends State<DamageDetails> {
                         cause = newValue;
                       });
                     },
+                    isExpanded: true,
                     items: <String>[
-                      'Typhoon',
-                      'Earthquake',
+                      'Typhoon (pagbagyo)',
+                      'Localized wind damage (sira dulot ng malakas na hangin)',
+                      'Fire (pagkasunog)',
+                      'Pest & Diseases (mga peste at sakit)',
+                      'Flood / flashfloods (matinding pagbaha)',
+                      'Others'
                     ]
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,overflow: TextOverflow.ellipsis),
                       );
                     }).toList(),
+                  ),
+                  SizedBox(height:10),
+                  Visibility(
+                      child: DropdownButtonFormField<String>(
+                        validator: (value) => value == null ? 'field required' : null,
+                        value: otherCause,
+                        decoration: new InputDecoration(
+                            border: OutlineInputBorder(),
+                            fillColor: Colors.white,
+                            filled: true,
+                            labelText: 'Other Causes of Loss & Damage'),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            otherCause = newValue;
+                          });
+                        },
+                        isExpanded: true,
+                        items: <String>[
+                          'Landslide (pagguho ng lupa)',
+                          'Ashfall / volcanic eruption (pagputok ng bulkan)',
+                          'Drought (matinding tagtuyot)',
+                          'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)',
+                        ]
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,overflow: TextOverflow.ellipsis),
+                          );
+                        }).toList(),
+                      ),
+                      visible: cause=='Others',
                   ),
                   SizedBox(height:10),
                   Card(
@@ -202,7 +238,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                             if(_formKey.currentState.validate() && _estimatedHarvestDate!=null && _lossDate!=null){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => GetCoordinates(selectedCrops: widget.selectedCrops, causeOL: cause,dateOL: _lossDate,extentOL: '${_extentOfLossController.text} ${sizeUnit}',estimatedDOH: _estimatedHarvestDate)),
+                                MaterialPageRoute(builder: (context) => GetCoordinates(selectedCrops: widget.selectedCrops, causeOL: (cause=='Others') ? otherCause : cause,dateOL: _lossDate,extentOL: '${_extentOfLossController.text} ${sizeUnit}',estimatedDOH: _estimatedHarvestDate)),
                               );
                             } else{
                               showToast('Please complete the form.', Colors.red);
