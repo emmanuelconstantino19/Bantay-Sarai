@@ -33,6 +33,13 @@ class _GetCoordinatesState extends State<GetCoordinates> {
     });
   }
 
+  Future takeAdditionalImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    setState(() {
+      _image.add(image);
+    });
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -116,7 +123,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                             ),
                             onPressed: () async {
-                              getImage(0);
+                              await getImage(0);
                             },
                             label: const Text('ADD IMAGE'),
                             icon: Icon(Icons.add_a_photo),
@@ -147,7 +154,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                             ),
                             onPressed: () async {
-                              getImage(1);
+                              await getImage(1);
                             },
                             label: const Text('ADD IMAGE'),
                             icon: Icon(Icons.add_a_photo),
@@ -182,7 +189,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                             ),
                             onPressed: () async {
-                              getImage(3);
+                              await getImage(3);
                             },
                             label: const Text('ADD IMAGE'),
                             icon: Icon(Icons.add_a_photo),
@@ -213,7 +220,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                             ),
                             onPressed: () async {
-                              getImage(2);
+                              await getImage(2);
                             },
                             label: const Text('ADD IMAGE'),
                             icon: Icon(Icons.add_a_photo),
@@ -225,6 +232,39 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                   ),
                 ],
               ),
+              Visibility(
+                child: SizedBox(
+                  height:200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _image.length,
+                    itemBuilder: (context, index) {
+                      return index > 3 ? Image.file(_image[index], height:100) : Container();
+                    },
+                  ),
+                ),
+                visible: _image.length > 4,
+              ),
+              SizedBox(height:5),
+              Row(
+                children: [
+                  SizedBox(width:5),
+                  Expanded(
+                    child: OutlinedButton(
+                    onPressed: () async {
+                      await takeAdditionalImage();
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('Take additional photos'),
+                    ), style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                    ),),
+                  ),
+                  SizedBox(width:5),
+                ],
+              ),
+              SizedBox(height:5),
               Row(
                 children: [
                   SizedBox(width:5),

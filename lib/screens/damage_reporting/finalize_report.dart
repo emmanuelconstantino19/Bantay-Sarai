@@ -39,7 +39,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
   Future uploadPic(BuildContext context) async{
     List<String> downloadUrls = [];
     String downloadUrl;
-    for(var i = 0 ; i < 4; i++){
+    for(var i = 0 ; i < widget.images.length; i++){
       String fileName = basename(widget.images[i].path);
       StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
       StorageUploadTask uploadTask = firebaseStorageRef.putFile(widget.images[i]);
@@ -201,6 +201,19 @@ class _FinalizeReportState extends State<FinalizeReport> {
                   ),
                 ],
               ),
+              Visibility(
+                child: SizedBox(
+                  height:200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.images.length,
+                    itemBuilder: (context, index) {
+                      return index > 3 ? Image.file(widget.images[index], height:100) : Container();
+                    },
+                  ),
+                ),
+                visible: widget.images.length > 4,
+              ),
               Row(
                 children: [
                   SizedBox(width:5),
@@ -208,7 +221,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
                     child: ElevatedButton(
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text(isUploading ? 'Please wait... Uploading ${uploads.toString()}/4 images' : 'Finish'),
+                        child: Text(isUploading ? 'Please wait... Uploading ${uploads.toString()}/${widget.images.length} images' : 'Finish'),
                       ),
                       onPressed: () {
                         // save data to firebase
