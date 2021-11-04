@@ -6,17 +6,44 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class DamageDetails extends StatefulWidget {
   final List<String> selectedCrops;
-  DamageDetails({Key key, @required this.selectedCrops}) : super(key: key);
+  final details;
+  DamageDetails({Key key, @required this.selectedCrops, this.details}) : super(key: key);
 
   @override
   _DamageDetailsState createState() => _DamageDetailsState();
 }
 
 class _DamageDetailsState extends State<DamageDetails> {
-  String cause, otherCause, sizeUnit = 'sq m';
+  String cause, otherCause, sizeUnit = 'sqm';
   DateTime _lossDate, _estimatedHarvestDate;
   TextEditingController _extentOfLossController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.details!=null) {
+      List<String> otherCauseList = ['Landslide (pagguho ng lupa)',
+        'Ashfall / volcanic eruption (pagputok ng bulkan)',
+        'Drought (matinding tagtuyot)',
+        'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)'];
+
+      if(otherCauseList.contains(widget.details['causeOfLoss'])){
+        cause = 'Others';
+        otherCause = widget.details['causeOfLoss'];
+      } else{
+        cause = widget.details['causeOfLoss'];
+      }
+      _lossDate = widget.details['dateOfLoss'].toDate();
+
+      var extent = widget.details['extentOfLoss'].split(' ');
+      _extentOfLossController.text = extent[0];
+      sizeUnit = extent[1];
+
+      _estimatedHarvestDate = widget.details['estimatedDOH'].toDate();
+
+    }
+  }
 
   void showToast(message, Color color) {
     print(message);
@@ -177,7 +204,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                             sizeUnit = newValue;
                           });
                          },
-                        items: <String>['sq m', 'ha']
+                        items: <String>['sqm', 'ha']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -238,7 +265,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                             if(_formKey.currentState.validate() && _estimatedHarvestDate!=null && _lossDate!=null){
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => GetCoordinates(selectedCrops: widget.selectedCrops, causeOL: (cause=='Others') ? otherCause : cause,dateOL: _lossDate,extentOL: '${_extentOfLossController.text} ${sizeUnit}',estimatedDOH: _estimatedHarvestDate)),
+                                MaterialPageRoute(builder: (context) => GetCoordinates(selectedCrops: widget.selectedCrops, causeOL: (cause=='Others') ? otherCause : cause,dateOL: _lossDate,extentOL: '${_extentOfLossController.text} ${sizeUnit}',estimatedDOH: _estimatedHarvestDate, details: widget.details)),
                               );
                             } else{
                               showToast('Please complete the form.', Colors.red);

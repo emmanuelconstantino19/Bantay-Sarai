@@ -6,11 +6,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:bantay_sarai/screens/damage_reporting/finalize_report.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+
+import 'package:uuid/uuid.dart';
+
 class GetCoordinates extends StatefulWidget {
   final List<String> selectedCrops;
   final String causeOL, extentOL;
   final DateTime dateOL, estimatedDOH;
-  GetCoordinates({Key key, @required this.selectedCrops, this.causeOL, this.dateOL, this.extentOL, this.estimatedDOH}) : super(key: key);
+  final details;
+  GetCoordinates({Key key, @required this.selectedCrops, this.causeOL, this.dateOL, this.extentOL, this.estimatedDOH, this.details}) : super(key: key);
 
   @override
   _GetCoordinatesState createState() => _GetCoordinatesState();
@@ -20,6 +26,49 @@ class _GetCoordinatesState extends State<GetCoordinates> {
   List<File> _image = [null,null,null,null];
   List<Position> _coordinates = [null,null,null,null];
 
+  @override
+  void initState() {
+    super.initState();
+
+    if(widget.details!=null) {
+      _coordinates[0] = Position(latitude: widget.details['coordinate1'][0], longitude: widget.details['coordinate1'][1]);
+      _coordinates[1] = Position(latitude: widget.details['coordinate2'][0], longitude: widget.details['coordinate2'][1]);
+      _coordinates[2] = Position(latitude: widget.details['coordinate3'][0], longitude: widget.details['coordinate3'][1]);
+      _coordinates[3] = Position(latitude: widget.details['coordinate4'][0], longitude: widget.details['coordinate4'][1]);
+
+      for(var i = 0 ; i < widget.details['urls'].length; i++){
+        urlToFile(widget.details['urls'][i]).then((result) {
+          print("result: $result");
+          setState(() {
+            if(i<4) {
+              _image[i] = result;
+            } else {
+              _image.add(result);
+            }
+          });
+        });
+      }
+    }
+  }
+
+  urlToFile(String imageUrl) async {
+    // generate random number.
+    var uuid = Uuid();
+// get temporary directory of device.
+    Directory tempDir = await getTemporaryDirectory();
+// get temporary path from temporary directory.
+    String tempPath = tempDir.path;
+// create a new file in temporary path with random file name.
+    File file = new File('$tempPath'+ uuid.v1().toString() +'.png');
+// call http.get method and pass imageUrl into it to get response.
+    http.Response response = await http.get(imageUrl);
+// write bodyBytes received in response to file.
+    await file.writeAsBytes(response.bodyBytes);
+// now return the file which is created with random name in
+// temporary directory and image bytes from response is written to // that file.
+    return file;
+  }
+
   Future getImage(index) async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
     Position coordinates;
@@ -28,15 +77,19 @@ class _GetCoordinatesState extends State<GetCoordinates> {
     }
 
     setState(() {
-      _coordinates[index] = coordinates;
-      _image[index] = image;
+      if(image!=null){
+        _coordinates[index] = coordinates;
+        _image[index] = image;
+      }
     });
   }
 
   Future takeAdditionalImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
     setState(() {
-      _image.add(image);
+      if(image!=null){
+        _image.add(image);
+      }
     });
   }
 
@@ -114,7 +167,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 1'),
                             subtitle: Text(
-                              _coordinates[0] == null ? 'No coordinates yet' : '[' + _coordinates[0].longitude.toStringAsFixed(3) + ', ' + _coordinates[0].latitude.toStringAsFixed(3) + ']',
+                              _coordinates[0] == null ? 'No coordinates yet' : '[' + _coordinates[0].latitude.toStringAsFixed(3) + ', ' + _coordinates[0].longitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -145,7 +198,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 2'),
                             subtitle: Text(
-                              _coordinates[1] == null ? 'No coordinates yet' : '[' + _coordinates[1].longitude.toStringAsFixed(3) + ', ' + _coordinates[1].latitude.toStringAsFixed(3) + ']',
+                              _coordinates[1] == null ? 'No coordinates yet' : '[' + _coordinates[1].latitude.toStringAsFixed(3) + ', ' + _coordinates[1].longitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -180,7 +233,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 4'),
                             subtitle: Text(
-                              _coordinates[3] == null ? 'No coordinates yet' : '[' + _coordinates[3].longitude.toStringAsFixed(3) + ', ' + _coordinates[3].latitude.toStringAsFixed(3) + ']',
+                              _coordinates[3] == null ? 'No coordinates yet' : '[' + _coordinates[3].latitude.toStringAsFixed(3) + ', ' + _coordinates[3].longitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -211,7 +264,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 //                                leading: Icon(Icons.mobile_friendly),
                             title: const Text('Image 3'),
                             subtitle: Text(
-                              _coordinates[2] == null ? 'No coordinates yet' : '[' + _coordinates[2].longitude.toStringAsFixed(3) + ', ' + _coordinates[2].latitude.toStringAsFixed(3) + ']',
+                              _coordinates[2] == null ? 'No coordinates yet' : '[' + _coordinates[2].latitude.toStringAsFixed(3) + ', ' + _coordinates[2].longitude.toStringAsFixed(3) + ']',
                               style: TextStyle(color: Colors.black.withOpacity(0.6)),
                             ),
                           ),
@@ -239,7 +292,35 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                     scrollDirection: Axis.horizontal,
                     itemCount: _image.length,
                     itemBuilder: (context, index) {
-                      return index > 3 ? Image.file(_image[index], height:100) : Container();
+                      return index > 3 ?
+
+                      Stack(
+                        children: <Widget>[
+                          Image.file(_image[index]),
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: GestureDetector(
+                              onTap: (){
+                                print('delete image from List');
+                                setState((){
+                                  print('set new state of images');
+                                });
+                                _image.removeAt(index);
+                              },
+                              child: Container(
+                                color: Colors.red,
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Colors.white
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                          :
+                      Container();
                     },
                   ),
                 ),
@@ -277,7 +358,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                       if(_image.where((element) => element == null).length==0){
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FinalizeReport(selectedCrops: widget.selectedCrops, causeOL: widget.causeOL,dateOL: widget.dateOL,extentOL: widget.extentOL,estimatedDOH: widget.estimatedDOH, coordinates: _coordinates, images: _image)),
+                          MaterialPageRoute(builder: (context) => FinalizeReport(selectedCrops: widget.selectedCrops, causeOL: widget.causeOL,dateOL: widget.dateOL,extentOL: widget.extentOL,estimatedDOH: widget.estimatedDOH, coordinates: _coordinates, images: _image, details: widget.details)),
                         );
                       }
                       else{

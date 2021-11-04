@@ -147,7 +147,7 @@ class _DamageReportingState extends State<DamageReporting> {
 
   deleteReport(report) async {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    for(var index = 0 ; index < 4; index++){
+    for(var index = 0 ; index < report['urls'].length; index++){
       var imageRef = await FirebaseStorage.instance.getReferenceFromUrl(report['urls'][index]);
       imageRef.delete();
     }
@@ -240,6 +240,35 @@ class _DamageReportingState extends State<DamageReporting> {
                           MaterialPageRoute(builder: (context) => DamageReportingItem(details: snapshot.data.documents[index])),
                         );
                       },
+                      onLongPress: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                  height: 50,
+                                  color: Colors.white,
+                                  child: ElevatedButton(
+                                    child: const Text('EDIT DAMAGE REPORT'),
+                                    style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.zero,
+                                            )
+                                        )
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ChooseCrop(details: snapshot.data.documents[index])),
+                                      );
+                                    },
+                                  )
+                              );
+                            },
+                          );
+                      },
                       child: CustomListItemTwo(
                         thumbnail: Image.network(snapshot.data.documents[index]['urls'][0]),
                         title: snapshot.data.documents[index]['causeOfLoss'],
@@ -247,6 +276,7 @@ class _DamageReportingState extends State<DamageReporting> {
                             'Estimated date of harvest is ${DateFormat('MMMM dd, yyyy').format(snapshot.data.documents[index]['estimatedDOH'].toDate())}',
                         author: 'Crops: ${snapshot.data.documents[index]['crops'].join(', ')}',
                         publishDate: DateFormat('MMMM dd, yyyy').format(snapshot.data.documents[index]['dateOfLoss'].toDate()),
+//                        readDuration: DateFormat('MMMM dd, yyyy').format(snapshot.data.documents[index]['updatedAt'].toDate()),
                         readDuration: '',
                       )
                   ),

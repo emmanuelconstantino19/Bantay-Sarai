@@ -8,6 +8,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 
 class ChooseCrop extends StatefulWidget {
+  final details;
+  ChooseCrop({Key key, @required this.details}) : super(key: key);
+
   @override
   _ChooseCropState createState() => _ChooseCropState();
 }
@@ -58,6 +61,16 @@ class _ChooseCropState extends State<ChooseCrop> {
     'cabbage': false,
   };
   List<String> selectedCrops = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.details!=null) {
+      for (var i = 0; i < widget.details['crops'].length; i++) {
+        checkedValues[widget.details['crops'][i]] = true;
+      }
+    }
+  }
 
   void showToast(message, Color color) {
     print(message);
@@ -2238,7 +2251,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                               else{
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops)),
+                                  MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops, details: widget.details)),
                                 );
                               }
                             },

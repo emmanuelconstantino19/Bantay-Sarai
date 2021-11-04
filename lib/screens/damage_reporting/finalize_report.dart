@@ -14,7 +14,8 @@ class FinalizeReport extends StatefulWidget {
   final DateTime dateOL, estimatedDOH;
   final List<File> images;
   final List<Position> coordinates;
-  FinalizeReport({Key key, @required this.selectedCrops, this.causeOL, this.dateOL, this.extentOL, this.estimatedDOH, this.coordinates, this.images}) : super(key: key);
+  final details;
+  FinalizeReport({Key key, @required this.selectedCrops, this.causeOL, this.dateOL, this.extentOL, this.estimatedDOH, this.coordinates, this.images, this.details}) : super(key: key);
 
   @override
   _FinalizeReportState createState() => _FinalizeReportState();
@@ -51,8 +52,39 @@ class _FinalizeReportState extends State<FinalizeReport> {
         uploads++;
       });
     }
+    if(widget.details!=null){
+      updateData(context,downloadUrls);
+    }
+    else{
+      createData(context,downloadUrls);
+    }
+  }
 
-    createData(context,downloadUrls);
+  deleteReport() async {
+    for(var index = 0 ; index < widget.details['urls'].length; index++){
+      var imageRef = await FirebaseStorage.instance.getReferenceFromUrl(widget.details['urls'][index]);
+      imageRef.delete();
+    }
+  }
+
+  void updateData(BuildContext context, List<String> downloadUrls) async {
+    final uid = await Provider.of(context).auth.getCurrentUID();
+    await db.collection("userData").document(uid).collection("damageReporting").document(widget.details.documentID).updateData({
+      'crops':widget.selectedCrops,
+      'urls': downloadUrls,
+      'coordinate1': [widget.coordinates[0].latitude,widget.coordinates[0].longitude],
+      'coordinate2': [widget.coordinates[1].latitude,widget.coordinates[1].longitude],
+      'coordinate3': [widget.coordinates[2].latitude,widget.coordinates[2].longitude],
+      'coordinate4': [widget.coordinates[3].latitude,widget.coordinates[3].longitude],
+      'causeOfLoss': widget.causeOL,
+      'dateOfLoss' : widget.dateOL,
+      'extentOfLoss': widget.extentOL,
+      'estimatedDOH' : widget.estimatedDOH,
+      'createdAt': widget.details['createdAt'],
+      'updatedAt': FieldValue.serverTimestamp()
+    });
+    showToast('Successfully Updated Report!', Colors.grey[700]);
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   void createData(BuildContext context, List<String> downloadUrls) async {
@@ -68,7 +100,8 @@ class _FinalizeReportState extends State<FinalizeReport> {
       'dateOfLoss' : widget.dateOL,
       'extentOfLoss': widget.extentOL,
       'estimatedDOH' : widget.estimatedDOH,
-      'createdAt': FieldValue.serverTimestamp()
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp()
       });
     showToast('Successfully Added Report!', Colors.grey[700]);
     Navigator.of(context).popUntil((route) => route.isFirst);
@@ -221,12 +254,18 @@ class _FinalizeReportState extends State<FinalizeReport> {
                     child: ElevatedButton(
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text(isUploading ? 'Please wait... Uploading ${uploads.toString()}/${widget.images.length} images' : 'Finish'),
+                        child: Text(isUploading ?
+                          (widget.details==null ?
+                          'Please wait... Uploading ${uploads/widget.images.length*100}%' : 'Please wait... Updating ${uploads/widget.images.length*100}%')
+                            : 'Finish'),
                       ),
                       onPressed: () {
                         // save data to firebase
                         setState(() {
                           if(!isUploading){
+                            if(widget.details!=null) {
+                              deleteReport();
+                            }
                             uploadPic(context);
                           }
                           isUploading = true;
