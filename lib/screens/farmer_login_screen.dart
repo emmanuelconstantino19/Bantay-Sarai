@@ -66,6 +66,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width/10),
               height: MediaQuery.of(context).size.height * 0.5,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -105,7 +106,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.all(MediaQuery.of(context).size.width/10),
                     child: Column(
                       children: <Widget>[
                         Container(

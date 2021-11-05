@@ -400,9 +400,9 @@ class _CropViewState extends State<CropView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              decoration: BoxDecoration(
-                color: Colors.white
-              ),
+//              decoration: BoxDecoration(
+//                color: Colors.white
+//              ),
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -437,354 +437,360 @@ class _CropViewState extends State<CropView> {
                 stream: getFarmStreamSnapshots(context),
                 builder: (context, snapshot) {
                   if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
-                  return new Expanded(child: new ListView.builder(
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (BuildContext context, int index){
-                      return Card(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child:Row(
-                                children: [
+                  return new Expanded(
+                      child: Center(
+                        child: Container(
+                          constraints: BoxConstraints(maxWidth: 700),
+                          child: ListView.builder(
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (BuildContext context, int index){
+                              return Card(
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child:Row(
+                                        children: [
 //                                  Text('${snapshot.data.documents[index]['farmName']} (${snapshot.data.documents[index]['farmSize']} ha)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
-                                  RichText(
-                                    text: TextSpan(
-                                      style: TextStyle(color:Colors.black),
-                                      children: <TextSpan>[
-                                        TextSpan(text: '${snapshot.data.documents[index]['farmName']} (${snapshot.data.documents[index]['farmSize']} ha)\n', style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16.0)),
-                                        TextSpan(text: snapshot.data.documents[index]['location'], style: TextStyle(color: Colors.grey[700])),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(child:Container()),
-                                  PopupMenuButton<String>(
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child:Icon(
-                                        Icons.more_horiz,
-                                        color: Colors.blueGrey,
+                                          RichText(
+                                            text: TextSpan(
+                                              style: TextStyle(color:Colors.black),
+                                              children: <TextSpan>[
+                                                TextSpan(text: '${snapshot.data.documents[index]['farmName']} (${snapshot.data.documents[index]['farmSize']} ha)\n', style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16.0)),
+                                                TextSpan(text: snapshot.data.documents[index]['location'], style: TextStyle(color: Colors.grey[700])),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(child:Container()),
+                                          PopupMenuButton<String>(
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child:Icon(
+                                                Icons.more_horiz,
+                                                color: Colors.blueGrey,
 //                                          size: 22.0,
-                                      ),
-                                    ),
-                                    onSelected: (value){
-                                      choiceAction(value,snapshot.data.documents[index]);
-                                      },
-                                    itemBuilder: (BuildContext context){
-                                      return choices.map((String choice){
-                                        return PopupMenuItem<String>(
-                                          value: choice,
-                                          child: Text(choice),
-                                          textStyle: TextStyle(color: choice==DeleteRecord ? Colors.red : Colors.black,),
-                                        );
-                                      }).toList();
-                                    },
-                                  ),
+                                              ),
+                                            ),
+                                            onSelected: (value){
+                                              choiceAction(value,snapshot.data.documents[index]);
+                                            },
+                                            itemBuilder: (BuildContext context){
+                                              return choices.map((String choice){
+                                                return PopupMenuItem<String>(
+                                                  value: choice,
+                                                  child: Text(choice),
+                                                  textStyle: TextStyle(color: choice==DeleteRecord ? Colors.red : Colors.black,),
+                                                );
+                                              }).toList();
+                                            },
+                                          ),
 //                                  GestureDetector(
 //                                    onTap: () {},
 //                                    child: Icon(
 //                                        Icons.more_horiz
 //                                    ),
 //                                  ),
-                                ],
-                              ),
-                            ),
-                            //title
-                            Divider(height:0),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  StreamBuilder<QuerySnapshot>(
-                                      stream: getRecordStreamSnapshots(context,snapshot.data.documents[index].documentID),
-                                      builder: (context,recordSnapshot){
-                                        if(!recordSnapshot.hasData) return Center(child: CircularProgressIndicator());
+                                        ],
+                                      ),
+                                    ),
+                                    //title
+                                    Divider(height:0),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          StreamBuilder<QuerySnapshot>(
+                                              stream: getRecordStreamSnapshots(context,snapshot.data.documents[index].documentID),
+                                              builder: (context,recordSnapshot){
+                                                if(!recordSnapshot.hasData) return Center(child: CircularProgressIndicator());
 
-                                        //when nothing is set yet
-                                        if(recordSnapshot.data.documents.length == 0){
-                                          return Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Expanded(
-                                                  child: GestureDetector(
-                                                    child: Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
-                                                      decoration: BoxDecoration(
-                                                          color:Color(0xffE9F4F9), borderRadius: BorderRadius.circular(15)),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Center(
-                                                            child: Text(
-                                                              "Petsa ng \nPagtanim:",
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight: FontWeight.w600,
-                                                                  color: Color(0xff5A6C64)),
+                                                //when nothing is set yet
+                                                if(recordSnapshot.data.documents.length == 0){
+                                                  return Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                    children: <Widget>[
+                                                      Expanded(
+                                                          child: GestureDetector(
+                                                            child: Container(
+                                                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
+                                                              decoration: BoxDecoration(
+                                                                  color:Color(0xffE9F4F9), borderRadius: BorderRadius.circular(15)),
+                                                              child: Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Center(
+                                                                    child: Text(
+                                                                      "Petsa ng \nPagtanim:",
+                                                                      textAlign: TextAlign.center,
+                                                                      style: TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          color: Color(0xff5A6C64)),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 15,
+                                                                  ),
+                                                                  Center(
+                                                                    child: Text(
+                                                                      '+ Add Entry',
+                                                                      textAlign: TextAlign.center,
+                                                                      style: TextStyle(
+                                                                          fontSize: 18,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: Color(0xff5A6C64)),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Center(
-                                                            child: Text(
-                                                              '+ Add Entry',
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Color(0xff5A6C64)),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID, recordID: null )),
+                                                              );
+                                                            },
+                                                          )
                                                       ),
-                                                    ),
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID, recordID: null )),
-                                                      );
-                                                    },
-                                                  )
-                                              ),
-                                              SizedBox(width: 10),
+                                                      SizedBox(width: 10),
 
-                                              Expanded(
-                                                  child: GestureDetector(
-                                                    child: Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
-                                                      decoration: BoxDecoration(
-                                                          color: Color(0xffEAFAF0), borderRadius: BorderRadius.circular(15)),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Center(
-                                                            child: Text(
-                                                              "Petsa ng \nPag-aani:",
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight: FontWeight.w600,
-                                                                  color: Color(0xff5A6C64)),
+                                                      Expanded(
+                                                          child: GestureDetector(
+                                                            child: Container(
+                                                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
+                                                              decoration: BoxDecoration(
+                                                                  color: Color(0xffEAFAF0), borderRadius: BorderRadius.circular(15)),
+                                                              child: Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Center(
+                                                                    child: Text(
+                                                                      "Petsa ng \nPag-aani:",
+                                                                      textAlign: TextAlign.center,
+                                                                      style: TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight: FontWeight.w600,
+                                                                          color: Color(0xff5A6C64)),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 15,
+                                                                  ),
+                                                                  Center(
+                                                                    child: Text(
+                                                                      '+ Add Entry',
+                                                                      textAlign: TextAlign.center,
+                                                                      style: TextStyle(
+                                                                          fontSize: 18,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: Color(0xff5A6C64)),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Center(
-                                                            child: Text(
-                                                              '+ Add Entry',
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  color: Color(0xff5A6C64)),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    onTap: (){
+                                                            onTap: (){
 //                                                  final snackBar = SnackBar(content: Text("Tap"));
 //
 //                                                  Scaffold.of(context).showSnackBar(snackBar);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: null )),
-                                                      );
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: null )),
+                                                              );
 
-                                                    },
-                                                  )
-                                              ),
-                                            ],
+                                                            },
+                                                          )
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+
+                                                //when atleast planting or harvesting date is set
+                                                return Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                        child: GestureDetector(
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
+                                                            decoration: BoxDecoration(
+                                                                color:Color(0xffE9F4F9), borderRadius: BorderRadius.circular(15)),
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Center(
+                                                                  child: Text(
+                                                                    "Petsa ng \nPagtanim:",
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                        fontSize: 16,
+                                                                        fontWeight: FontWeight.w600,
+                                                                        color: Color(0xff5A6C64)),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 15,
+                                                                ),
+                                                                Center(
+                                                                  child: Text(
+                                                                    (recordSnapshot.data.documents[0]['plantedDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[0]['plantedDate'].toDate()) : '+ Add Entry',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: Color(0xff5A6C64)),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          onLongPress: () {
+                                                            if(recordSnapshot.data.documents[0]['plantedDate'] != null){
+                                                              showModalBottomSheet<void>(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                  return Container(
+                                                                      height: 50,
+                                                                      color: Colors.white,
+                                                                      child: ElevatedButton(
+                                                                        child: const Text('EDIT PLANTING DATE'),
+                                                                        style: ButtonStyle(
+                                                                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                                RoundedRectangleBorder(
+                                                                                  borderRadius: BorderRadius.zero,
+                                                                                )
+                                                                            )
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          Navigator.of(context).pop();
+                                                                          Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                          );
+                                                                        },
+                                                                      )
+                                                                  );
+                                                                },
+                                                              );
+                                                            }
+                                                          },
+                                                          onTap: () {
+                                                            if(recordSnapshot.data.documents[0]['plantedDate'] == null){
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                              );
+                                                            }
+                                                          },
+                                                        )
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Expanded(
+                                                        child: GestureDetector(
+                                                          child: Container(
+                                                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
+                                                            decoration: BoxDecoration(
+                                                                color: Color(0xffEAFAF0), borderRadius: BorderRadius.circular(15)),
+                                                            child: Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Center(
+                                                                  child: Text(
+                                                                    "Petsa ng \nPag-aani:",
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                        fontSize: 16,
+                                                                        fontWeight: FontWeight.w600,
+                                                                        color: Color(0xff5A6C64)),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 15,
+                                                                ),
+                                                                Center(
+                                                                  child: Text(
+                                                                    (recordSnapshot.data.documents[0]['harvestDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[0]['harvestDate'].toDate()) : '+ Add Entry',
+                                                                    textAlign: TextAlign.center,
+                                                                    style: TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: Color(0xff5A6C64)),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          onLongPress: () {
+                                                            if(recordSnapshot.data.documents[0]['harvestDate'] != null) {
+                                                              showModalBottomSheet<void>(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                  return Container(
+                                                                      height: 50,
+                                                                      color: Colors.white,
+                                                                      child: ElevatedButton(
+                                                                        child: const Text('EDIT HARVESTING DATE'),
+                                                                        style: ButtonStyle(
+                                                                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                                RoundedRectangleBorder(
+                                                                                  borderRadius: BorderRadius.zero,
+                                                                                )
+                                                                            )
+                                                                        ),
+                                                                        onPressed: () {
+                                                                          Navigator.of(context).pop();
+                                                                          Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                          );
+                                                                        },
+                                                                      )
+                                                                  );
+                                                                },
+                                                              );
+                                                            }
+                                                          },
+                                                          onTap: () {
+                                                            if(recordSnapshot.data.documents[0]['harvestDate'] == null){
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                              );
+                                                            }
+                                                          },
+                                                        )
+                                                    ),
+                                                  ],
+                                                );
+                                              }
+                                          ),
+
+                                        ],
+                                      ),
+                                    ), //body
+                                    Divider(height:0),
+                                    InkWell(
+                                        child: Container(padding:EdgeInsets.all(15),child:Text("View all records", style: TextStyle(color: Colors.blue),), alignment: Alignment.center),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => Records(farmData: snapshot.data.documents[index])),
                                           );
+
                                         }
-
-                                        //when atleast planting or harvesting date is set
-                                        return Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            Expanded(
-                                                child: GestureDetector(
-                                                  child: Container(
-                                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
-                                                    decoration: BoxDecoration(
-                                                        color:Color(0xffE9F4F9), borderRadius: BorderRadius.circular(15)),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Center(
-                                                          child: Text(
-                                                            "Petsa ng \nPagtanim:",
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight: FontWeight.w600,
-                                                                color: Color(0xff5A6C64)),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        Center(
-                                                          child: Text(
-                                                            (recordSnapshot.data.documents[0]['plantedDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[0]['plantedDate'].toDate()) : '+ Add Entry',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight: FontWeight.bold,
-                                                                color: Color(0xff5A6C64)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  onLongPress: () {
-                                                    if(recordSnapshot.data.documents[0]['plantedDate'] != null){
-                                                      showModalBottomSheet<void>(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return Container(
-                                                              height: 50,
-                                                              color: Colors.white,
-                                                              child: ElevatedButton(
-                                                                child: const Text('EDIT PLANTING DATE'),
-                                                                style: ButtonStyle(
-                                                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                                        RoundedRectangleBorder(
-                                                                          borderRadius: BorderRadius.zero,
-                                                                        )
-                                                                    )
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-                                                                  Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
-                                                                  );
-                                                                },
-                                                              )
-                                                          );
-                                                        },
-                                                      );
-                                                    }
-                                                  },
-                                                  onTap: () {
-                                                    if(recordSnapshot.data.documents[0]['plantedDate'] == null){
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
-                                                      );
-                                                    }
-                                                  },
-                                                )
-                                            ),
-                                            SizedBox(width: 10),
-                                            Expanded(
-                                                child: GestureDetector(
-                                                  child: Container(
-                                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 30),
-                                                    decoration: BoxDecoration(
-                                                        color: Color(0xffEAFAF0), borderRadius: BorderRadius.circular(15)),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Center(
-                                                          child: Text(
-                                                            "Petsa ng \nPag-aani:",
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight: FontWeight.w600,
-                                                                color: Color(0xff5A6C64)),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        Center(
-                                                          child: Text(
-                                                            (recordSnapshot.data.documents[0]['harvestDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[0]['harvestDate'].toDate()) : '+ Add Entry',
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight: FontWeight.bold,
-                                                                color: Color(0xff5A6C64)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  onLongPress: () {
-                                                    if(recordSnapshot.data.documents[0]['harvestDate'] != null) {
-                                                      showModalBottomSheet<void>(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return Container(
-                                                              height: 50,
-                                                              color: Colors.white,
-                                                              child: ElevatedButton(
-                                                                child: const Text('EDIT HARVESTING DATE'),
-                                                                style: ButtonStyle(
-                                                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                                        RoundedRectangleBorder(
-                                                                          borderRadius: BorderRadius.zero,
-                                                                        )
-                                                                    )
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-                                                                  Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
-                                                                  );
-                                                                },
-                                                              )
-                                                          );
-                                                        },
-                                                      );
-                                                    }
-                                                  },
-                                                  onTap: () {
-                                                    if(recordSnapshot.data.documents[0]['harvestDate'] == null){
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
-                                                      );
-                                                    }
-                                                  },
-                                                )
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                  ),
-
-                                ],
-                              ),
-                            ), //body
-                            Divider(height:0),
-                            InkWell(
-                                child: Container(padding:EdgeInsets.all(15),child:Text("View all records", style: TextStyle(color: Colors.blue),), alignment: Alignment.center),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Records(farmData: snapshot.data.documents[index])),
-                                  );
-
-                                }
-                            ),
-                          ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      );
-                    },
-
-                  ));
+                      )
+                  );
                 }
             ),
           ],

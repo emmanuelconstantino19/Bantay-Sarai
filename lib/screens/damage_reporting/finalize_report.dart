@@ -116,6 +116,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/10, vertical: 20),
           child: Column(
             children: <Widget>[
               DataTable(
@@ -247,6 +248,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
                 ),
                 visible: widget.images.length > 4,
               ),
+              SizedBox(height:20),
               Row(
                 children: [
                   SizedBox(width:5),

@@ -108,7 +108,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -147,7 +147,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -186,7 +186,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -230,7 +230,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -269,7 +269,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -308,7 +308,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -352,7 +352,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -391,7 +391,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -430,7 +430,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -474,7 +474,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -513,7 +513,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -552,7 +552,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -596,7 +596,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -635,7 +635,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -674,7 +674,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -718,7 +718,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -757,7 +757,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -796,7 +796,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -840,7 +840,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -879,7 +879,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -918,7 +918,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -962,7 +962,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1001,7 +1001,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1040,7 +1040,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1084,7 +1084,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1123,7 +1123,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1162,7 +1162,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1206,7 +1206,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1245,7 +1245,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1284,7 +1284,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1328,7 +1328,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1367,7 +1367,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
@@ -1424,6 +1424,7 @@ class _ChooseCropState extends State<ChooseCrop> {
         body: Center(
             child: SingleChildScrollView(
               child: Container(
+                constraints: BoxConstraints(maxWidth: 700),
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: <Widget>[
@@ -1433,7 +1434,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1461,7 +1462,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1489,7 +1490,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1521,7 +1522,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1549,7 +1550,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1577,7 +1578,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1609,7 +1610,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1637,7 +1638,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1665,7 +1666,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                         ),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -1725,26 +1726,27 @@ class _ChooseCropState extends State<ChooseCrop> {
                     SizedBox(height:20),
                     Row(
                       children: [
-                        SizedBox(width:20),
                         Expanded(
-                          child: OutlinedButton(
-                            onPressed: () => showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              context: context,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18),
+                            child: OutlinedButton(
+                              onPressed: () => showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
                                 builder: (context){
                                   return StatefulBuilder (builder: (context,updateState){
                                     return buildSheet(context,updateState);
                                   });
                                 },
-                            ), child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text('View High value crop (HVC)'),
-                          ), style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                          ),),
+                              ), child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text('View High value crop (HVC)'),
+                            ), style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            ),),
+                          ),
                         ),
-                        SizedBox(width:20),
                       ],
                     ),
                     SizedBox(height:20),
@@ -2229,35 +2231,36 @@ class _ChooseCropState extends State<ChooseCrop> {
 //                  ),
                     Row(
                       children: [
-                        SizedBox(width:20),
                         Expanded(
-                          child: ElevatedButton(
-                            child: Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text('Proceed'),
-                            ),
-                            onPressed: () {
-                              selectedCrops = [];
-                              checkedValues.keys.forEach((key) {
-                                if(checkedValues[key]){
-                                  selectedCrops.add(key);
-                                }
-                              });
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18),
+                            child: ElevatedButton(
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text('Proceed'),
+                              ),
+                              onPressed: () {
+                                selectedCrops = [];
+                                checkedValues.keys.forEach((key) {
+                                  if(checkedValues[key]){
+                                    selectedCrops.add(key);
+                                  }
+                                });
 
-                              print(selectedCrops);
-                              if(selectedCrops.length==0){
-                                showToast('Please choose atleast 1 crop.', Colors.red);
-                              }
-                              else{
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops, details: widget.details)),
-                                );
-                              }
-                            },
+                                print(selectedCrops);
+                                if(selectedCrops.length==0){
+                                  showToast('Please choose atleast 1 crop.', Colors.red);
+                                }
+                                else{
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => DamageDetails(selectedCrops: selectedCrops, details: widget.details)),
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ),
-                        SizedBox(width:20),
                       ],
                     ),
                     SizedBox(height:20)

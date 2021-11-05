@@ -151,6 +151,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/10, vertical: 20),
           child: Column(
             children: <Widget>[
               Row(
@@ -161,7 +162,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                       child: Column(
                         children: [
                           _image[0] == null
-                              ? Image.asset('assets/images/placeholder.jpg',height: 100,)
+                              ? Image.asset('assets/images/placeholder.jpg',height: 100)
                               : Image.file(_image[0], height:100),
                           ListTile(
 //                                leading: Icon(Icons.mobile_friendly),
@@ -326,7 +327,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                 ),
                 visible: _image.length > 4,
               ),
-              SizedBox(height:5),
+              SizedBox(height:20),
               Row(
                 children: [
                   SizedBox(width:5),
@@ -345,7 +346,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
                   SizedBox(width:5),
                 ],
               ),
-              SizedBox(height:5),
+              SizedBox(height:20),
               Row(
                 children: [
                   SizedBox(width:5),

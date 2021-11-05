@@ -83,71 +83,86 @@ class _DamageReportingItemState extends State<DamageReportingItem> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GoogleMap(
-              mapType: MapType.hybrid,
-              markers: _markers,
-              polygons: _polygons,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: GoogleMap(
+                mapType: MapType.hybrid,
+                markers: _markers,
+                polygons: _polygons,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height:150,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.details['urls'].length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return ImageDetails(imageUrl: widget.details['urls'][index], heroTag: 'imageHero' + index.toString(),);
-                    }));
+            Container(
+              child: SizedBox(
+                height:170,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.details['urls'].length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return ImageDetails(imageUrl: widget.details['urls'][index], heroTag: 'imageHero' + index.toString(),);
+                        }));
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal:10, vertical: 20),
+                        child: Hero(
+                          tag: 'imageHero' + index.toString(),
+                          child: Image.network(widget.details['urls'][index],),
+                        ),
+                      ),
+                    );
                   },
-                  child: Hero(
-                    tag: 'imageHero' + index.toString(),
-                    child: Image.network(widget.details['urls'][index],),
-                  ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
-          DataTable(
+            Row(
+              children: [
+                Expanded(
+                  child: DataTable(
 //                  columnSpacing: 15,
-            horizontalMargin: 0,
-            headingRowHeight: 0,
-            columns: [
-              DataColumn(label: Text('Fields')),
-              DataColumn(label: Text('Values')),
-            ],
-            rows: [
-              DataRow(cells: [
-                DataCell(Text("Selected Crops", style: TextStyle(fontWeight: FontWeight.bold),)),
-                DataCell(Text(widget.details['crops'].join(','))),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Cause of loss", style: TextStyle(fontWeight: FontWeight.bold))),
-                DataCell(Text(widget.details['causeOfLoss'])),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Date of loss", style: TextStyle(fontWeight: FontWeight.bold))),
-                DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['dateOfLoss'].toDate()))),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Extent of Loss / Damage", style: TextStyle(fontWeight: FontWeight.bold))),
-                DataCell(Text(widget.details['extentOfLoss'])),
-              ]),
-              DataRow(cells: [
-                DataCell(Text("Estimated date of harvest", style: TextStyle(fontWeight: FontWeight.bold))),
-                DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['estimatedDOH'].toDate()))),
-              ]),
-            ],
-          ),
-        ],
+//              horizontalMargin: 0,
+                    headingRowHeight: 0,
+                    columns: [
+                      DataColumn(label: Text('Fields')),
+                      DataColumn(label: Text('Values')),
+                    ],
+                    rows: [
+                      DataRow(cells: [
+                        DataCell(Text("Selected Crops", style: TextStyle(fontWeight: FontWeight.bold),)),
+                        DataCell(Text(widget.details['crops'].join(','))),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(Text("Cause of loss", style: TextStyle(fontWeight: FontWeight.bold))),
+                        DataCell(Text(widget.details['causeOfLoss'])),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(Text("Date of loss", style: TextStyle(fontWeight: FontWeight.bold))),
+                        DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['dateOfLoss'].toDate()))),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(Text("Extent of Loss / Damage", style: TextStyle(fontWeight: FontWeight.bold))),
+                        DataCell(Text(widget.details['extentOfLoss'])),
+                      ]),
+                      DataRow(cells: [
+                        DataCell(Text("Estimated date of harvest", style: TextStyle(fontWeight: FontWeight.bold))),
+                        DataCell(Text(DateFormat('MMMM dd, yyyy').format(widget.details['estimatedDOH'].toDate()))),
+                      ]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+          ],
+        ),
       ),
     );
   }

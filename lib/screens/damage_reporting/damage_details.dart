@@ -66,7 +66,7 @@ class _DamageDetailsState extends State<DamageDetails> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/10, vertical: 20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -74,7 +74,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                 children: <Widget>[
                   Text("Selected crops of damage farm", style: TextStyle(fontSize:18)),
                   Text(widget.selectedCrops.toString().substring(1,widget.selectedCrops.toString().length-1)),
-                  SizedBox(height:10),
+                  SizedBox(height:20),
                   DropdownButtonFormField<String>(
                     validator: (value) => value == null ? 'field required' : null,
                     value: cause,
@@ -104,7 +104,6 @@ class _DamageDetailsState extends State<DamageDetails> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(height:10),
                   Visibility(
                       child: DropdownButtonFormField<String>(
                         validator: (value) => value == null ? 'field required' : null,
@@ -135,7 +134,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                       ),
                       visible: cause=='Others',
                   ),
-                  SizedBox(height:10),
+                  SizedBox(height:20),
                   Card(
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
@@ -174,7 +173,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                       ),
                     ),
                   ),
-                  SizedBox(height:10),
+                  SizedBox(height:20),
                   Row(
                     children: [
                       Expanded(
@@ -215,7 +214,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                     ],
                   ),
 
-                  SizedBox(height:10),
+                  SizedBox(height:20),
                   Card(
                     clipBehavior: Clip.antiAlias,
                     child: ListTile(
@@ -252,7 +251,7 @@ class _DamageDetailsState extends State<DamageDetails> {
                       ),
                     ),
                   ),
-                  SizedBox(height:10),
+                  SizedBox(height:20),
                   Row(
                     children: [
                       Expanded(

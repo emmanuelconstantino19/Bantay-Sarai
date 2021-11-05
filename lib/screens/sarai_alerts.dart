@@ -936,7 +936,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Padding(
+        Container(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1059,7 +1059,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color: setColor(rainfallData[1]),
                                         ),
@@ -1068,7 +1068,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Aug 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1079,7 +1079,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "mm",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                           ],
                                         )
@@ -1088,16 +1088,16 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color:setColor(rainfallData[2]),
                                         ),
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Sept 2020",
+                                              "Sep 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1108,7 +1108,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "mm",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                           ],
                                         )
@@ -1117,7 +1117,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color: setColor(rainfallData[3]),
                                         ),
@@ -1126,7 +1126,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Oct 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1137,7 +1137,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "mm",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                           ],
                                         )
@@ -1146,7 +1146,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color: setColor(rainfallData[4]),
                                         ),
@@ -1155,7 +1155,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Nov 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1166,7 +1166,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "mm",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                           ],
                                         )
@@ -1175,7 +1175,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color: setColor(rainfallData[5]),
                                         ),
@@ -1184,7 +1184,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Dec 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1195,7 +1195,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "mm",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.white),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
                                           ],
                                         )
@@ -1354,7 +1354,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.all(20.0),
                                         decoration: BoxDecoration(
                                           color: setDCAFColor(dcafData[1]),
                                           border: Border.all(
@@ -1367,7 +1367,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Jun 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1382,7 +1382,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.all(20.0),
                                         decoration: BoxDecoration(
                                           color:setDCAFColor(dcafData[2]),
                                           border: Border.all(
@@ -1395,7 +1395,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Jul 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1410,7 +1410,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.all(20.0),
                                         decoration: BoxDecoration(
                                           color: setDCAFColor(dcafData[3]),
                                           border: Border.all(
@@ -1423,7 +1423,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Aug 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1442,7 +1442,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                 children: <Widget>[
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.all(20.0),
                                         decoration: BoxDecoration(
                                           color: setDCAFColor(dcafData[4]),
                                           border: Border.all(
@@ -1455,7 +1455,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Sept 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1470,7 +1470,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.all(20.0),
                                         decoration: BoxDecoration(
                                           color:setDCAFColor(dcafData[5]),
                                           border: Border.all(
@@ -1483,7 +1483,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Oct 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1498,7 +1498,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                   Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.all(6.0),
+                                        padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 20.0),
                                         decoration: BoxDecoration(
                                           color: setDCAFColor(dcafData[6]),
                                           border: Border.all(
@@ -1511,7 +1511,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             Text(
                                               "Nov 2020",
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 15.0, color: Colors.blueGrey),
+                                              style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
                                             SizedBox(height:10),
                                             Text(
@@ -1547,11 +1547,11 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text('Advisories', style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
-                              Icon(
-                                Icons.help_outline,
-                                color: Colors.blueGrey,
-                                size: 22.0,
-                              ),
+//                              Icon(
+//                                Icons.help_outline,
+//                                color: Colors.blueGrey,
+//                                size: 22.0,
+//                              ),
                             ],
                           )
 
@@ -1564,56 +1564,56 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                       Container(
                           child: Column(
                             children: <Widget>[
-                              Visibility(
-                                visible: (advisoriesData[0] == "" && advisoriesData[1] == "") ? false : true,
-                                child: ExpansionTile(
-                                  initiallyExpanded: true,
-                                  title: RichText(
-                                    text: TextSpan(
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.blueGrey),
-                                      children: <TextSpan>[
-                                        TextSpan(text: "SARAi Cropping Advisories for "),
-                                        TextSpan(text: dropdownValue, style: new TextStyle(fontWeight: FontWeight.bold,color:Colors.black)),
-                                        TextSpan(text: " (June to October 2020) as of May 2020"),
-                                      ],
-                                    ),
-                                  ),
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0,),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Visibility(
-                                              visible: (advisoriesData[0]=="") ? false : true,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text('RAINFED RICE', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                  Text(advisoriesData[0],style: TextStyle(color: Colors.blueGrey)),
-                                                  SizedBox(height:16),
-                                                ],
-                                              )
-                                          ),
-                                          Visibility(
-                                              visible: (advisoriesData[1]=="") ? false : true,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Text('CORN', style: TextStyle(fontWeight: FontWeight.bold)),
-                                                  Text(advisoriesData[1],style: TextStyle(color: Colors.blueGrey))
-                                                ],
-                                              )
-                                          ),
-
-                                        ],
-                                      ),
-                                    )
-
-                                  ],
-                                ),
-                              ),
+//                              Visibility(
+//                                visible: (advisoriesData[0] == "" && advisoriesData[1] == "") ? false : true,
+//                                child: ExpansionTile(
+//                                  initiallyExpanded: true,
+//                                  title: RichText(
+//                                    text: TextSpan(
+//                                      style: TextStyle(
+//                                          fontSize: 14,
+//                                          color: Colors.blueGrey),
+//                                      children: <TextSpan>[
+//                                        TextSpan(text: "SARAi Cropping Advisories for "),
+//                                        TextSpan(text: dropdownValue, style: new TextStyle(fontWeight: FontWeight.bold,color:Colors.black)),
+//                                        TextSpan(text: " (June to October 2020) as of May 2020"),
+//                                      ],
+//                                    ),
+//                                  ),
+//                                  children: <Widget>[
+//                                    Padding(
+//                                      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0,),
+//                                      child: Column(
+//                                        children: <Widget>[
+//                                          Visibility(
+//                                              visible: (advisoriesData[0]=="") ? false : true,
+//                                              child: Column(
+//                                                crossAxisAlignment: CrossAxisAlignment.start,
+//                                                children: <Widget>[
+//                                                  Text('RAINFED RICE', style: TextStyle(fontWeight: FontWeight.bold)),
+//                                                  Text(advisoriesData[0],style: TextStyle(color: Colors.blueGrey)),
+//                                                  SizedBox(height:16),
+//                                                ],
+//                                              )
+//                                          ),
+//                                          Visibility(
+//                                              visible: (advisoriesData[1]=="") ? false : true,
+//                                              child: Column(
+//                                                crossAxisAlignment: CrossAxisAlignment.start,
+//                                                children: <Widget>[
+//                                                  Text('CORN', style: TextStyle(fontWeight: FontWeight.bold)),
+//                                                  Text(advisoriesData[1],style: TextStyle(color: Colors.blueGrey))
+//                                                ],
+//                                              )
+//                                          ),
+//
+//                                        ],
+//                                      ),
+//                                    )
+//
+//                                  ],
+//                                ),
+//                              ),
                               ExpansionTile(
                                 title: Text(
                                   "National & Regional Bulletin",
@@ -1627,7 +1627,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
                                     child: Column(
                                       children: <Widget>[
-                                        Text("We expect favorable growing condition for corn, and generally for other rainfed crops, this current wet season. The amount of rainfall is enough to sustain the crop till harvest. Corn needs about 500mm rainfall/season (FAO). And because ~June 21 – Sept 21 is summer season, the daylength is longest in the year hence photosynthesis favored leading to better biomass production. Unfortunately, as pointed out in the last advisory, we might have problem with drying at harvest time for a grain crop like corn. Lowland rice might face similar problem because dams have to be filled up for about a month before irrigation water is made available. This delay has repercussion in terms of the crop’s growth stage and arrival of strong typhoons during the ‘ber’ months. Post-harvest is the problem during wet season crop."),
+                                        Text("We expect favorable growing condition for corn, and generally for other rainfed crops, this current wet season. The amount of rainfall is enough to sustain the crop till harvest. Corn needs about 500mm rainfall/season (FAO). And because ~June 21 – Sept 21 is summer season, the daylength is longest in the year hence photosynthesis favored leading to better biomass production. Unfortunately, as pointed out in the last advisory, we might have problem with drying at harvest time for a grain crop like corn. Lowland rice might face similar problem because dams have to be filled up for about a month before irrigation water is made available. This delay has repercussion in terms of the crop’s growth stage and arrival of strong typhoons during the ‘ber’ months. Post-harvest is the problem during wet season crop.", style: TextStyle(fontSize:16),),
                                         SizedBox(height:10),
                                         Table(
                                           columnWidths: {
@@ -1639,161 +1639,161 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('CAR'),
+                                                child: Text('CAR', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region is expected to be very wet especially during August which is the expected corn harvest time. Therefore, availability of mechanical dryers will be very useful. Plant as soon as possible after harvest because based on 40-year rainfall data (Jan1980-Jan2020) it will dry up in January'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('I'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('It will be more wet in Ilocos than in CAR. The Region is expected to be very wet especially during August which is the expected corn harvest time. But Ilocos is producing more rice than corn during the wet season. It starts to dry up earlier by the end of the year and this is when the Region plants corn and other more profitable upland crops. Availability of irrigation facility during the following wet season is essential.'),
+                                                child: Text('The Region is expected to be very wet especially during August which is the expected corn harvest time. Therefore, availability of mechanical dryers will be very useful. Plant as soon as possible after harvest because based on 40-year rainfall data (Jan1980-Jan2020) it will dry up in January', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('II'),
+                                                child: Text('I', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The predicted rainfall is expected to sustain a good corn crop. Being also in the more northern latitude (hence longer wavelength during summer or 3rd quarter) than lower portions of Ilocos Region and has more flat areas (than Cordillera) the Region has been a traditional prime and massive corn growing area'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('III'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('Just like the other Luzon Regions, Central Luzon is expected to be very wet this cropping season, like Bataan and Zambales. It used to be called Central Plain of Luzon. Historically, this Region has been more of lowland rice growing region than for upland crop. As in Region 1, Region 3, corn is planted more during the next dry season using the irrigation facility used in rice.'),
+                                                child: Text('It will be more wet in Ilocos than in CAR. The Region is expected to be very wet especially during August which is the expected corn harvest time. But Ilocos is producing more rice than corn during the wet season. It starts to dry up earlier by the end of the year and this is when the Region plants corn and other more profitable upland crops. Availability of irrigation facility during the following wet season is essential.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('IV-A'),
+                                                child: Text('II', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The output of this Region is important to Metro Manila because of its proximity to metro Manila (as in Regions 3 and 4B)The rainfall distribution is favorable also for corn (and other upland crops) but the problem (for a grain crop like corn) is the still high amount of rainfall come harvest time. Lack of post-harvest facility limits production in this area especially in the province of Quezon.'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('IV-B'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall distribution is similar to Calabarzon. Corn is more extensively grown during the dry season especially in the island of Mindoro. Its cropping pattern is somehow similar to that of Regions 1 and 3.'),
+                                                child: Text('The predicted rainfall is expected to sustain a good corn crop. Being also in the more northern latitude (hence longer wavelength during summer or 3rd quarter) than lower portions of Ilocos Region and has more flat areas (than Cordillera) the Region has been a traditional prime and massive corn growing area', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('V'),
+                                                child: Text('III', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text(' It has generally lower amount of rainfall early in the season compared to 4A and 4B. But it builds up later in the year because it faces the Pacific Ocean where strong typhoons come from. Early planting (and early maturing variety also) is recommended for Bicol.'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('VI'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall is consistently high from June to October. Post-harvest is therefore a concern also during this wet season corn production. Early maturing variety is advisable to cope with such rainfall pattern.'),
+                                                child: Text('Just like the other Luzon Regions, Central Luzon is expected to be very wet this cropping season, like Bataan and Zambales. It used to be called Central Plain of Luzon. Historically, this Region has been more of lowland rice growing region than for upland crop. As in Region 1, Region 3, corn is planted more during the next dry season using the irrigation facility used in rice.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('VII'),
+                                                child: Text('IV-A', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall slowly builds up more slowly compared to the neighboring Region (VI). But the amount of rain is enough to sustain a corn crop even starting June (or even May) though high rainfall is expected also at harvest time. Post-harvest is also a concern during this season. Being a major commercial region outside of Manila and therefore with high population, Cebu has to source its corn (for meat) outside the Region. But for food, Cebu is known to consume white corn grits as staple which is a factor in its food security though this has to be also sourced now outside the Region.'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('VIII'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region has consistently high amount of rainfall from June to October. The Region plants rice more extensively than corn as staple during the wet season.'),
+                                                child: Text('The output of this Region is important to Metro Manila because of its proximity to metro Manila (as in Regions 3 and 4B)The rainfall distribution is favorable also for corn (and other upland crops) but the problem (for a grain crop like corn) is the still high amount of rainfall come harvest time. Lack of post-harvest facility limits production in this area especially in the province of Quezon.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('IX'),
+                                                child: Text('IV-B', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rain comes in heavy during the early months of the season and is almost sustained till October. Post-harvest then is a concern in corn production this season.'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('X'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('This used to be the biggest corn producing region in the country because of its very favorable rainfall distribution. But even though there is a wider planting window, the high amoun of rainfall at harvest time is a concern.'),
+                                                child: Text('Rainfall distribution is similar to Calabarzon. Corn is more extensively grown during the dry season especially in the island of Mindoro. Its cropping pattern is somehow similar to that of Regions 1 and 3.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('XI'),
+                                                child: Text('V', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The amount and distribution of rainfall is not desirable as in Bukidnon but it is still enough to sustain a corn crop.'),
-                                              ),
-                                            ]),
-                                            TableRow(children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('XII'),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall in the Region is somewhere between Region 10 and 11. It is good enough for a good corn crop hence the Region is one major source of corn in Mindanao. Sarangani might experience less rain compared to other provinces in the Region'),
+                                                child: Text(' It has generally lower amount of rainfall early in the season compared to 4A and 4B. But it builds up later in the year because it faces the Pacific Ocean where strong typhoons come from. Early planting (and early maturing variety also) is recommended for Bicol.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('XIII'),
+                                                child: Text('VI', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region has also even distribution of rainfall across the season and therefore with wider planting and harvesting windows with attendant post-harvest concerns'),
+                                                child: Text('Rainfall is consistently high from June to October. Post-harvest is therefore a concern also during this wet season corn production. Early maturing variety is advisable to cope with such rainfall pattern.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('XIV'),
+                                                child: Text('VII', style: TextStyle(fontSize:16),),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The region has big potential for corn production because of its favorable rainfall distribution. Of course, post-harvest should also be addressed for this season.'),
+                                                child: Text('Rainfall slowly builds up more slowly compared to the neighboring Region (VI). But the amount of rain is enough to sustain a corn crop even starting June (or even May) though high rainfall is expected also at harvest time. Post-harvest is also a concern during this season. Being a major commercial region outside of Manila and therefore with high population, Cebu has to source its corn (for meat) outside the Region. But for food, Cebu is known to consume white corn grits as staple which is a factor in its food security though this has to be also sourced now outside the Region.', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('VIII', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('The Region has consistently high amount of rainfall from June to October. The Region plants rice more extensively than corn as staple during the wet season.', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('IX', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('Rain comes in heavy during the early months of the season and is almost sustained till October. Post-harvest then is a concern in corn production this season.', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('X', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('This used to be the biggest corn producing region in the country because of its very favorable rainfall distribution. But even though there is a wider planting window, the high amoun of rainfall at harvest time is a concern.', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('XI', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('The amount and distribution of rainfall is not desirable as in Bukidnon but it is still enough to sustain a corn crop.', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('XII', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('Rainfall in the Region is somewhere between Region 10 and 11. It is good enough for a good corn crop hence the Region is one major source of corn in Mindanao. Sarangani might experience less rain compared to other provinces in the Region', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('XIII', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('The Region has also even distribution of rainfall across the season and therefore with wider planting and harvesting windows with attendant post-harvest concerns', style: TextStyle(fontSize:16),),
+                                              ),
+                                            ]),
+                                            TableRow(children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('XIV', style: TextStyle(fontSize:16),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: Text('The region has big potential for corn production because of its favorable rainfall distribution. Of course, post-harvest should also be addressed for this season.', style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                           ],
@@ -1822,7 +1822,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                                 RichText(
                                                     text: TextSpan(
                                                         style: TextStyle(
-                                                            color: Colors.blueGrey),
+                                                            color: Colors.blueGrey, fontSize: 16),
                                                         children: <TextSpan>[
                                                           TextSpan(text:"200 mm",style: TextStyle(fontWeight: FontWeight.bold)),
                                                           TextSpan(text:" cumulative rainfall for "),
@@ -1836,7 +1836,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                                 RichText(
                                                     text: TextSpan(
                                                         style: TextStyle(
-                                                            color: Colors.blueGrey),
+                                                            color: Colors.blueGrey, fontSize: 16),
                                                         children: <TextSpan>[
                                                           TextSpan(text:"100 mm",style: TextStyle(fontWeight: FontWeight.bold)),
                                                           TextSpan(text:" cumulative rainfall for "),
@@ -1852,42 +1852,42 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                   ),
                                 ],
                               ),
-                              ExpansionTile(
-                                title: Text(
-                                  "iCMF Corn Bulletin for April-August 2020 Based on March 2020 condition",
-                                  style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
-                                children: <Widget>[
-                                  Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0,),
-                                      child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text("Dr. Artemio Salazar, April 2020",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
-                                            SizedBox(height:10),
-                                            Text("This forecast gives us a glimpse of possible corn production this coming entire wet season i.e. from planting to harvest. Roughly, about 60% of our annual production comes from wet season harvest. We expect a good crop as rains will generally fall in May and there is sustained rainfall for all the subsequent growth stages.",style: TextStyle(color: Colors.blueGrey)),
-                                            SizedBox(height:10),
-                                            RichText(
-                                              text: TextSpan(
-                                                style: TextStyle(
-                                                    color: Colors.blueGrey),
-                                                children: <TextSpan>[
-                                                  TextSpan(text: "We could note from the SARAI rainfall data that Mindanao can plant earlier than Luzon and Visayas. Also, Mindanao is not much affected by typhoon this time of the year, thus it has a wider planting window. It might also have "),
-                                                  TextSpan(text: "post-harvest problems because harvesting in July and August could be very wet", style: new TextStyle(fontWeight: FontWeight.bold)),
-                                                  TextSpan(text: " so it advised that owners/operators of mechanical to condition their facilities as they will most likely have a big need for them. Luzon, and Visayas, will plant a month later i.e. May. However, CAR, Bicol and Eastern Visayas may be able to plant earlier. All the corn planting regions might have good harvest but again, drying at harvest time would be a concern."),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(height:10),
-                                            Text("The same could also be said for other upland crops like upland rice. For lowland rice, it would take at least a month before water from irrigation dams could flow. With such amount of rainfall expected usually this season, farmers in sloping areas using herbicide resistant varieties should adopt appropriate soil conservation practices to avoid or minimize the worrisome soil erosion. Brown colored creeks and rivers and galleys in sloping areas are manifestations of the deterioration of our uplands: the last frontier in our crop production and from where future generations will be fed from.",style: TextStyle(color: Colors.blueGrey)),
-                                          ]
-                                      )
-                                  ),
-                                ],
-                              ),
+//                              ExpansionTile(
+//                                title: Text(
+//                                  "iCMF Corn Bulletin for April-August 2020 Based on March 2020 condition",
+//                                  style: TextStyle(
+//                                    color: Colors.blueGrey,
+//                                    fontSize: 14.0,
+//                                  ),
+//                                ),
+//                                children: <Widget>[
+//                                  Padding(
+//                                      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0,),
+//                                      child: Column(
+//                                          crossAxisAlignment: CrossAxisAlignment.start,
+//                                          children: <Widget>[
+//                                            Text("Dr. Artemio Salazar, April 2020",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+//                                            SizedBox(height:10),
+//                                            Text("This forecast gives us a glimpse of possible corn production this coming entire wet season i.e. from planting to harvest. Roughly, about 60% of our annual production comes from wet season harvest. We expect a good crop as rains will generally fall in May and there is sustained rainfall for all the subsequent growth stages.",style: TextStyle(color: Colors.blueGrey)),
+//                                            SizedBox(height:10),
+//                                            RichText(
+//                                              text: TextSpan(
+//                                                style: TextStyle(
+//                                                    color: Colors.blueGrey),
+//                                                children: <TextSpan>[
+//                                                  TextSpan(text: "We could note from the SARAI rainfall data that Mindanao can plant earlier than Luzon and Visayas. Also, Mindanao is not much affected by typhoon this time of the year, thus it has a wider planting window. It might also have "),
+//                                                  TextSpan(text: "post-harvest problems because harvesting in July and August could be very wet", style: new TextStyle(fontWeight: FontWeight.bold)),
+//                                                  TextSpan(text: " so it advised that owners/operators of mechanical to condition their facilities as they will most likely have a big need for them. Luzon, and Visayas, will plant a month later i.e. May. However, CAR, Bicol and Eastern Visayas may be able to plant earlier. All the corn planting regions might have good harvest but again, drying at harvest time would be a concern."),
+//                                                ],
+//                                              ),
+//                                            ),
+//                                            SizedBox(height:10),
+//                                            Text("The same could also be said for other upland crops like upland rice. For lowland rice, it would take at least a month before water from irrigation dams could flow. With such amount of rainfall expected usually this season, farmers in sloping areas using herbicide resistant varieties should adopt appropriate soil conservation practices to avoid or minimize the worrisome soil erosion. Brown colored creeks and rivers and galleys in sloping areas are manifestations of the deterioration of our uplands: the last frontier in our crop production and from where future generations will be fed from.",style: TextStyle(color: Colors.blueGrey)),
+//                                          ]
+//                                      )
+//                                  ),
+//                                ],
+//                              ),
                             ],
                           )
                       ),
@@ -1898,76 +1898,76 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
               ],
             )
         ),
-        Container(
-            color: Colors.black54,
-            height: 140,
-            child: Container(
-                padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 5.0),
-                child: Column(
-                    children: <Widget>[
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                          child: Text("Connect With Us", style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight:FontWeight.bold))
-                      ),
-                      Container(
-                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 10.0),
-                          child: Column(
-                              children: <Widget>[
-                                Container(
-                                    child: Row(
-                                        children: <Widget>[
-                                          Icon(Icons.phone, color:Colors.white, size:18),
-                                          Text("  +63 (049) 536 2302,+63 (049) 536 2836",style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight:FontWeight.w300
-                                          )
-                                          )
-                                        ]
-                                    )
-                                ),
-                                Container(
-                                    padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
-                                    child: Row(
-                                        children: <Widget>[
-                                          Icon(Icons.markunread, color:Colors.white, size:18),
-                                          Text("  project.sarai.uplb@gmail.com",style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight:FontWeight.w300
-                                          )
-                                          )
-                                        ]
-                                    )
-                                ),
-                                Container(
-                                    padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
-                                    child: Row(
-                                        children: <Widget>[
-                                          Icon(Icons.place, color:Colors.white, size:18),
-                                          Text("  SESAM UPLB, College, Laguna Philippines 4031",style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight:FontWeight.w300
-                                          )
-                                          )
-                                        ]
-                                    )
-                                ),
-
-                              ]
-                          )
-                      )
-
-                    ]
-                )
-            )
-
-        )
+//        Container(
+//            color: Colors.black54,
+//            height: 140,
+//            child: Container(
+//                padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 5.0),
+//                child: Column(
+//                    children: <Widget>[
+//                      Container(
+//                          alignment: Alignment.centerLeft,
+//                          padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+//                          child: Text("Connect With Us", style: TextStyle(
+//                              fontSize: 23,
+//                              color: Colors.white,
+//                              fontWeight:FontWeight.bold))
+//                      ),
+//                      Container(
+//                          padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 10.0),
+//                          child: Column(
+//                              children: <Widget>[
+//                                Container(
+//                                    child: Row(
+//                                        children: <Widget>[
+//                                          Icon(Icons.phone, color:Colors.white, size:18),
+//                                          Text("  +63 (049) 536 2302,+63 (049) 536 2836",style: TextStyle(
+//                                              color: Colors.white,
+//                                              fontSize: 12,
+//                                              fontWeight:FontWeight.w300
+//                                          )
+//                                          )
+//                                        ]
+//                                    )
+//                                ),
+//                                Container(
+//                                    padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
+//                                    child: Row(
+//                                        children: <Widget>[
+//                                          Icon(Icons.markunread, color:Colors.white, size:18),
+//                                          Text("  project.sarai.uplb@gmail.com",style: TextStyle(
+//                                              color: Colors.white,
+//                                              fontSize: 12,
+//                                              fontWeight:FontWeight.w300
+//                                          )
+//                                          )
+//                                        ]
+//                                    )
+//                                ),
+//                                Container(
+//                                    padding: EdgeInsets.fromLTRB(0.0, 4.0, 0.0, 0.0),
+//                                    child: Row(
+//                                        children: <Widget>[
+//                                          Icon(Icons.place, color:Colors.white, size:18),
+//                                          Text("  SESAM UPLB, College, Laguna Philippines 4031",style: TextStyle(
+//                                              color: Colors.white,
+//                                              fontSize: 12,
+//                                              fontWeight:FontWeight.w300
+//                                          )
+//                                          )
+//                                        ]
+//                                    )
+//                                ),
+//
+//                              ]
+//                          )
+//                      )
+//
+//                    ]
+//                )
+//            )
+//
+//        )
       ],
     );
   }

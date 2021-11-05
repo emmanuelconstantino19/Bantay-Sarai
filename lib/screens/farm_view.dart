@@ -35,141 +35,148 @@ class _FarmViewState extends State<FarmView> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                FutureBuilder(
-                    future: _getUserData(),
-                    builder: (context, snapshot) {
-                      return Column(
-                        children: [
-                          const SizedBox(height: 30),
-                          Text(
-                            "${user.firstName} ${user.lastName}",
-                            style: TextStyle(color:Colors.white,fontSize:22),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 5.0),
-                          Text(
-                            loc,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.white70,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 30.0),
-                          Card(
-                            color: Colors.white,
-                            elevation: 0,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 32.0,
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(color: Colors.lightGreen[700])
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          noOfFarms,
-                                          style: TextStyle(color:Colors.grey[600],fontSize:36),
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Text(
-                                          "Farms",
-                                          style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          noOfCrops,
-                                          style: TextStyle(color:Colors.grey[600],fontSize:36),
-                                        ),
-                                        const SizedBox(height: 10.0),
-                                        Text(
-                                          "Crops",
-                                          style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    FutureBuilder(
+                        future: _getUserData(),
+                        builder: (context, snapshot) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 30),
+                              Text(
+                                "${user.firstName} ${user.lastName}",
+                                style: TextStyle(color:Colors.white,fontSize:22),
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                  ),
-                  FutureBuilder(
-                    future: _getFarmData(),
-                    builder: (context,snapshot) {
-                      if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
-                      return Expanded(
-                        child: GridView.builder(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context,index){
-                              String key = snapshot.data.keys.elementAt(index);
-                              return InkWell(
-                                onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => CropView(crop: key, totalSize: snapshot.data[key].toString())),
-                                  );
-                                },
+                              const SizedBox(height: 5.0),
+                              Text(
+                                loc,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white70,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 30.0),
+                              Container(
+                                constraints: BoxConstraints(maxWidth: 500),
                                 child: Card(
-                                  child: Container(
-                                    margin: EdgeInsets.all(20.0),
-                                    color: Colors.white,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  color: Colors.white,
+                                  elevation: 0,
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 32.0,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: BorderSide(color: Colors.lightGreen[700])
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Row(
                                       children: [
                                         Expanded(
-                                          flex: 6,
-                                          child: Image(
-                                            image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                noOfFarms,
+                                                style: TextStyle(color:Colors.grey[600],fontSize:36),
+                                              ),
+                                              const SizedBox(height: 10.0),
+                                              Text(
+                                                "Farms",
+                                                style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
-//                                              color: Colors.red,
-                                              child: FittedBox(
-                                                fit: BoxFit.fill,
-                                                child: Text('${snapshot.data[key]} ha', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                              )
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-//                                              color: Colors.red,
-                                              child: FittedBox(
-                                                fit: BoxFit.fill,
-                                                child: Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold)),
-                                              )
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                noOfCrops,
+                                                style: TextStyle(color:Colors.grey[600],fontSize:36),
+                                              ),
+                                              const SizedBox(height: 10.0),
+                                              Text(
+                                                "Crops",
+                                                style: TextStyle(color:Colors.lightGreen[700],fontSize:18),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              );
-                            }),
-                      );
-                    },
-                  ),
+                              ),
+                            ],
+                          );
+                        }
+                    ),
+                    FutureBuilder(
+                      future: _getFarmData(),
+                      builder: (context,snapshot) {
+                        if(!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                        return Expanded(
+                          child: Container(
+                            constraints: BoxConstraints(maxWidth: 500),
+                            child: GridView.builder(
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context,index){
+                                  String key = snapshot.data.keys.elementAt(index);
+                                  return InkWell(
+                                    onTap: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => CropView(crop: key, totalSize: snapshot.data[key].toString())),
+                                      );
+                                    },
+                                    child: Card(
+                                      child: Container(
+                                        margin: EdgeInsets.all(20.0),
+                                        color: Colors.white,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Expanded(
+                                              flex: 6,
+                                              child: Image(
+                                                image: AssetImage('assets/images/'+ key.toLowerCase() +'1.png'),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
+//                                              color: Colors.red,
+                                                  child: FittedBox(
+                                                    fit: BoxFit.fill,
+                                                    child: Text('${snapshot.data[key]} ha', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                                  )
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
+//                                              color: Colors.red,
+                                                  child: FittedBox(
+                                                    fit: BoxFit.fill,
+                                                    child: Text('${filipinoTerm(key)} ($key)', style: TextStyle(fontWeight: FontWeight.bold)),
+                                                  )
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        );
+                      },
+                    ),
 
 //                  FutureBuilder(
 //                    future: _getFarmData(),
@@ -220,7 +227,8 @@ class _FarmViewState extends State<FarmView> {
 //                      ));
 //                    }
 //                ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

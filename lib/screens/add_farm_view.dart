@@ -29,7 +29,7 @@ class _AddFarmViewState extends State<AddFarmView> {
           elevation: 1,
         ),
         body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/10, vertical:20),
             child: Form(
                 key: _formKey,
               child: Column(
