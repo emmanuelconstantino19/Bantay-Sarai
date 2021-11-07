@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'dart:async' show Future;
+import 'package:bantay_sarai/widgets/provider_widget.dart';
 
 class WeatherData {
   final List<dynamic> dayOfWeek, qpf, precipitationChance, tempMax, iconCode;
@@ -33,6 +34,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
   Future<String> futureDate;
   String dropdownValue;
   var rainfallData, advisoriesData, subscription, dcafData;
+  var allRainfallData, allDroughtData, allICMFData;
 
 //  addStringToSP(String weatherData, String location) async {
 //    SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -106,58 +108,12 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
   }
 
   fetchRainfallOutlookData(String location){
-    Map<String, dynamic> rainfallData = {
-      'BUCAF Guinobatan, Albay': ['Guinobatan, Albay','266','284','352','434','436'],
-      'CLSU Muñoz, Nueva Ecija': ['Muñoz, Nueva Ecija','410','294','217','115','44'],
-      'CMU Maramag, Bukidnon': ['Maramag, Bukidnon','279','315','283','197','146'],
-      'CTU Barili, Cebu': ['Barili, Cebu','155','176','210','246','199']  ,
-      'DA-QAES Tiaong, Quezon': ['Tiaong, Quezon','230','248','286','275','198'],
-      'IPB, UP Los Baños, Laguna': ['Los Baños, Laguna','313','301','280','248','170'],
-      'ISU Cabagan, Isabela': ['Cabagan, Isabela','220','230','367','357','202'],
-      'ISU Echague, Isabela': ['Echague, Isabela','217','264','360','373','280'],
-      'MinSCAT Alcate, Victoria, Oriental Mindoro': ['Victoria, Oriental Mindoro','268','294','341','292','251'],
-      'MMSU Batac, Ilocos Norte': ['Batac, Ilocos Norte','572','345','190','88','34'] ,
-      'PCA San Ramon, Zamboanga del Sur': ['Zamboanga City, Zamboanga del Sur','220','228','255','174','102'],
-      'PhilRice Sta Cruz, Occidental Mindoro': ['Sta Cruz, Occidental Mindoro','395','365','312','240','146'],
-      'SPAMAST Buhangin Campus, Malita, Davao Occidental': ['Choose another location','--','--','--','--','--'],
-      'SPAMAST Kapoc ,Matanao, Davao del Sur': ['Matanao, Davao del Sur','176','162','173','154','132'],
-      'UPLB-CA La Carlota, Negros Occidental':  ['La Carlota, Negros Occidental','344','335','327','245','137'],
-      'USM Kabacan, Cotabato': ['Kabacan, North Cotabato','213','216','234','187','138'],
-      'USTP Claveria, Misamis Oriental': ['Claveria, Misamis Oriental','264','266','267','247','276'],
-      'WPU Aborlan, Palawan': ['Aboral, Palawan','186','208','214','276','168'],
-      'WVSU Lambunao, Iloilo City': ['Lambunao, Iloilo','372','340','339','287','186']
-    };
-
-    return rainfallData[location];
+      return allRainfallData[location];
 
   }
 
   fetchDCAFData(String location){
-    Map<String, dynamic> dcafData = {
-      'BUCAF Guinobatan, Albay': ['Albay','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'CLSU Muñoz, Nueva Ecija': ['Nueva Ecija','Normal','Normal','Normal','Mild','Normal','Normal'],
-      'CMU Maramag, Bukidnon': ['Bukidnon','Moderate','Mild','Normal','Normal','Normal','Normal'],
-      'CTU Barili, Cebu': ['Cebu','Normal','Mild','Normal','Normal','Normal','Normal']  ,
-      'DA-QAES Tiaong, Quezon': ['Quezon','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'IPB, UP Los Baños, Laguna': ['Laguna','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'ISU Cabagan, Isabela': ['Isabela','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'ISU Echague, Isabela': ['Isabela','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'MinSCAT Alcate, Victoria, Oriental Mindoro': ['Oriental Mindoro','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'MMSU Batac, Ilocos Norte': ['Ilocos Norte','Normal','Normal','Normal','Normal','Normal','Normal'] ,
-      'PCA San Ramon, Zamboanga del Sur': ['Zamboanga del Sur','Normal','Mild','Normal','Normal','Normal','Normal'],
-      'PhilRice Sta Cruz, Occidental Mindoro': ['Occidental Mindoro','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'SPAMAST Buhangin Campus, Malita, Davao Occidental': ['Choose another location','--','--','--','--','--','--'],
-      'SPAMAST Kapoc ,Matanao, Davao del Sur': ['Davao del Sur','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'UPLB-CA La Carlota, Negros Occidental':  ['Negros Occidental','Normal','Mild','Normal','Normal','Normal','Normal'],
-      'USM Kabacan, Cotabato': ['North Cotabato','Moderate','Mild','Normal','Normal','Normal','Normal'],
-      'USTP Claveria, Misamis Oriental': ['Claveria, Misamis Oriental','Normal','Mild','Normal','Normal','Normal','Normal'],
-      'WPU Aborlan, Palawan': ['Palawan','Normal','Normal','Normal','Normal','Normal','Normal'],
-      'WVSU Lambunao, Iloilo City': ['Iloilo','Normal','Mild','Mild','Normal','Normal','Normal']
-    };
-
-    print(dcafData[location]);
-
-    return dcafData[location];
+      return allDroughtData[location];
   }
 
   fetchAdvisories(String location){
@@ -274,14 +230,49 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
     About
   ];
 
+  getRainfallData() async {
+    var rdata = await Provider.of(context)
+        .db
+        .collection('saraiAlerts')
+        .document('rainfallOutlook').get();
+    setState(() {
+      allRainfallData = rdata;
+      rainfallData = fetchRainfallOutlookData('IPB, UP Los Baños, Laguna');
+    });
+  }
+
+  getDroughtData() async {
+    var ddata = await Provider.of(context)
+        .db
+        .collection('saraiAlerts')
+        .document('droughtForecast').get();
+    setState(() {
+      allDroughtData = ddata;
+      dcafData = fetchDCAFData('IPB, UP Los Baños, Laguna');
+    });
+  }
+
+  getICMFData() async {
+    var icmfData = await Provider.of(context)
+        .db
+        .collection('saraiAlerts')
+        .document('icmfBulletin').get();
+    setState(() {
+      allICMFData = icmfData;
+    });
+  }
+
   @override
   void initState() {
     dropdownValue = 'IPB, UP Los Baños, Laguna';
-    rainfallData = fetchRainfallOutlookData('IPB, UP Los Baños, Laguna');
-    dcafData = fetchDCAFData('IPB, UP Los Baños, Laguna');
     advisoriesData = fetchAdvisories('IPB, UP Los Baños, Laguna');
     futureWeatherData = fetchWeatherData('IPB, UP Los Baños, Laguna');
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      getRainfallData();
+      getDroughtData();
+      getICMFData();
+    });
 
   }
 
@@ -1012,7 +1003,10 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0.0),
                   ),
-                  child: Column(
+                  child: (rainfallData==null) ? Center(
+                      child: CircularProgressIndicator()
+                  ) :
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
@@ -1066,7 +1060,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Aug 2020",
+                                              allRainfallData['months'][0],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
@@ -1095,7 +1089,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Sep 2020",
+                                              allRainfallData['months'][1],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
@@ -1124,7 +1118,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Oct 2020",
+                                              allRainfallData['months'][2],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
@@ -1153,7 +1147,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Nov 2020",
+                                              allRainfallData['months'][3],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
@@ -1182,7 +1176,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Dec 2020",
+                                              allRainfallData['months'][4],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.white),
                                             ),
@@ -1307,7 +1301,9 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0.0),
                   ),
-                  child: Column(
+                  child: (dcafData==null) ? Center(
+                      child: CircularProgressIndicator()
+                  ) : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
@@ -1365,7 +1361,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Jun 2020",
+                                              allDroughtData['months'][0],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1393,7 +1389,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Jul 2020",
+                                              allDroughtData['months'][1],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1421,7 +1417,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Aug 2020",
+                                              allDroughtData['months'][2],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1453,7 +1449,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Sept 2020",
+                                              allDroughtData['months'][3],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1481,7 +1477,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Oct 2020",
+                                              allDroughtData['months'][4],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1509,7 +1505,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              "Nov 2020",
+                                              allDroughtData['months'][5],
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
                                             ),
@@ -1561,7 +1557,9 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                           height: 0,
                           color: Colors.blueGrey
                       ),
-                      Container(
+                      (allICMFData==null) ? Center(
+                          child: CircularProgressIndicator()
+                      ) : Container(
                           child: Column(
                             children: <Widget>[
 //                              Visibility(
@@ -1627,8 +1625,8 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
                                     child: Column(
                                       children: <Widget>[
-                                        Text("We expect favorable growing condition for corn, and generally for other rainfed crops, this current wet season. The amount of rainfall is enough to sustain the crop till harvest. Corn needs about 500mm rainfall/season (FAO). And because ~June 21 – Sept 21 is summer season, the daylength is longest in the year hence photosynthesis favored leading to better biomass production. Unfortunately, as pointed out in the last advisory, we might have problem with drying at harvest time for a grain crop like corn. Lowland rice might face similar problem because dams have to be filled up for about a month before irrigation water is made available. This delay has repercussion in terms of the crop’s growth stage and arrival of strong typhoons during the ‘ber’ months. Post-harvest is the problem during wet season crop.", style: TextStyle(fontSize:16),),
-                                        SizedBox(height:10),
+//                                        Text("We expect favorable growing condition for corn, and generally for other rainfed crops, this current wet season. The amount of rainfall is enough to sustain the crop till harvest. Corn needs about 500mm rainfall/season (FAO). And because ~June 21 – Sept 21 is summer season, the daylength is longest in the year hence photosynthesis favored leading to better biomass production. Unfortunately, as pointed out in the last advisory, we might have problem with drying at harvest time for a grain crop like corn. Lowland rice might face similar problem because dams have to be filled up for about a month before irrigation water is made available. This delay has repercussion in terms of the crop’s growth stage and arrival of strong typhoons during the ‘ber’ months. Post-harvest is the problem during wet season crop.", style: TextStyle(fontSize:16),),
+//                                        SizedBox(height:10),
                                         Table(
                                           columnWidths: {
                                             0: IntrinsicColumnWidth(),
@@ -1643,7 +1641,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region is expected to be very wet especially during August which is the expected corn harvest time. Therefore, availability of mechanical dryers will be very useful. Plant as soon as possible after harvest because based on 40-year rainfall data (Jan1980-Jan2020) it will dry up in January', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['CAR'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1653,7 +1651,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('It will be more wet in Ilocos than in CAR. The Region is expected to be very wet especially during August which is the expected corn harvest time. But Ilocos is producing more rice than corn during the wet season. It starts to dry up earlier by the end of the year and this is when the Region plants corn and other more profitable upland crops. Availability of irrigation facility during the following wet season is essential.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['I'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1663,7 +1661,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The predicted rainfall is expected to sustain a good corn crop. Being also in the more northern latitude (hence longer wavelength during summer or 3rd quarter) than lower portions of Ilocos Region and has more flat areas (than Cordillera) the Region has been a traditional prime and massive corn growing area', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['II'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1673,7 +1671,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Just like the other Luzon Regions, Central Luzon is expected to be very wet this cropping season, like Bataan and Zambales. It used to be called Central Plain of Luzon. Historically, this Region has been more of lowland rice growing region than for upland crop. As in Region 1, Region 3, corn is planted more during the next dry season using the irrigation facility used in rice.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['III'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1683,7 +1681,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The output of this Region is important to Metro Manila because of its proximity to metro Manila (as in Regions 3 and 4B)The rainfall distribution is favorable also for corn (and other upland crops) but the problem (for a grain crop like corn) is the still high amount of rainfall come harvest time. Lack of post-harvest facility limits production in this area especially in the province of Quezon.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['IV-A'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1693,7 +1691,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall distribution is similar to Calabarzon. Corn is more extensively grown during the dry season especially in the island of Mindoro. Its cropping pattern is somehow similar to that of Regions 1 and 3.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['IV-B'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1703,7 +1701,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text(' It has generally lower amount of rainfall early in the season compared to 4A and 4B. But it builds up later in the year because it faces the Pacific Ocean where strong typhoons come from. Early planting (and early maturing variety also) is recommended for Bicol.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['V'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1713,7 +1711,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall is consistently high from June to October. Post-harvest is therefore a concern also during this wet season corn production. Early maturing variety is advisable to cope with such rainfall pattern.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['VI'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1723,7 +1721,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall slowly builds up more slowly compared to the neighboring Region (VI). But the amount of rain is enough to sustain a corn crop even starting June (or even May) though high rainfall is expected also at harvest time. Post-harvest is also a concern during this season. Being a major commercial region outside of Manila and therefore with high population, Cebu has to source its corn (for meat) outside the Region. But for food, Cebu is known to consume white corn grits as staple which is a factor in its food security though this has to be also sourced now outside the Region.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['VII'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1733,7 +1731,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region has consistently high amount of rainfall from June to October. The Region plants rice more extensively than corn as staple during the wet season.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['VIII'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1743,7 +1741,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rain comes in heavy during the early months of the season and is almost sustained till October. Post-harvest then is a concern in corn production this season.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['IX'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1753,7 +1751,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('This used to be the biggest corn producing region in the country because of its very favorable rainfall distribution. But even though there is a wider planting window, the high amoun of rainfall at harvest time is a concern.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['X'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1763,7 +1761,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The amount and distribution of rainfall is not desirable as in Bukidnon but it is still enough to sustain a corn crop.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['XI'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1773,7 +1771,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('Rainfall in the Region is somewhere between Region 10 and 11. It is good enough for a good corn crop hence the Region is one major source of corn in Mindanao. Sarangani might experience less rain compared to other provinces in the Region', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['XII'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1783,7 +1781,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The Region has also even distribution of rainfall across the season and therefore with wider planting and harvesting windows with attendant post-harvest concerns', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['XIII'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                             TableRow(children: [
@@ -1793,7 +1791,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.all(16.0),
-                                                child: Text('The region has big potential for corn production because of its favorable rainfall distribution. Of course, post-harvest should also be addressed for this season.', style: TextStyle(fontSize:16),),
+                                                child: Text(allICMFData['XIV'], style: TextStyle(fontSize:16),),
                                               ),
                                             ]),
                                           ],

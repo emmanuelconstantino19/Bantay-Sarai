@@ -71,54 +71,55 @@ class OtherApps extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.mobile_friendly),
-                          title: const Text('CAPHE'),
-                          subtitle: Text(
-                            'SARAi Mobile Application',
-                            style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            'Coffee Application Harvest Estimator',
-                            style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.start,
-                          children: [
-                            TextButton(
-                              style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                              ),
-                              onPressed: () {
-//                            await launch('https://saraiapps.xyz/banana/');
-                              },
-                              child: const Text('DOWNLOAD'),
-                            ),
-//                          TextButton(
-//                            style: ButtonStyle(
-//                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-//                            ),
-//                            onPressed: () {
-//                              // Perform some action
-//                            },
-//                            child: const Text('ACTION 2'),
+//                  Card(
+//                    clipBehavior: Clip.antiAlias,
+//                    child: Column(
+//                      children: [
+//                        ListTile(
+//                          leading: Icon(Icons.mobile_friendly),
+//                          title: const Text('CAPHE'),
+//                          subtitle: Text(
+//                            'SARAi Mobile Application',
+//                            style: TextStyle(color: Colors.black.withOpacity(0.6)),
 //                          ),
-                          ],
-                        ),
-                        Image.network('https://drive.google.com/uc?export=view&id=1FrIbrsAjtCSC6OCRsEJMjSkRNZwcbUFA', fit: BoxFit.fitWidth, height:300),
-                        SizedBox(height:20),
-//                      Image.asset('assets/card-sample-image-2.jpg'),
-                      ],
-                    ),
-                  ),
+//                        ),
+//                        Padding(
+//                          padding: const EdgeInsets.all(16.0),
+//                          child: Text(
+//                            'A mobile application which can help extension workers to calculate and
+//                              track the harvest dates of their coffee crops.',
+//                            style: TextStyle(color: Colors.black.withOpacity(0.6)),
+//                          ),
+//                        ),
+//                        ButtonBar(
+//                          alignment: MainAxisAlignment.start,
+//                          children: [
+//                            TextButton(
+//                              style: ButtonStyle(
+//                                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+//                              ),
+//                              onPressed: () {
+////                            await launch('https://saraiapps.xyz/banana/');
+//                              },
+//                              child: const Text('DOWNLOAD'),
+//                            ),
+////                          TextButton(
+////                            style: ButtonStyle(
+////                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+////                            ),
+////                            onPressed: () {
+////                              // Perform some action
+////                            },
+////                            child: const Text('ACTION 2'),
+////                          ),
+//                          ],
+//                        ),
+//                        Image.network('https://drive.google.com/uc?export=view&id=1FrIbrsAjtCSC6OCRsEJMjSkRNZwcbUFA', fit: BoxFit.fitWidth, height:300),
+//                        SizedBox(height:20),
+////                      Image.asset('assets/card-sample-image-2.jpg'),
+//                      ],
+//                    ),
+//                  ),
                   Card(
                     clipBehavior: Clip.antiAlias,
                     child: Column(
