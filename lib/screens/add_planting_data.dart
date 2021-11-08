@@ -255,9 +255,10 @@ class _AddPlantingDataState extends State<AddPlantingData> {
 
 
 class AddPlantingDataInner extends StatefulWidget {
-  final String farmName, cropPlanted, farmID, recordID;
+  final String farmName, cropPlanted, farmID;
+  final record;
 
-  AddPlantingDataInner({Key key, @required this.farmName, @required this.cropPlanted, @required this.farmID, @required this.recordID}) : super(key: key);
+  AddPlantingDataInner({Key key, @required this.farmName, @required this.cropPlanted, @required this.farmID, @required this.record}) : super(key: key);
 
   @override
   _AddPlantingDataInnerState createState() => _AddPlantingDataInnerState();
@@ -270,6 +271,20 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
   final _formKey = GlobalKey<FormState>();
   String farmChosen;
   DateTime _landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest;
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.record!=null && widget.record['plantedDate']!=null) {
+      print(widget.record);
+      _landPreparationDate = widget.record['landPreparationDate'].toDate();
+      _seedlingPreparationDate = widget.record['seedlingPreparationDate'].toDate();
+      _plantedDate = widget.record['plantedDate'].toDate();
+      _targetDateOfHarvest = widget.record['targetDateOfHarvest'].toDate();
+      _targetMarketController.text = widget.record['targetMarket'];
+      _expectedQtyOfHarvest.text =  widget.record['expectedQtyOfHarvest'];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -444,11 +459,11 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                               if(_formKey.currentState.validate()){
                                 Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
-                                if(widget.recordID == null){
+                                if(widget.record == null){
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
                                 }
                                 else{
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.recordID)
+                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
                                       .updateData({
                                     'landPreparationDate': _landPreparationDate,
                                     'seedlingPreparationDate': _seedlingPreparationDate,

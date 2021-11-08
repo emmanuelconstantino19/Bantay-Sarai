@@ -127,7 +127,7 @@ class _CropViewState extends State<CropView> {
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , recordID: null)),
+                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , record: null)),
                                     );
                                   },
                                   textColor: Colors.white,
@@ -151,7 +151,7 @@ class _CropViewState extends State<CropView> {
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , recordID: null)),
+                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , record: null)),
                                     );
                                   },
                                   textColor: Colors.white,
@@ -549,7 +549,7 @@ class _CropViewState extends State<CropView> {
                                                             onTap: () {
                                                               Navigator.push(
                                                                 context,
-                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID, recordID: null )),
+                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID, record: null )),
                                                               );
                                                             },
                                                           )
@@ -597,7 +597,7 @@ class _CropViewState extends State<CropView> {
 //                                                  Scaffold.of(context).showSnackBar(snackBar);
                                                               Navigator.push(
                                                                 context,
-                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: null )),
+                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , record: null )),
                                                               );
 
                                                             },
@@ -668,7 +668,7 @@ class _CropViewState extends State<CropView> {
                                                                           Navigator.of(context).pop();
                                                                           Navigator.push(
                                                                             context,
-                                                                            MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                            MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , record: recordSnapshot.data.documents[0])),
                                                                           );
                                                                         },
                                                                       )
@@ -681,7 +681,7 @@ class _CropViewState extends State<CropView> {
                                                             if(recordSnapshot.data.documents[0]['plantedDate'] == null){
                                                               Navigator.push(
                                                                 context,
-                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , record: recordSnapshot.data.documents[0])),
                                                               );
                                                             }
                                                           },
@@ -745,7 +745,7 @@ class _CropViewState extends State<CropView> {
                                                                           Navigator.of(context).pop();
                                                                           Navigator.push(
                                                                             context,
-                                                                            MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                            MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , record: recordSnapshot.data.documents[0])),
                                                                           );
                                                                         },
                                                                       )
@@ -758,7 +758,7 @@ class _CropViewState extends State<CropView> {
                                                             if(recordSnapshot.data.documents[0]['harvestDate'] == null){
                                                               Navigator.push(
                                                                 context,
-                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , recordID: recordSnapshot.data.documents[0].documentID)),
+                                                                MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:snapshot.data.documents[index]['farmName'],cropPlanted:snapshot.data.documents[index]['cropsPlanted'], farmID: snapshot.data.documents[index].documentID , record: recordSnapshot.data.documents[0])),
                                                               );
                                                             }
                                                           },

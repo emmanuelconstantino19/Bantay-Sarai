@@ -219,9 +219,10 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
 }
 
 class AddHarvestingDataInner extends StatefulWidget {
-  final String farmName, cropPlanted, farmID, recordID;
+  final String farmName, cropPlanted, farmID;
+  final record;
 
-  AddHarvestingDataInner({Key key, @required this.farmName, @required this.cropPlanted, @required this.farmID, @required this.recordID}) : super(key: key);
+  AddHarvestingDataInner({Key key, @required this.farmName, @required this.cropPlanted, @required this.farmID, @required this.record}) : super(key: key);
 
   @override
   _AddHarvestingDataInnerState createState() => _AddHarvestingDataInnerState();
@@ -236,6 +237,19 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
   TextEditingController _netIncomeController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   DateTime _harvestDate;
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.record!=null && widget.record['harvestDate']!=null) {
+      _harvestDate = widget.record['harvestDate'].toDate();
+      _qtyOfHarvestController.text = widget.record['qtyOfHarvest'];
+      _qtyOfHarvestSoldController.text = widget.record['qtyOfHarvestSold'];
+      _grossIncomeController.text = widget.record['grossIncome'];
+      _netIncomeController.text = widget.record['netIncome'];
+      harvestingProcedure = widget.record['harvestingProcedure'];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -377,11 +391,11 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
                               if(_formKey.currentState.validate()){
                                 Record record = new Record(null,null,null,null,null,null,_harvestDate,_qtyOfHarvestController.text,_qtyOfHarvestSoldController.text,_grossIncomeController.text,_netIncomeController.text,harvestingProcedure);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
-                                if(widget.recordID == null){
+                                if(widget.record == null){
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
                                 }
                                 else{
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.recordID)
+                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
                                       .updateData({
                                     'harvestDate': _harvestDate,
                                     'qtyOfHarvest': _qtyOfHarvestController.text,

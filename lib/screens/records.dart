@@ -110,7 +110,7 @@ class _RecordsState extends State<Records> {
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , recordID: null)),
+                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , record: null)),
                                     );
                                   },
                                   textColor: Colors.white,
@@ -134,7 +134,7 @@ class _RecordsState extends State<Records> {
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , recordID: null)),
+                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName: farmName,cropPlanted: cropPlanted, farmID: farmId , record: null)),
                                     );
                                   },
                                   textColor: Colors.white,
@@ -392,7 +392,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , recordID: recordSnapshot.data.documents[index].documentID)),
+                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
                                                     );
                                                   },
                                                 )
@@ -405,7 +405,7 @@ class _RecordsState extends State<Records> {
                                       if(recordSnapshot.data.documents[index]['plantedDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , recordID: recordSnapshot.data.documents[index].documentID)),
+                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
                                         );
                                       }
                                     },
@@ -469,7 +469,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , recordID: recordSnapshot.data.documents[index].documentID)),
+                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
                                                     );
                                                   },
                                                 )
@@ -482,7 +482,7 @@ class _RecordsState extends State<Records> {
                                       if(recordSnapshot.data.documents[index]['harvestDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , recordID: recordSnapshot.data.documents[index].documentID)),
+                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
                                         );
                                       }
                                     },
