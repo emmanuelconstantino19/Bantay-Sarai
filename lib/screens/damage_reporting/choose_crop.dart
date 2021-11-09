@@ -288,7 +288,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/calamansi.png')),
+                                    child: Image(image: AssetImage('assets/hvc/calamansi.png')),
                                   ),
                                 ),
 
@@ -371,7 +371,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/cassava.png')),
+                                    child: Image(image: AssetImage('assets/hvc/cassava.png')),
                                   ),
                                 ),
 
@@ -493,7 +493,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/dalanghita.png')),
+                                    child: Image(image: AssetImage('assets/hvc/dalanghita.png')),
                                   ),
                                 ),
 
@@ -615,7 +615,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/honeydew.png')),
+                                    child: Image(image: AssetImage('assets/hvc/honeydew.png')),
                                   ),
                                 ),
 
@@ -654,7 +654,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/kalabasa.png')),
+                                    child: Image(image: AssetImage('assets/hvc/squash.png')),
                                   ),
                                 ),
 
@@ -898,7 +898,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/melon.png')),
+                                    child: Image(image: AssetImage('assets/hvc/melon.png')),
                                   ),
                                 ),
 
@@ -1103,7 +1103,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/potato.png')),
+                                    child: Image(image: AssetImage('assets/hvc/potato.png')),
                                   ),
                                 ),
 
@@ -1166,50 +1166,6 @@ class _ChooseCropState extends State<ChooseCrop> {
                       child: GestureDetector(
                         onTap: () {
                           updateState(() {
-                            checkedValues['repolyo'] = !checkedValues['repolyo'];
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.lightBlueAccent,
-                                  ),
-                                  child: AspectRatio(
-                                    aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/repolyo.png')),
-                                  ),
-                                ),
-
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Badge(
-                                      badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: checkedValues['repolyo'],)
-                                )
-                              ],
-                            ),
-                            SizedBox(height:5),
-                            Text('repolyo', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
-                      child: GestureDetector(
-                        onTap: () {
-                          updateState(() {
                             checkedValues['santol'] = !checkedValues['santol'];
                           });
                         },
@@ -1243,6 +1199,12 @@ class _ChooseCropState extends State<ChooseCrop> {
                       ),
                     ),
                   ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
@@ -1264,7 +1226,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/sayote.png')),
+                                    child: Image(image: AssetImage('assets/hvc/sayote.png')),
                                   ),
                                 ),
 
@@ -1303,7 +1265,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/sitaw.png')),
+                                    child: Image(image: AssetImage('assets/hvc/sitaw.png')),
                                   ),
                                 ),
 
@@ -1321,11 +1283,6 @@ class _ChooseCropState extends State<ChooseCrop> {
                       ),
                     ),
                   ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
@@ -1347,7 +1304,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/star apple.png')),
+                                    child: Image(image: AssetImage('assets/hvc/starfruit.png')),
                                   ),
                                 ),
 
@@ -1365,6 +1322,11 @@ class _ChooseCropState extends State<ChooseCrop> {
                       ),
                     ),
                   ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
@@ -1386,7 +1348,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/watermelon.png')),
+                                    child: Image(image: AssetImage('assets/hvc/watermelon.png')),
                                   ),
                                 ),
 
@@ -1404,6 +1366,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                       ),
                     ),
                   ),
+                  Expanded(child: Container()),
                   Expanded(child: Container()),
                 ],
               ),
@@ -1428,6 +1391,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: <Widget>[
+                    SizedBox(height:20),
                     Text("Pumili ng pananim na napinsala", style: TextStyle(fontSize:18)),
                     SizedBox(height:10),
                     Row(
@@ -1723,14 +1687,15 @@ class _ChooseCropState extends State<ChooseCrop> {
 //                    ],
 //                  ),
 
-                    SizedBox(height:20),
+                    SizedBox(height:10),
+
                     Row(
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18),
-                            child: OutlinedButton(
-                              onPressed: () => showModalBottomSheet(
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
+                            child: GestureDetector(
+                              onTap: () => showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
                                 context: context,
@@ -1739,507 +1704,25 @@ class _ChooseCropState extends State<ChooseCrop> {
                                     return buildSheet(context,updateState);
                                   });
                                 },
-                              ), child: Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text('View High value crop (HVC)'),
-                            ), style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                            ),),
+                              ),
+                              child: Column(
+                                children: [
+                                  Image(image: AssetImage('assets/hvc/high value crops.png')),
+                                  SizedBox(height:5),
+                                  Text('high value crops (HVC)', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18),textAlign: TextAlign.center,),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height:20),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child:CheckboxListTile(
-//                          title: Text("Ampalaya"),
-//                          value: checkedValues['ampalaya'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['ampalaya'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,
+//                        Expanded(
+//                          child: Container(),
 //                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Assorted Beans"),
-//                          value: checkedValues['assorted beans'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['assorted beans'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Avocado"),
-//                          value: checkedValues['avocado'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['avocado'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Carrots"),
-//                          value: checkedValues['carrots'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['carrots'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Rambutan"),
-//                          value: checkedValues['rambutan'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['rambutan'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Lanzones"),
-//                          value: checkedValues['lanzones'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['lanzones'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Pechay"),
-//                          value: checkedValues['pechay'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['pechay'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Cucumber"),
-//                          value: checkedValues['cucumber'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['cucumber'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Gabi"),
-//                          value: checkedValues['gabi'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['gabi'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Papaya"),
-//                          value: checkedValues['papaya'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['papaya'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Okra"),
-//                          value: checkedValues['okra'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['okra'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Mustasa"),
-//                          value: checkedValues['mustasa'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['mustasa'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Mango"),
-//                          value: checkedValues['mango'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['mango'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Kamote"),
-//                          value: checkedValues['kamote'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['kamote'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Labanos"),
-//                          value: checkedValues['labanos'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['labanos'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Repolyo"),
-//                          value: checkedValues['repolyo'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['repolyo'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Chinese Cabbage"),
-//                          value: checkedValues['chinese cabbage'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['chinese cabbage'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Eggplant"),
-//                          value: checkedValues['eggplant'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['eggplant'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Kangkong"),
-//                          value: checkedValues['kangkong'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['kangkong'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Honeydew"),
-//                          value: checkedValues['honeydew'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['honeydew'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Santol"),
-//                          value: checkedValues['santol'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['santol'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Sayote"),
-//                          value: checkedValues['sayote'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['sayote'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Sitaw"),
-//                          value: checkedValues['sitaw'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['sitaw'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Potato"),
-//                          value: checkedValues['potato'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['potato'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Calamansi"),
-//                          value: checkedValues['calamansi'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['calamansi'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Cassava"),
-//                          value: checkedValues['cassava'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['cassava'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Dalanghita/Sintunis"),
-//                          value: checkedValues['dalanghita/sintunis'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['dalanghita/sintunis'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Star Apple"),
-//                          value: checkedValues['star apple'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['star apple'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Melon"),
-//                          value: checkedValues['melon'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['melon'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Kalabasa"),
-//                          value: checkedValues['kalabasa'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['kalabasa'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Row(
-//                    children: [
-//                      Expanded(
-//                        child: CheckboxListTile(
-//                          title: Text("Watermelon"),
-//                          value: checkedValues['watermelon'],
-//                          onChanged: (newValue) {
-//                            setState(() {
-//                              checkedValues['watermelon'] = newValue;
-//                            });
-//                          },
-//                          controlAffinity: ListTileControlAffinity.leading,
-//                          contentPadding: EdgeInsets.all(0),
-//                          dense: true,//  <-- leading Checkbox
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-                    Row(
-                      children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18),
-                            child: ElevatedButton(
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text('Proceed'),
-                              ),
-                              onPressed: () {
+                            padding: EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width/18, vertical: 20),
+                            child: GestureDetector(
+                              onTap: () {
                                 selectedCrops = [];
                                 checkedValues.keys.forEach((key) {
                                   if(checkedValues[key]){
@@ -2258,6 +1741,13 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   );
                                 }
                               },
+                              child: Column(
+                                children: [
+                                  Image(image: AssetImage('assets/hvc/submit crop.png')),
+                                  SizedBox(height:5),
+                                  Text('submit crop', style: TextStyle(color:Colors.green, fontWeight: FontWeight.w700, fontSize:18),textAlign: TextAlign.center,),
+                                ],
+                              ),
                             ),
                           ),
                         ),

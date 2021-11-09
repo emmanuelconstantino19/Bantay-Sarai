@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:bantay_sarai/screens/damage_reporting/get_coordinates.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:badges/badges.dart';
 
 class DamageDetails extends StatefulWidget {
   final List<String> selectedCrops;
@@ -23,17 +24,8 @@ class _DamageDetailsState extends State<DamageDetails> {
   void initState() {
     super.initState();
     if(widget.details!=null) {
-      List<String> otherCauseList = ['Landslide (pagguho ng lupa)',
-        'Ashfall / volcanic eruption (pagputok ng bulkan)',
-        'Drought (matinding tagtuyot)',
-        'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)'];
+      cause = widget.details['causeOfLoss'];
 
-      if(otherCauseList.contains(widget.details['causeOfLoss'])){
-        cause = 'Others';
-        otherCause = widget.details['causeOfLoss'];
-      } else{
-        cause = widget.details['causeOfLoss'];
-      }
       _lossDate = widget.details['dateOfLoss'].toDate();
 
       var extent = widget.details['extentOfLoss'].split(' ');
@@ -75,64 +67,289 @@ class _DamageDetailsState extends State<DamageDetails> {
                   Text("Selected crops of damage farm", style: TextStyle(fontSize:18)),
                   Text(widget.selectedCrops.toString().substring(1,widget.selectedCrops.toString().length-1)),
                   SizedBox(height:20),
-                  DropdownButtonFormField<String>(
-                    validator: (value) => value == null ? 'field required' : null,
-                    value: cause,
-                    decoration: new InputDecoration(
-                        border: OutlineInputBorder(),
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelText: 'Cause of loss'),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        cause = newValue;
-                      });
-                    },
-                    isExpanded: true,
-                    items: <String>[
-                      'Typhoon (pagbagyo)',
-                      'Localized wind damage (sira dulot ng malakas na hangin)',
-                      'Fire (pagkasunog)',
-                      'Pest & Diseases (mga peste at sakit)',
-                      'Flood / flashfloods (matinding pagbaha)',
-                      'Others'
-                    ]
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value,overflow: TextOverflow.ellipsis),
-                      );
-                    }).toList(),
-                  ),
-                  Visibility(
-                      child: DropdownButtonFormField<String>(
-                        validator: (value) => value == null ? 'field required' : null,
-                        value: otherCause,
-                        decoration: new InputDecoration(
-                            border: OutlineInputBorder(),
-                            fillColor: Colors.white,
-                            filled: true,
-                            labelText: 'Other Causes of Loss & Damage'),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            otherCause = newValue;
-                          });
-                        },
-                        isExpanded: true,
-                        items: <String>[
-                          'Landslide (pagguho ng lupa)',
-                          'Ashfall / volcanic eruption (pagputok ng bulkan)',
-                          'Drought (matinding tagtuyot)',
-                          'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)',
-                        ]
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value,overflow: TextOverflow.ellipsis),
-                          );
-                        }).toList(),
+                  Text("Cause of loss", style: TextStyle(fontSize:18)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Typhoon (pagbagyo)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/typhoon.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause=='Typhoon (pagbagyo)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Typhoon', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      visible: cause=='Others',
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Localized wind damage (sira dulot ng malakas na hangin)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/wind damage.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause=="Localized wind damage (sira dulot ng malakas na hangin)",)
+                                    )
+                                  ],
+                                ),
+                                Text('Wind Damage', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Fire (pagkasunog)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/fire.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause=='Fire (pagkasunog)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Fire', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Pest & Diseases (mga peste at sakit)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/pest and disease.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause=='Pest & Diseases (mga peste at sakit)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Pest & Disease', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Flood / flashfloods (matinding pagbaha)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/flood_too much rain.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause == 'Flood / flashfloods (matinding pagbaha)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Flood', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Ashfall / volcanic eruption (pagputok ng bulkan)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/Ashfall Volcanic Eruption.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause == 'Ashfall / volcanic eruption (pagputok ng bulkan)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Ashfall / Volcanic Eruption', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Drought (matinding tagtuyot)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/Drought.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause == 'Drought (matinding tagtuyot)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Drought', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:18), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                cause = 'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/Rare meteorological phe.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause == 'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Rare meteorological phenomena', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:15), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height:20),
                   Card(
@@ -162,8 +379,8 @@ class _DamageDetailsState extends State<DamageDetails> {
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2018),
                             lastDate: DateTime(2030),
-                            errorInvalidText:'haha',
-                            errorFormatText: 'hehe'
+//                            errorInvalidText:'haha',
+//                            errorFormatText: 'hehe'
                           ).then((date) {
                             setState((){
                               _lossDate = date;

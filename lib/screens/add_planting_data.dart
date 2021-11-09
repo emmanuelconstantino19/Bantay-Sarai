@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/Record.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 class AddPlantingData extends StatefulWidget {
   @override
   _AddPlantingDataState createState() => _AddPlantingDataState();
@@ -17,6 +19,17 @@ class _AddPlantingDataState extends State<AddPlantingData> {
   final _formKey = GlobalKey<FormState>();
   String farmChosen;
   DateTime _landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest;
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +78,18 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Land Preparation date'),
-                        subtitle: Text(
-                          _landPreparationDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_landPreparationDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _landPreparationDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_landPreparationDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -93,9 +115,18 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Seedling Preparation date'),
-                        subtitle: Text(
-                            _seedlingPreparationDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_seedlingPreparationDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _seedlingPreparationDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_seedlingPreparationDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -120,9 +151,18 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Planted/Transplanted date'),
-                        subtitle: Text(
-                          _plantedDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_plantedDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _plantedDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_plantedDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -147,9 +187,18 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Target date of harvest'),
-                        subtitle: Text(
-                            _targetDateOfHarvest == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_targetDateOfHarvest),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _targetDateOfHarvest == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_targetDateOfHarvest)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -202,11 +251,14 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                               child: Text('Submit'),
                             ),
                             onPressed: () async {
-                              if(_formKey.currentState.validate()){
+                              if(_formKey.currentState.validate() && _landPreparationDate!=null && _seedlingPreparationDate!=null && _plantedDate!=null && _targetDateOfHarvest!=null){
                                 Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 await db.collection("userData").document(uid).collection("farms").document(farmChosen).collection("records").add(record.toJson());
+                                showToast('Successfully added new record.', Colors.green);
                                 Navigator.of(context).popUntil((route) => route.isFirst);
+                              } else {
+                                showToast('Please complete the form.', Colors.red);
                               }
                             },
                           ),
@@ -272,15 +324,26 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
   String farmChosen;
   DateTime _landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest;
 
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   @override
   void initState() {
     super.initState();
     if(widget.record!=null && widget.record['plantedDate']!=null) {
       print(widget.record);
-      _landPreparationDate = widget.record['landPreparationDate'].toDate();
-      _seedlingPreparationDate = widget.record['seedlingPreparationDate'].toDate();
-      _plantedDate = widget.record['plantedDate'].toDate();
-      _targetDateOfHarvest = widget.record['targetDateOfHarvest'].toDate();
+      _landPreparationDate = widget.record['landPreparationDate']!=null ? widget.record['landPreparationDate'].toDate() : null;
+      _seedlingPreparationDate = widget.record['seedlingPreparationDate']!=null ? widget.record['seedlingPreparationDate'].toDate() : null;
+      _plantedDate = widget.record['plantedDate']!=null ? widget.record['plantedDate'].toDate() : null;
+      _targetDateOfHarvest = widget.record['targetDateOfHarvest']!=null ? widget.record['targetDateOfHarvest'].toDate() : null;
       _targetMarketController.text = widget.record['targetMarket'];
       _expectedQtyOfHarvest.text =  widget.record['expectedQtyOfHarvest'];
     }
@@ -320,9 +383,18 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Land Preparation date'),
-                        subtitle: Text(
-                          _landPreparationDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_landPreparationDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _landPreparationDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_landPreparationDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -348,9 +420,18 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Seedling preparation date'),
-                        subtitle: Text(
-                            _seedlingPreparationDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_seedlingPreparationDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _seedlingPreparationDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_seedlingPreparationDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -375,9 +456,18 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Planted/Transplanted date'),
-                        subtitle: Text(
-                            _plantedDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_plantedDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _plantedDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_plantedDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -402,9 +492,18 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Target date of harvest'),
-                        subtitle: Text(
-                            _targetDateOfHarvest == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_targetDateOfHarvest),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _targetDateOfHarvest == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_targetDateOfHarvest)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -456,11 +555,12 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                               child: Text('Submit'),
                             ),
                             onPressed: () async {
-                              if(_formKey.currentState.validate()){
+                              if(_formKey.currentState.validate() && _landPreparationDate!=null && _seedlingPreparationDate!=null && _plantedDate!=null && _targetDateOfHarvest!=null){
                                 Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 if(widget.record == null){
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
+                                  showToast('Successfully added new record.', Colors.green);
                                 }
                                 else{
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
@@ -472,8 +572,11 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                                     'targetMarket': _targetMarketController.text,
                                     'expectedQtyOfHarvest': _expectedQtyOfHarvest.text,
                                   });
+                                  showToast('Successfully updated record.', Colors.green);
                                 }
                                 Navigator.of(context).pop();
+                              } else {
+                                showToast('Please complete the form.', Colors.red);
                               }
                             },
                           ),

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/Record.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddHarvestingData extends StatefulWidget {
   @override
@@ -19,6 +20,17 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
   TextEditingController _netIncomeController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   DateTime _harvestDate;
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +78,18 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Harvest date'),
-                        subtitle: Text(
-                          _harvestDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_harvestDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _harvestDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_harvestDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -168,11 +189,14 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
                               child: Text('Submit'),
                             ),
                             onPressed: () async {
-                              if(_formKey.currentState.validate()){
+                              if(_formKey.currentState.validate() && _harvestDate!=null){
                                 Record record = new Record(null,null,null,null,null,null,_harvestDate,_qtyOfHarvestController.text,_qtyOfHarvestSoldController.text,_grossIncomeController.text,_netIncomeController.text,harvestingProcedure);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 await db.collection("userData").document(uid).collection("farms").document(farmChosen).collection("records").add(record.toJson());
+                                showToast('Successfully added new record.', Colors.green);
                                 Navigator.of(context).popUntil((route) => route.isFirst);
+                              } else {
+                                showToast('Please complete the form.', Colors.red);
                               }
                             },
                           ),
@@ -238,11 +262,22 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
   final _formKey = GlobalKey<FormState>();
   DateTime _harvestDate;
 
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   @override
   void initState() {
     super.initState();
     if(widget.record!=null && widget.record['harvestDate']!=null) {
-      _harvestDate = widget.record['harvestDate'].toDate();
+      _harvestDate = widget.record['harvestDate']!=null ? widget.record['harvestDate'].toDate() : null;
       _qtyOfHarvestController.text = widget.record['qtyOfHarvest'];
       _qtyOfHarvestSoldController.text = widget.record['qtyOfHarvestSold'];
       _grossIncomeController.text = widget.record['grossIncome'];
@@ -285,9 +320,18 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
                       child: ListTile(
 //                            leading: Icon(Icons.arrow_drop_down_circle),
                         title: const Text('Harvest date'),
-                        subtitle: Text(
-                            _harvestDate == null? 'Please pick a date' : DateFormat('MM/dd/yyyy').format(_harvestDate),
-                          style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                        subtitle: _harvestDate == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                            SizedBox(width:5),
+                            Text('Please pick a date')
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_harvestDate)
                         ),
                         trailing: ElevatedButton.icon(
                           label: Text('Set Date'),
@@ -388,11 +432,12 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
                               child: Text('Submit'),
                             ),
                             onPressed: () async {
-                              if(_formKey.currentState.validate()){
+                              if(_formKey.currentState.validate() && _harvestDate!=null){
                                 Record record = new Record(null,null,null,null,null,null,_harvestDate,_qtyOfHarvestController.text,_qtyOfHarvestSoldController.text,_grossIncomeController.text,_netIncomeController.text,harvestingProcedure);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 if(widget.record == null){
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
+                                  showToast('Successfully added new record.', Colors.green);
                                 }
                                 else{
                                   await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
@@ -404,8 +449,11 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
                                     'netIncome': _netIncomeController.text,
                                     'harvestingProcedure': harvestingProcedure,
                                   });
+                                  showToast('Successfully updated record.', Colors.green);
                                 }
                                 Navigator.of(context).pop();
+                              } else {
+                                showToast('Please complete the form.', Colors.red);
                               }
                             },
                           ),
