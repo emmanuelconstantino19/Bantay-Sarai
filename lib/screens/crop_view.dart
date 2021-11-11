@@ -351,6 +351,10 @@ class _CropViewState extends State<CropView> {
                                   DataCell(Text("Organic Practitioner")),
                                   DataCell(Text(farmData['organicPractitioner']==null ? '' : farmData['organicPractitioner'])),
                                 ]),
+                                DataRow(cells: [
+                                  DataCell(Text("Coordinates")),
+                                  DataCell(Text(farmData['coordinates']==null ? '' : farmData['coordinates'].toString())),
+                                ]),
                               ],
                             ),
 //                            Text('Know which provinces are affected and will be affected by moisture stress. Indices are aggregated per province.', style: TextStyle(color:Colors.blueGrey),),

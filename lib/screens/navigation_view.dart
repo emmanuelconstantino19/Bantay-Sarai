@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final newFarm = new Farm(null, null, null, null, null, null, null, null);
+//    final newFarm = new Farm(null, null, null, null, null, null, null, null);
     return Scaffold(
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -369,6 +369,7 @@ class _HomeState extends State<Home> {
 
   void onTabTapped(int index) {
     setState(() {
+      _children[0] = ExplorePage(myLocation: null);
       _currentIndex = index;
     });
   }

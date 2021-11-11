@@ -8,6 +8,7 @@ class Farm {
   String farmType;
   String organicPractitioner;
   String farmOwnership;
+  List<double> coordinates;
 
 
   Farm(
@@ -19,6 +20,7 @@ class Farm {
       this.farmType,
       this.organicPractitioner,
       this.farmOwnership,
+      this.coordinates,
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +31,8 @@ class Farm {
     'farmSize': farmSize,
     'farmType': farmType,
     'organicPractitioner': organicPractitioner,
-    'farmOwnership': farmOwnership
+    'farmOwnership': farmOwnership,
+    'coordinates': coordinates,
   };
 
   Farm.fromSnapshot(DocumentSnapshot snapshot) :
@@ -40,8 +43,8 @@ class Farm {
         farmSize = snapshot['farmSize'],
         farmType = snapshot['farmType'],
         organicPractitioner = snapshot['organicPractitioner'],
-        farmOwnership = snapshot['farmOwnership'];
-
+        farmOwnership = snapshot['farmOwnership'],
+        coordinates = snapshot['coordinates'];
 }
 
 class FarmRecord {

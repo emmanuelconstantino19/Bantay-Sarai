@@ -3,6 +3,7 @@ import 'package:bantay_sarai/models/Farm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:bantay_sarai/screens/navigation_view.dart';
 
 class FinalizeFarm extends StatelessWidget {
   final db = Firestore.instance;
@@ -61,6 +62,10 @@ class FinalizeFarm extends StatelessWidget {
                       DataCell(Text("Farm Ownership")),
                       DataCell(Text(farm.farmOwnership)),
                     ]),
+                    DataRow(cells: [
+                      DataCell(Text("Coordinates")),
+                      DataCell(Text(farm.coordinates==null? '' : farm.coordinates.toString())),
+                    ]),
                   ],
                 ),
                 Expanded(
@@ -77,6 +82,7 @@ class FinalizeFarm extends StatelessWidget {
                     await db.collection("userData").document(uid).collection("farms").add(farm.toJson());
                     showToast('Successfully Added Farm!', Colors.grey[700]);
                     Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
                   },
                 ),
 //                RaisedButton(

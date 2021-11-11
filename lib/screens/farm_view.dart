@@ -13,7 +13,7 @@ class FarmView extends StatefulWidget {
 
 class _FarmViewState extends State<FarmView> {
   FUser user = FUser("","","","","","","","");
-  final newFarm = new Farm(null, null, null, null, null, null, null, null);
+  final newFarm = new Farm(null, null, null, null, null, null, null, null, null);
   String loc = '', noOfFarms = '', noOfCrops = '';
 
   @override
