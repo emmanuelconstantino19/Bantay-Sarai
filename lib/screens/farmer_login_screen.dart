@@ -67,7 +67,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width/10),
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/rice_banner.jpg"),
@@ -174,7 +174,7 @@ class _FarmerLoginScreenState extends State<FarmerLoginScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 40,),
+                        SizedBox(height: 20,),
 //                        FadeAnimation(1.5, Text("Don't have an account? Register", style: TextStyle(color: Colors.grey),)),
 //                        SizedBox(height: 40,),
                         Container(
