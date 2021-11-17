@@ -318,6 +318,39 @@ class _DamageDetailsState extends State<DamageDetails> {
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
+                                cause = 'Landslide (pagguho ng lupa)';
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image(image: AssetImage('assets/damage_reporting/landslide.png')),
+                                      ),
+                                    ),
+
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Badge(
+                                          badgeContent: Icon(Icons.check, color: Colors.white, size: 16), showBadge: cause == 'Landslide (pagguho ng lupa)',)
+                                    )
+                                  ],
+                                ),
+                                Text('Landslide', style: TextStyle(color:Colors.blue, fontWeight: FontWeight.w700, fontSize:15), textAlign: TextAlign.center,),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal:5, vertical: 5),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
                                 cause = 'Other rare meteorological phenomena (e.g. lightning strikes, hail, etc.)';
                               });
                             },
@@ -343,10 +376,6 @@ class _DamageDetailsState extends State<DamageDetails> {
                               ],
                             ),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
                         ),
                       ),
                     ],

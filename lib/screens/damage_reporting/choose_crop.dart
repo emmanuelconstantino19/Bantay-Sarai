@@ -937,7 +937,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                                   ),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-//                                    child: Image(image: AssetImage('assets/hvc/mustasa.png')),
+                                    child: Image(image: AssetImage('assets/hvc/mustasa.png')),
                                   ),
                                 ),
 

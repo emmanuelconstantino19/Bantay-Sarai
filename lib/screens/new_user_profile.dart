@@ -138,8 +138,8 @@ class _NewUserProfileState extends State<NewUserProfile> {
                                 await Provider.of(context)
                                     .db
                                     .collection('userData')
-                                    .doc(uid)
-                                    .set(user.toJson());
+                                    .document(uid)
+                                    .setData(user.toJson());
                                 Navigator.pushReplacement(
                                     context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
                               }
