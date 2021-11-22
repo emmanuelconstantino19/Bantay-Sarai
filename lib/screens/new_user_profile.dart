@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/main.dart';
+import 'package:intl/intl.dart';
 
 class NewUserProfile extends StatefulWidget {
   @override
@@ -14,11 +15,13 @@ class _NewUserProfileState extends State<NewUserProfile> {
   final TextEditingController _lnameControl = new TextEditingController();
   final TextEditingController _mnameControl = new TextEditingController();
   final TextEditingController _mshipControl = new TextEditingController();
-  final TextEditingController _bdayControl = new TextEditingController();
+//  final TextEditingController _bdayControl = new TextEditingController();
   final TextEditingController _placeControl = new TextEditingController();
-  final TextEditingController _sexControl = new TextEditingController();
-  final TextEditingController _isPWDControl = new TextEditingController();
+//  final TextEditingController _sexControl = new TextEditingController();
+//  final TextEditingController _isPWDControl = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String sex, isPWD;
+  DateTime _dateOfBirth;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +57,40 @@ class _NewUserProfileState extends State<NewUserProfile> {
                           labelText: 'Panggitnang Apelyido'),
                       controller: _mnameControl,
                     ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? 'field required' : null,
-                      autofocus: true,
-                      decoration: new InputDecoration(
-                          labelText: 'Araw ng Kapanganakan'),
-                      controller: _bdayControl,
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+//                            leading: Icon(Icons.arrow_drop_down_circle),
+                        title: const Text('Araw ng Kapanganakan'),
+                        subtitle: _dateOfBirth == null ? Row(
+                          children: [
+                            Icon(
+                                Icons.error,
+                                color: Colors.red,
+                                size:15
+                            ),
+                          ],
+                        ) : Text(
+                            DateFormat('MMMM dd, yyyy').format(_dateOfBirth)
+                        ),
+                        trailing: ElevatedButton.icon(
+                          label: Text('Set Date'),
+                          icon: Icon(Icons.date_range),
+                          onPressed: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now().subtract(Duration(days:3650)),
+                              firstDate: DateTime(1940),
+                              lastDate:  DateTime.now().subtract(Duration(days:3650)),
+                              initialDatePickerMode: DatePickerMode.year,
+                            ).then((date) {
+                              setState((){
+                                _dateOfBirth = date;
+                              });
+                            });
+                          },
+                        ),
+                      ),
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
@@ -68,19 +99,53 @@ class _NewUserProfileState extends State<NewUserProfile> {
                           labelText: 'Lugar ng Kapanganakan'),
                       controller: _placeControl,
                     ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? 'field required' : null,
-                      autofocus: true,
+                    DropdownButtonFormField<String>(
+                      validator: (value) => value == null ? 'field required' : null,
+                      value: sex,
                       decoration: new InputDecoration(
-                          labelText: 'Kasarian'),
-                      controller: _sexControl,
+//                                border: OutlineInputBorder(),
+//                                fillColor: Colors.white,
+//                                filled: true,
+                          labelText: 'Sex'),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          sex = newValue;
+                        });
+                      },
+                      items: <String>[
+                        'Male',
+                        'Female'
+                      ]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    TextFormField(
-                      validator: (val) => val.isEmpty ? 'field required' : null,
-                      autofocus: true,
+                    DropdownButtonFormField<String>(
+                      validator: (value) => value == null ? 'field required' : null,
+                      value: isPWD,
                       decoration: new InputDecoration(
-                          labelText: 'Person with Disability (PWD) [Y/N]'),
-                      controller: _isPWDControl,
+//                                border: OutlineInputBorder(),
+//                                fillColor: Colors.white,
+//                                filled: true,
+                          labelText: 'Person with Disability'),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          isPWD = newValue;
+                        });
+                      },
+                      items: <String>[
+                        'Yes',
+                        'No'
+                      ]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
                     TextFormField(
                       validator: (val) => val.isEmpty ? 'field required' : null,
@@ -90,65 +155,115 @@ class _NewUserProfileState extends State<NewUserProfile> {
                       controller: _mshipControl,
                     ),
                     SizedBox(height:20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: InkWell(
-                            child: Container(
-                              height: 60,
-                              //margin: EdgeInsets.symmetric(horizontal: 50),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(1.0, 1.0),
-                                      blurRadius: 5.0,
-                                    ),
-                                  ]
-                              ),
-                              child: Center(
-                                child: Text("i-submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                              ),
-                            ),
-                            onTap: () async {
-                              if(_formKey.currentState.validate()){
-                                user.firstName = _fnameControl.text;
-                                user.lastName = _lnameControl.text;
-                                user.middleName = _mnameControl.text;
-                                user.birthDate = _bdayControl.text;
-                                user.placeOfBirth = _placeControl.text;
-                                user.sex = _sexControl.text;
-                                user.isPwd = _isPWDControl.text;
-                                user.membership = _mshipControl.text;
-                                setState(() {
-                                  _fnameControl.text = user.firstName;
-                                  _lnameControl.text = user.lastName;
-                                  _mnameControl.text = user.middleName;
-                                  _bdayControl.text = user.birthDate;
-                                  _placeControl.text = user.placeOfBirth;
-                                  _sexControl.text = user.sex;
-                                  _isPWDControl.text = user.isPwd;
-                                  _mshipControl.text = user.membership;
+                    Container(
+                      child: MaterialButton(
+                        minWidth: double.infinity,
+                        height: 50,
+                        onPressed: () async {
+                          if(_formKey.currentState.validate()){
+                            user.firstName = _fnameControl.text;
+                            user.lastName = _lnameControl.text;
+                            user.middleName = _mnameControl.text;
+                            user.birthDate = DateFormat('MMMM dd, yyyy').format(_dateOfBirth);
+                            user.placeOfBirth = _placeControl.text;
+                            user.sex = sex;
+                            user.isPwd = isPWD;
+                            user.membership = _mshipControl.text;
+                            setState(() {
+                              _fnameControl.text = user.firstName;
+                              _lnameControl.text = user.lastName;
+                              _mnameControl.text = user.middleName;
+//                              _bdayControl.text = user.birthDate;
+                              _placeControl.text = user.placeOfBirth;
+                              sex = user.sex;
+                              isPWD = user.isPwd;
+                              _mshipControl.text = user.membership;
 
-                                });
-                                final uid =
-                                await Provider.of(context).auth.getCurrentUID();
-                                await Provider.of(context)
-                                    .db
-                                    .collection('userData')
-                                    .document(uid)
-                                    .setData(user.toJson());
-                                Navigator.pushReplacement(
-                                    context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
-                              }
-                            },
+                            });
+                            final uid =
+                            await Provider.of(context).auth.getCurrentUID();
+                            await Provider.of(context)
+                                .db
+                                .collection('userData')
+                                .document(uid)
+                                .setData(user.toJson());
+                            Navigator.pushReplacement(
+                                context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
+                          }
+                        },
+                        color: Color(0xFF369d34),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)
+                        ),
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18
                           ),
                         ),
-
-                      ],
+                      ),
                     ),
+//                    Row(
+//                      mainAxisAlignment: MainAxisAlignment.center,
+//                      children: <Widget>[
+//                        Expanded(
+//                          child: InkWell(
+//                            child: Container(
+//                              height: 60,
+//                              //margin: EdgeInsets.symmetric(horizontal: 50),
+//                              decoration: BoxDecoration(
+//                                  borderRadius: BorderRadius.circular(10),
+//                                  color: Colors.black,
+//                                  boxShadow: [
+//                                    BoxShadow(
+//                                      offset: const Offset(1.0, 1.0),
+//                                      blurRadius: 5.0,
+//                                    ),
+//                                  ]
+//                              ),
+//                              child: Center(
+//                                child: Text("i-submit", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+//                              ),
+//                            ),
+//                            onTap: () async {
+//                              if(_formKey.currentState.validate()){
+//                                user.firstName = _fnameControl.text;
+//                                user.lastName = _lnameControl.text;
+//                                user.middleName = _mnameControl.text;
+//                                user.birthDate = _bdayControl.text;
+//                                user.placeOfBirth = _placeControl.text;
+//                                user.sex = _sexControl.text;
+//                                user.isPwd = _isPWDControl.text;
+//                                user.membership = _mshipControl.text;
+//                                setState(() {
+//                                  _fnameControl.text = user.firstName;
+//                                  _lnameControl.text = user.lastName;
+//                                  _mnameControl.text = user.middleName;
+//                                  _bdayControl.text = user.birthDate;
+//                                  _placeControl.text = user.placeOfBirth;
+//                                  _sexControl.text = user.sex;
+//                                  _isPWDControl.text = user.isPwd;
+//                                  _mshipControl.text = user.membership;
+//
+//                                });
+//                                final uid =
+//                                await Provider.of(context).auth.getCurrentUID();
+//                                await Provider.of(context)
+//                                    .db
+//                                    .collection('userData')
+//                                    .document(uid)
+//                                    .setData(user.toJson());
+//                                Navigator.pushReplacement(
+//                                    context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
+//                              }
+//                            },
+//                          ),
+//                        ),
+//
+//                      ],
+//                    ),
 
                   ],
                 )

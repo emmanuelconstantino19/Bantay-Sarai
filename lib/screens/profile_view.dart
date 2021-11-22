@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/widgets/custome_list_tile.dart';
 import 'package:bantay_sarai/widgets/small_button.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -22,6 +23,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _isPWDControl = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String loc = '', noOfFarms = '', noOfCrops = '';
+  String sex, isPWD;
+  DateTime _dateOfBirth;
+
+  void showToast(message, Color color) {
+    print(message);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: color,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +83,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _mnameControl.text = user.middleName;
                 _bdayControl.text = user.birthDate;
                 _placeControl.text = user.placeOfBirth;
-                _sexControl.text = user.sex;
-                _isPWDControl.text = user.isPwd;
+                sex = (user.sex=="Male" || user.sex=="Female") ? user.sex : null;
+                isPWD = (user.isPwd=="Yes" || user.isPwd=="No") ? user.isPwd : null;
+//                _isPWDControl.text = user.isPwd;
                 _mshipControl.text = user.membership;
 
                 return SingleChildScrollView(
@@ -184,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Text('Sex: ' + _sexControl.text, style: TextStyle(fontSize: 14),),
+                                  child: Text('Sex: ${(sex==null) ? "":sex}', style: TextStyle(fontSize: 14),),
                                 ),
                                 Divider(
                                   height: 10.0,
@@ -200,7 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Text('PWD: ' + _isPWDControl.text, style: TextStyle(fontSize: 14),),
+                                  child: Text('PWD: ${(isPWD==null) ? "":isPWD}', style: TextStyle(fontSize: 14),),
                                 ),
                                 Divider(
                                   height: 10.0,
@@ -277,126 +292,248 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+//  Future<Null> _selectDate(BuildContext context, updateState) async {
+//    DateTime _datePicker = await showDatePicker(
+//      context: context,
+//      initialDate: DateTime.now().subtract(Duration(days:3650)),
+//      firstDate: DateTime(1950),
+//      lastDate: DateTime.now().subtract(Duration(days:3650)),
+//      initialDatePickerMode: DatePickerMode.year,
+//    );
+//
+//    if (_datePicker != null && _datePicker != _dateOfBirth) {
+//      updateState(() {
+//        _dateOfBirth = _datePicker;
+//        print(_dateOfBirth.toString());
+//      });
+//    }
+//  }
+
   void _userEditBottomSheet(BuildContext context) {
     showDialog<String>(
       context: context,
       barrierDismissible: false, // dialog is dismissible with a tap on the barrier
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Update Profile'),
-          content: Container(
-              child: SingleChildScrollView(
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'First Name'),
-                            controller: _fnameControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Last Name'),
-                            controller: _lnameControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Middle Name'),
-                            controller: _mnameControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Date of birth'),
-                            controller: _bdayControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Place of birth'),
-                            controller: _placeControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Sex'),
-                            controller: _sexControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Person with Disability [Y/N]'),
-                            controller: _isPWDControl,
-                          ),
-                          TextFormField(
-                            validator: (val) => val.isEmpty ? 'field required' : null,
-                            autofocus: true,
-                            decoration: new InputDecoration(
-                                labelText: 'Membership'),
-                            controller: _mshipControl,
-                          ),
-                        ],
+        return StatefulBuilder(
+          builder: (context, updateState){
+            return AlertDialog(
+              title: Text('Update Profile'),
+              content: Container(
+                  child: SingleChildScrollView(
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              TextFormField(
+                                validator: (val) => val.isEmpty ? 'field required' : null,
+                                autofocus: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'First Name'),
+                                controller: _fnameControl,
+                              ),
+                              TextFormField(
+                                validator: (val) => val.isEmpty ? 'field required' : null,
+                                autofocus: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'Last Name'),
+                                controller: _lnameControl,
+                              ),
+                              TextFormField(
+                                validator: (val) => val.isEmpty ? 'field required' : null,
+                                autofocus: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'Middle Name'),
+                                controller: _mnameControl,
+                              ),
+//                              TextFormField(
+//                                validator: (val) => val.isEmpty ? 'field required' : null,
+//                                autofocus: true,
+//                                decoration: new InputDecoration(
+//                                    labelText: 'Date of birth'),
+//                                controller: _bdayControl,
+//                              ),
+//                              TextFormField(
+//                                validator: (val) => val.isEmpty ? 'field required' : null,
+//                                decoration: InputDecoration(
+//                                    labelText: 'Birthday',
+//                                    hintText: _dateOfBirth == null ? "" : DateFormat('MMMM dd, yyyy').format(_dateOfBirth)),
+//                                onTap: (){
+//                                  setState(() {
+//                                    _selectDate(context, updateState);
+//                                  });
+//                                },
+//                              ),
+                              Card(
+                                clipBehavior: Clip.antiAlias,
+                                child: ListTile(
+//                            leading: Icon(Icons.arrow_drop_down_circle),
+                                  title: const Text('Birthday'),
+                                  subtitle: _dateOfBirth == null ? Row(
+                                    children: [
+                                      Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                          size:15
+                                      ),
+                                    ],
+                                  ) : Text(
+                                      DateFormat('MMMM dd, yyyy').format(_dateOfBirth)
+                                  ),
+                                  trailing: ElevatedButton.icon(
+                                    label: Text('Set Date'),
+                                    icon: Icon(Icons.date_range),
+                                    onPressed: () {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now().subtract(Duration(days:3650)),
+                                        firstDate: DateTime(1940),
+                                        lastDate:  DateTime.now().subtract(Duration(days:3650)),
+                                        initialDatePickerMode: DatePickerMode.year,
+                                      ).then((date) {
+                                        updateState((){
+                                          _dateOfBirth = date;
+                                        });
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              TextFormField(
+                                validator: (val) => val.isEmpty ? 'field required' : null,
+                                autofocus: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'Place of birth'),
+                                controller: _placeControl,
+                              ),
+//                              TextFormField(
+//                                validator: (val) => val.isEmpty ? 'field required' : null,
+//                                autofocus: true,
+//                                decoration: new InputDecoration(
+//                                    labelText: 'Sex'),
+//                                controller: _sexControl,
+//                              ),
+                              DropdownButtonFormField<String>(
+                                validator: (value) => value == null ? 'field required' : null,
+                                value: sex,
+                                decoration: new InputDecoration(
+//                                border: OutlineInputBorder(),
+//                                fillColor: Colors.white,
+//                                filled: true,
+                                    labelText: 'Sex'),
+                                onChanged: (String newValue) {
+                                  updateState(() {
+                                    sex = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Male',
+                                  'Female'
+                                ]
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                              DropdownButtonFormField<String>(
+                                validator: (value) => value == null ? 'field required' : null,
+                                value: isPWD,
+                                decoration: new InputDecoration(
+//                                border: OutlineInputBorder(),
+//                                fillColor: Colors.white,
+//                                filled: true,
+                                    labelText: 'Person with Disability'),
+                                onChanged: (String newValue) {
+                                  updateState(() {
+                                    isPWD = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Yes',
+                                  'No'
+                                ]
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+//                              TextFormField(
+//                                validator: (val) => val.isEmpty ? 'field required' : null,
+//                                autofocus: true,
+//                                decoration: new InputDecoration(
+//                                    labelText: 'Person with Disability [Y/N]'),
+//                                controller: _isPWDControl,
+//                              ),
+                              TextFormField(
+                                validator: (val) => val.isEmpty ? 'field required' : null,
+                                autofocus: true,
+                                decoration: new InputDecoration(
+                                    labelText: 'Membership'),
+                                controller: _mshipControl,
+                              ),
+                            ],
+                          )
                       )
                   )
-              )
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel',
-                style: TextStyle(color: Colors.grey),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            RaisedButton(
-              child: Text('Save'),
-              color: Colors.green,
-              textColor: Colors.white,
-              onPressed: () async {
-                if(_formKey.currentState.validate()){
-                  user.firstName = _fnameControl.text;
-                  user.lastName = _lnameControl.text;
-                  user.middleName = _mnameControl.text;
-                  user.birthDate = _bdayControl.text;
-                  user.placeOfBirth = _placeControl.text;
-                  user.sex = _sexControl.text;
-                  user.isPwd = _isPWDControl.text;
-                  user.membership = _mshipControl.text;
-                  setState(() {
-                    _fnameControl.text = user.firstName;
-                    _lnameControl.text = user.lastName;
-                    _mnameControl.text = user.middleName;
-                    _bdayControl.text = user.birthDate;
-                    _placeControl.text = user.placeOfBirth;
-                    _sexControl.text = user.sex;
-                    _isPWDControl.text = user.isPwd;
-                    _mshipControl.text = user.membership;
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Cancel',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                RaisedButton(
+                  child: Text('Save'),
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    if(_formKey.currentState.validate() && _dateOfBirth!=null){
+                      user.firstName = _fnameControl.text;
+                      user.lastName = _lnameControl.text;
+                      user.middleName = _mnameControl.text;
+//                      user.birthDate = _bdayControl.text;
+                      user.birthDate = DateFormat('MMMM dd, yyyy').format(_dateOfBirth);
+                      user.placeOfBirth = _placeControl.text;
+//                      user.sex = _sexControl.text;
+                      user.sex = sex;
+//                      user.isPwd = _isPWDControl.text;
+                      user.isPwd = isPWD;
+                      user.membership = _mshipControl.text;
+                      setState(() {
+                        _fnameControl.text = user.firstName;
+                        _lnameControl.text = user.lastName;
+                        _mnameControl.text = user.middleName;
+//                        _bdayControl.text = user.birthDate;
+                        _placeControl.text = user.placeOfBirth;
+//                        _sexControl.text = user.sex;
+                        sex = user.sex;
+//                        _isPWDControl.text = user.isPwd;
+                        isPWD = user.isPwd;
+                        _mshipControl.text = user.membership;
 
-                  });
-                  final uid =
-                  await Provider.of(context).auth.getCurrentUID();
-                  await Provider.of(context)
-                      .db
-                      .collection('userData')
-                      .document(uid)
-                      .setData(user.toJson());
-                  Navigator.of(context).pop();
-                }
-              },
-            )
-          ],
+                      });
+                      final uid =
+                      await Provider.of(context).auth.getCurrentUID();
+                      await Provider.of(context)
+                          .db
+                          .collection('userData')
+                          .document(uid)
+                          .setData(user.toJson());
+                      Navigator.of(context).pop();
+                    }else{
+                      showToast('Please complete the form.', Colors.red);
+                    }
+                  },
+                )
+              ],
+            );
+          }
         );
       },
     );
