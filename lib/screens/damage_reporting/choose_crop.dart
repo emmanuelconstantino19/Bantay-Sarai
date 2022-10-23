@@ -4,7 +4,7 @@ import 'package:bantay_sarai/screens/damage_reporting/damage_details.dart';
 
 import 'package:badges/badges.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 
 class ChooseCrop extends StatefulWidget {
@@ -74,13 +74,13 @@ class _ChooseCropState extends State<ChooseCrop> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   Widget makeDismissible({Widget child}) => GestureDetector(

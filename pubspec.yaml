@@ -19,28 +19,32 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  simple_animations: ^3.1.1
-  circular_bottom_navigation: ^1.0.1
+  simple_animations: ^4.0.0
+  circular_bottom_navigation: ^2.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
-#  cloud_firestore: ^2.5.0
-#  firebase_auth: ^3.0.2
-  cloud_firestore: ^0.12.6
-  firebase_auth: ^0.15.3
+  #  cloud_firestore: ^2.5.0
+  #  firebase_auth: ^3.0.2
+  cloud_firestore: ^3.1.9
+  firebase_auth: ^3.3.8
+  firebase_core:
   intl: ^0.17.0
   google_maps_flutter: ^2.0.6
   flutter_custom_clippers: ^2.0.0
-  fluttertoast: ^8.0.8
+  #fluttertoast: ^8.0.8
   url_launcher: ^6.0.9
   image_picker:
-  geolocator: ^7.6.2
+  geolocator: ^8.0.5
   simple_speed_dial: ^0.1.3
-  firebase_storage: ^3.0.8
+  firebase_storage: ^10.2.8
   badges: ^2.0.1
   path_provider:
   uuid: ^3.0.5
+  flutter_dotenv: ^5.0.2
+  http:
+  web3dart: ^2.3.5
 #  http: ^0.13.3
 
 dev_dependencies:
@@ -49,13 +53,24 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+dependency_overrides:
+  firebase_messaging_platform_interface: 3.1.6
+  firebase_crashlytics_platform_interface: 3.1.13
+  cloud_firestore_platform_interface: 5.4.13
+  firebase_auth_platform_interface: 6.1.11
+  firebase_storage_platform_interface: 4.0.14
+  cloud_functions_platform_interface: 5.0.21
+  firebase_analytics_platform_interface: 3.0.5
+  firebase_remote_config_platform_interface: 1.0.5
+  firebase_dynamic_links_platform_interface: 0.2.0+5
+  firebase_performance_platform_interface: 0.1.0+5
+  firebase_app_installations_platform_interface: 0.1.0+6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -154,7 +169,6 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: assets/logos/bantay_sarai_launcher_icon.png
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

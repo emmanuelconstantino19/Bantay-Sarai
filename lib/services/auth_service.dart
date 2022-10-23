@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/screens/dashboard_screen.dart';
 import 'package:bantay_sarai/screens/login_screen.dart';
 import 'package:bantay_sarai/screens/navigation_view.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthService {
 
@@ -15,18 +15,18 @@ class AuthService {
 //      );
 
   Stream<String> get onAuthStateChanged =>
-      _firebaseAuth.onAuthStateChanged.map(
-            (FirebaseUser user) => user?.uid,
+      _firebaseAuth.authStateChanges().map(
+            (firebaseUser) => firebaseUser?.uid,
       );
 
   // GET UID
   Future<String> getCurrentUID() async {
-    return (await _firebaseAuth.currentUser()).uid;
+    return _firebaseAuth.currentUser.uid;
   }
 
   // GET CURRENT USER
   Future getCurrentUser() async {
-    return await _firebaseAuth.currentUser();
+    return _firebaseAuth.currentUser;
   }
 
   //Sign out
@@ -72,7 +72,7 @@ class AuthService {
 //                  minWidth: double.infinity,
 //                  height: 50,
                   onPressed: () async {
-                    var _credential = PhoneAuthProvider.getCredential(verificationId: verificationId,
+                    var _credential = PhoneAuthProvider.credential(verificationId: verificationId,
                         smsCode: _codeController.text.trim());
                     await _firebaseAuth.signInWithCredential(_credential).then((result){
                       //Navigator.of(context).pushReplacementNamed('/home');
@@ -124,13 +124,13 @@ class AuthService {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
 
@@ -140,7 +140,7 @@ class AuthService {
   }
 
   signInWithOTP(smsCode, verId) {
-    AuthCredential authCreds = PhoneAuthProvider.getCredential(
+    AuthCredential authCreds = PhoneAuthProvider.credential(
         verificationId: verId, smsCode: smsCode);
     signIn(authCreds);
   }

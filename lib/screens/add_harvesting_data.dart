@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/Record.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class AddHarvestingData extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class AddHarvestingData extends StatefulWidget {
 
 
 class _AddHarvestingDataState extends State<AddHarvestingData> {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
   String harvestingProcedure, farmChosen;
   TextEditingController _qtyOfHarvestController = new TextEditingController();
   TextEditingController _qtyOfHarvestSoldController = new TextEditingController();
@@ -23,13 +23,13 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override
@@ -63,9 +63,9 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
                                 farmChosen = newValue;
                               });
                             },
-                            items: snapshot.data.documents.map((DocumentSnapshot document) {
+                            items: snapshot.data.docs.map((DocumentSnapshot document) {
                               return new DropdownMenuItem<String>(
-                                  value: document.documentID,
+                                  value: document.id,
                                   child: Text('${document['farmName']} - ${document['cropsPlanted']}')
                               );
                             }).toList(),
@@ -192,7 +192,7 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
                               if(_formKey.currentState.validate() && _harvestDate!=null){
                                 Record record = new Record(null,null,null,null,null,null,_harvestDate,_qtyOfHarvestController.text,_qtyOfHarvestSoldController.text,_grossIncomeController.text,_netIncomeController.text,harvestingProcedure);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
-                                await db.collection("userData").document(uid).collection("farms").document(farmChosen).collection("records").add(record.toJson());
+                                await db.collection("userData").doc(uid).collection("farms").doc(farmChosen).collection("records").add(record.toJson());
                                 showToast('Successfully added new record.', Colors.green);
                                 Navigator.of(context).popUntil((route) => route.isFirst);
                               } else {
@@ -238,7 +238,7 @@ class _AddHarvestingDataState extends State<AddHarvestingData> {
   }
   Stream<QuerySnapshot> getFarmStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('userData').document(uid).collection('farms').snapshots();
+    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').snapshots();
   }
 }
 
@@ -253,7 +253,7 @@ class AddHarvestingDataInner extends StatefulWidget {
 }
 
 class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
   String harvestingProcedure;
   TextEditingController _qtyOfHarvestController = new TextEditingController();
   TextEditingController _qtyOfHarvestSoldController = new TextEditingController();
@@ -264,13 +264,13 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override
@@ -436,12 +436,12 @@ class _AddHarvestingDataInnerState extends State<AddHarvestingDataInner> {
                                 Record record = new Record(null,null,null,null,null,null,_harvestDate,_qtyOfHarvestController.text,_qtyOfHarvestSoldController.text,_grossIncomeController.text,_netIncomeController.text,harvestingProcedure);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 if(widget.record == null){
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
+                                  await db.collection("userData").doc(uid).collection("farms").doc(widget.farmID).collection("records").add(record.toJson());
                                   showToast('Successfully added new record.', Colors.green);
                                 }
                                 else{
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
-                                      .updateData({
+                                  await db.collection("userData").doc(uid).collection("farms").doc(widget.farmID).collection("records").doc(widget.record.documentID)
+                                      .update({
                                     'harvestDate': _harvestDate,
                                     'qtyOfHarvest': _qtyOfHarvestController.text,
                                     'qtyOfHarvestSold': _qtyOfHarvestSoldController.text,

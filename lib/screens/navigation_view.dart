@@ -11,12 +11,13 @@ import 'package:bantay_sarai/pages.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/screens/sarai_alerts.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bantay_sarai/screens/add_planting_data.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -379,12 +380,14 @@ class _HomeState extends State<Home> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .get().then((result) {
-      user.firstName = result['firstName'];
-      user.lastName = result['lastName'];
-      user.middleName = result['middleName'];
-    });
+        .doc(uid)
+        .get().then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              user.firstName = documentSnapshot.get('firstName');
+              user.lastName = documentSnapshot.get('lastName');
+              user.middleName = documentSnapshot.get('middleName');
+            }
+          });
 
     await Provider
         .of(context)
@@ -396,13 +399,13 @@ class _HomeState extends State<Home> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   buildAddRecordDialog(BuildContext context){

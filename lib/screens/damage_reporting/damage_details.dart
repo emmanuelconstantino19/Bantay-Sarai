@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:bantay_sarai/screens/damage_reporting/get_coordinates.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:badges/badges.dart';
 
 class DamageDetails extends StatefulWidget {
@@ -39,13 +39,13 @@ class _DamageDetailsState extends State<DamageDetails> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override

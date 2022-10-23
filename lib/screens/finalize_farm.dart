@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bantay_sarai/screens/navigation_view.dart';
 
 class FinalizeFarm extends StatelessWidget {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
 
   final Farm farm;
   FinalizeFarm({Key key, @required this.farm}) : super(key: key);
@@ -79,7 +79,7 @@ class FinalizeFarm extends StatelessWidget {
                   onPressed: () async {
                     // save data to firebase
                     final uid = await Provider.of(context).auth.getCurrentUID();
-                    await db.collection("userData").document(uid).collection("farms").add(farm.toJson());
+                    await db.collection("userData").doc(uid).collection("farms").add(farm.toJson());
                     showToast('Successfully Added Farm!', Colors.grey[700]);
                     Navigator.of(context).popUntil((route) => route.isFirst);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
@@ -103,12 +103,12 @@ class FinalizeFarm extends StatelessWidget {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 }

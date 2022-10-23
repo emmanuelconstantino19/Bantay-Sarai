@@ -13,8 +13,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       auth: AuthService(),
-      db: Firestore.instance,
+      db: FirebaseFirestore.instance,
       child: MaterialApp(
         title: "Bantay Sarai",
         theme: ThemeData(
@@ -105,10 +106,20 @@ class _HomeControllerState extends State<HomeController> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .get().then((result) {
-          user.firstName = result.data['firstName'];
-          user.lastName = result.data['lastName'];
-    });
+        .doc(uid)
+        .get().then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              user.firstName = documentSnapshot.get('firstName');
+              user.lastName = documentSnapshot.get('lastName');
+            }
+          });
+          
+          
+          
+          
+    //       (result) {
+    //       user.firstName = result.data['firstName'];
+    //       user.lastName = result.data['lastName'];
+    // });
   }
 }

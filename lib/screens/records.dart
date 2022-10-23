@@ -4,7 +4,7 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
 import 'package:bantay_sarai/screens/add_planting_data.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class Records extends StatefulWidget {
   final farmData;
@@ -26,18 +26,18 @@ class _RecordsState extends State<Records> {
 
   Stream<QuerySnapshot> getRecordStreamSnapshots(BuildContext context, farmId) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('userData').document(uid).collection('farms').document(farmId).collection('records').orderBy('plantedDate',descending: true).snapshots();
+    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').orderBy('plantedDate',descending: true).snapshots();
   }
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   void choiceAction(String choice, DocumentSnapshot recordData) async {
@@ -46,14 +46,14 @@ class _RecordsState extends State<Records> {
     }
     else if(choice==DeleteRecord){
         final uid = await Provider.of(context).auth.getCurrentUID();
-        await _deleteRecordData(uid, widget.farmData.documentID,recordData.documentID);
+        await _deleteRecordData(uid, widget.farmData.docID,recordData.id);
         showToast('Successfully deleted entry.', Colors.green);
 
     }
   }
 
   _deleteRecordData(uid,farmId,recordId) async {
-    await Provider.of(context).db.collection('userData').document(uid).collection('farms').document(farmId).collection('records').document(recordId).delete();
+    await Provider.of(context).db.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').doc(recordId).delete();
   }
 
   buildAddRecordDialog(BuildContext context, String farmName, String cropPlanted, String farmId){
@@ -286,14 +286,14 @@ class _RecordsState extends State<Records> {
         elevation: 1,
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: getRecordStreamSnapshots(context,widget.farmData.documentID),
+          stream: getRecordStreamSnapshots(context,widget.farmData.docID),
           builder: (context,recordSnapshot){
             if(!recordSnapshot.hasData) return Center(child: CircularProgressIndicator());
-            if(recordSnapshot.data.documents.length==0){
+            if(recordSnapshot.data.docs.length==0){
               return Center(child: Text("No records for this farm yet.",style: TextStyle(fontSize: 18)),);
             }
             return ListView.builder(
-                itemCount: recordSnapshot.data.documents.length,
+                itemCount: recordSnapshot.data.docs.length,
                 itemBuilder: (BuildContext context, int index){
                   return Card(
                     child: Column(
@@ -313,7 +313,7 @@ class _RecordsState extends State<Records> {
                                   ),
                                 ),
                                 onSelected: (value){
-                                  choiceAction(value,recordSnapshot.data.documents[index]);
+                                  choiceAction(value,recordSnapshot.data.docs[index]);
                                 },
                                 itemBuilder: (BuildContext context){
                                   return choices.map((String choice){
@@ -359,7 +359,7 @@ class _RecordsState extends State<Records> {
                                           ),
                                           Center(
                                             child: Text(
-                                              (recordSnapshot.data.documents[index]['plantedDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[index]['plantedDate'].toDate()) : '+ Add Entry',
+                                              (recordSnapshot.data.docs[index]['plantedDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.docs[index]['plantedDate'].toDate()) : '+ Add Entry',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 18,
@@ -371,7 +371,7 @@ class _RecordsState extends State<Records> {
                                       ),
                                     ),
                                     onLongPress: () {
-                                      if(recordSnapshot.data.documents[index]['plantedDate'] != null) {
+                                      if(recordSnapshot.data.docs[index]['plantedDate'] != null) {
                                         showModalBottomSheet<void>(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -392,7 +392,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
+                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
                                                     );
                                                   },
                                                 )
@@ -402,10 +402,10 @@ class _RecordsState extends State<Records> {
                                       }
                                     },
                                     onTap: () {
-                                      if(recordSnapshot.data.documents[index]['plantedDate'] == null){
+                                      if(recordSnapshot.data.docs[index]['plantedDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
+                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
                                         );
                                       }
                                     },
@@ -436,7 +436,7 @@ class _RecordsState extends State<Records> {
                                           ),
                                           Center(
                                             child: Text(
-                                              (recordSnapshot.data.documents[index]['harvestDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.documents[index]['harvestDate'].toDate()) : '+ Add Entry',
+                                              (recordSnapshot.data.docs[index]['harvestDate'] != null) ? DateFormat('MMM dd, yyyy').format(recordSnapshot.data.docs[index]['harvestDate'].toDate()) : '+ Add Entry',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 18,
@@ -448,7 +448,7 @@ class _RecordsState extends State<Records> {
                                       ),
                                     ),
                                     onLongPress: () {
-                                      if(recordSnapshot.data.documents[index]['harvestDate'] != null) {
+                                      if(recordSnapshot.data.docs[index]['harvestDate'] != null) {
                                         showModalBottomSheet<void>(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -469,7 +469,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
+                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
                                                     );
                                                   },
                                                 )
@@ -479,10 +479,10 @@ class _RecordsState extends State<Records> {
                                       }
                                     },
                                     onTap: () {
-                                      if(recordSnapshot.data.documents[index]['harvestDate'] == null){
+                                      if(recordSnapshot.data.docs[index]['harvestDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.documentID , record: recordSnapshot.data.documents[index])),
+                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
                                         );
                                       }
                                     },
@@ -501,7 +501,7 @@ class _RecordsState extends State<Records> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF369d34),
         onPressed: (){
-          buildAddRecordDialog(context, widget.farmData['farmName'], widget.farmData['cropsPlanted'], widget.farmData.documentID);
+          buildAddRecordDialog(context, widget.farmData['farmName'], widget.farmData['cropsPlanted'], widget.farmData.docID);
         },
         tooltip: 'Add Record',
         child: Icon(Icons.add),

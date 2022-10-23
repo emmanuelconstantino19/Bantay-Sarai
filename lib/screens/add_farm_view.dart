@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/screens/finalize_farm.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 class AddFarmView extends StatefulWidget {

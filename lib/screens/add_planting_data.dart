@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/Record.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class AddPlantingData extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class AddPlantingData extends StatefulWidget {
 
 
 class _AddPlantingDataState extends State<AddPlantingData> {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
   TextEditingController _targetMarketController = new TextEditingController();
   TextEditingController _expectedQtyOfHarvest = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -22,13 +22,13 @@ class _AddPlantingDataState extends State<AddPlantingData> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override
@@ -63,9 +63,9 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                                 farmChosen = newValue;
                               });
                             },
-                            items: snapshot.data.documents.map((DocumentSnapshot document) {
+                            items: snapshot.data.docs.map((DocumentSnapshot document) {
                               return new DropdownMenuItem<String>(
-                                  value: document.documentID,
+                                  value: document.id,
                                   child: Text('${document['farmName']} - ${document['cropsPlanted']}')
                               );
                             }).toList(),
@@ -254,7 +254,7 @@ class _AddPlantingDataState extends State<AddPlantingData> {
                               if(_formKey.currentState.validate() && _landPreparationDate!=null && _seedlingPreparationDate!=null && _plantedDate!=null && _targetDateOfHarvest!=null){
                                 Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
-                                await db.collection("userData").document(uid).collection("farms").document(farmChosen).collection("records").add(record.toJson());
+                                await db.collection("userData").doc(uid).collection("farms").doc(farmChosen).collection("records").add(record.toJson());
                                 showToast('Successfully added new record.', Colors.green);
                                 Navigator.of(context).popUntil((route) => route.isFirst);
                               } else {
@@ -301,7 +301,7 @@ class _AddPlantingDataState extends State<AddPlantingData> {
 
   Stream<QuerySnapshot> getFarmStreamSnapshots(BuildContext context) async* {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    yield* Firestore.instance.collection('userData').document(uid).collection('farms').snapshots();
+    yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('farms').snapshots();
   }
 }
 
@@ -317,7 +317,7 @@ class AddPlantingDataInner extends StatefulWidget {
 }
 
 class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
   TextEditingController _targetMarketController = new TextEditingController();
   TextEditingController _expectedQtyOfHarvest = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -326,13 +326,13 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override
@@ -559,12 +559,12 @@ class _AddPlantingDataInnerState extends State<AddPlantingDataInner> {
                                 Record record = new Record(_landPreparationDate, _seedlingPreparationDate, _plantedDate, _targetDateOfHarvest, _targetMarketController.text, _expectedQtyOfHarvest.text,null,null,null,null,null,null);
                                 final uid = await Provider.of(context).auth.getCurrentUID();
                                 if(widget.record == null){
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").add(record.toJson());
+                                  await db.collection("userData").doc(uid).collection("farms").doc(widget.farmID).collection("records").add(record.toJson());
                                   showToast('Successfully added new record.', Colors.green);
                                 }
                                 else{
-                                  await db.collection("userData").document(uid).collection("farms").document(widget.farmID).collection("records").document(widget.record.documentID)
-                                      .updateData({
+                                  await db.collection("userData").doc(uid).collection("farms").doc(widget.farmID).collection("records").doc(widget.record.documentID)
+                                      .update({
                                     'landPreparationDate': _landPreparationDate,
                                     'seedlingPreparationDate': _seedlingPreparationDate,
                                     'plantedDate': _plantedDate,

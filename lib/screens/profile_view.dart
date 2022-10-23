@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/widgets/custome_list_tile.dart';
 import 'package:bantay_sarai/widgets/small_button.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -28,13 +29,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   @override
@@ -268,27 +269,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
-      user.birthDate = result.data['birthDate'];
-      user.placeOfBirth = result.data['placeOfBirth'];
-      user.sex = result.data['sex'];
-      user.isPwd = result.data['isPwd'];
-      user.membership = result.data['membership'];
+        .doc(uid)
+        .get().then((DocumentSnapshot documentSnapshot) {
+      user.firstName = documentSnapshot['firstName'];
+      user.lastName = documentSnapshot['lastName'];
+      user.middleName = documentSnapshot['middleName'];
+      user.birthDate = documentSnapshot['birthDate'];
+      user.placeOfBirth = documentSnapshot['placeOfBirth'];
+      user.sex = documentSnapshot['sex'];
+      user.isPwd = documentSnapshot['isPwd'];
+      user.membership = documentSnapshot['membership'];
     });
 
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-      result.documents.forEach((f) => cropList.add(f['cropsPlanted']));
+        .doc(uid)
+        .collection('farms').get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((f) => cropList.add(f['cropsPlanted']));
       noOfCrops = cropList.toSet().toList().join(", ");
-      noOfFarms = result.documents.length.toString();
-      loc = result.documents[0]['location'];
+      noOfFarms = querySnapshot.docs.length.toString();
+      loc = querySnapshot.docs[0]['location'];
     });
   }
 
@@ -523,8 +524,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       await Provider.of(context)
                           .db
                           .collection('userData')
-                          .document(uid)
-                          .setData(user.toJson());
+                          .doc(uid)
+                          .update(user.toJson());
                       Navigator.of(context).pop();
                     }else{
                       showToast('Please complete the form.', Colors.red);

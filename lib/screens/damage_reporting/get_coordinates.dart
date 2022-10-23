@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:io';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:bantay_sarai/screens/damage_reporting/finalize_report.dart';
 
@@ -61,7 +61,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 // create a new file in temporary path with random file name.
     File file = new File('$tempPath'+ uuid.v1().toString() +'.png');
 // call http.get method and pass imageUrl into it to get response.
-    http.Response response = await http.get(imageUrl);
+    http.Response response = await http.get(Uri.parse(imageUrl));
 // write bodyBytes received in response to file.
     await file.writeAsBytes(response.bodyBytes);
 // now return the file which is created with random name in
@@ -70,7 +70,7 @@ class _GetCoordinatesState extends State<GetCoordinates> {
   }
 
   Future getImage(index) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    var image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 20);
     Position coordinates;
     if(image!=null){
       coordinates = await _determinePosition();
@@ -79,16 +79,16 @@ class _GetCoordinatesState extends State<GetCoordinates> {
     setState(() {
       if(image!=null){
         _coordinates[index] = coordinates;
-        _image[index] = image;
+        _image[index] = File(image.path);
       }
     });
   }
 
   Future takeAdditionalImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 20);
+    var image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 20);
     setState(() {
       if(image!=null){
-        _image.add(image);
+        _image.add(File(image.path));
       }
     });
   }
@@ -132,13 +132,13 @@ class _GetCoordinatesState extends State<GetCoordinates> {
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
 

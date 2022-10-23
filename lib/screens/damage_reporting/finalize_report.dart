@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -22,19 +22,19 @@ class FinalizeReport extends StatefulWidget {
 }
 
 class _FinalizeReportState extends State<FinalizeReport> {
-  final db = Firestore.instance;
+  final db = FirebaseFirestore.instance;
   int uploads = 0;
   bool isUploading = false;
 
   void showToast(message, Color color) {
     print(message);
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: color,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    // Fluttertoast.showToast(
+    //     msg: message,
+    //     toastLength: Toast.LENGTH_LONG,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: color,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0);
   }
 
   Future uploadPic(BuildContext context) async{
@@ -42,14 +42,34 @@ class _FinalizeReportState extends State<FinalizeReport> {
     String downloadUrl;
     for(var i = 0 ; i < widget.images.length; i++){
       String fileName = basename(widget.images[i].path);
-      StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(widget.images[i]);
-      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-      downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      downloadUrls.add(downloadUrl);
-      setState(() {
-        uploads++;
+      Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = firebaseStorageRef.putFile(widget.images[i]);
+      uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+        switch (taskSnapshot.state) {
+          case TaskState.running:
+            final progress =
+                100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+            print("Upload is $progress% complete.");
+            break;
+          case TaskState.paused:
+            print("Upload is paused.");
+            break;
+          case TaskState.canceled:
+            print("Upload was canceled");
+            break;
+          case TaskState.error:
+            // Handle unsuccessful uploads
+            break;
+          case TaskState.success:
+            // Handle successful uploads on complete
+            // ...
+            downloadUrl = await taskSnapshot.ref.getDownloadURL();
+            downloadUrls.add(downloadUrl);
+            setState(() {
+              uploads++;
+            });
+            break;
+        }
       });
     }
     if(widget.details!=null){
@@ -62,14 +82,14 @@ class _FinalizeReportState extends State<FinalizeReport> {
 
   deleteReport() async {
     for(var index = 0 ; index < widget.details['urls'].length; index++){
-      var imageRef = await FirebaseStorage.instance.getReferenceFromUrl(widget.details['urls'][index]);
+      var imageRef = await FirebaseStorage.instance.refFromURL(widget.details['urls'][index]);
       imageRef.delete();
     }
   }
 
   void updateData(BuildContext context, List<String> downloadUrls) async {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    await db.collection("userData").document(uid).collection("damageReporting").document(widget.details.documentID).updateData({
+    await db.collection("userData").doc(uid).collection("damageReporting").doc(widget.details.documentID).update({
       'crops':widget.selectedCrops,
       'urls': downloadUrls,
       'coordinate1': [widget.coordinates[0].latitude,widget.coordinates[0].longitude],
@@ -89,7 +109,7 @@ class _FinalizeReportState extends State<FinalizeReport> {
 
   void createData(BuildContext context, List<String> downloadUrls) async {
     final uid = await Provider.of(context).auth.getCurrentUID();
-    await db.collection("userData").document(uid).collection("damageReporting").add({
+    await db.collection("userData").doc(uid).collection("damageReporting").add({
       'crops':widget.selectedCrops,
       'urls': downloadUrls,
       'coordinate1': [widget.coordinates[0].latitude,widget.coordinates[0].longitude],

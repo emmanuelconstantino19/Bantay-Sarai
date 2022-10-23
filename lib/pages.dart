@@ -8,6 +8,8 @@ import 'package:bantay_sarai/screens/farm_view.dart';
 import 'package:bantay_sarai/screens/add_planting_data.dart';
 import 'package:bantay_sarai/screens/add_harvesting_data.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:web3dart/web3dart.dart';
 
 class ExplorePage extends StatefulWidget {
   final Position myLocation;
@@ -134,13 +136,13 @@ class _ExplorePageState extends State<ExplorePage> {
       await Provider.of(context)
           .db
           .collection('userData')
-          .document(uid)
-          .collection('farms').getDocuments().then((result) {
-        var farmsWithCoordinates = result.documents.where((farm) => farm.data['coordinates']!=null).toList();
+          .doc(uid)
+          .collection('farms').get().then((QuerySnapshot querySnapshot) {
+        var farmsWithCoordinates = querySnapshot.docs.where((farm) => farm['coordinates']!=null).toList();
         if(farmsWithCoordinates.length > 0){
-          _initialPosition = CameraPosition(target: LatLng(farmsWithCoordinates[0].data['coordinates'][0], farmsWithCoordinates[0].data['coordinates'][1]), zoom:12);
+          _initialPosition = CameraPosition(target: LatLng(farmsWithCoordinates[0]['coordinates'][0], farmsWithCoordinates[0]['coordinates'][1]), zoom:12);
           for(var i = 0; i < farmsWithCoordinates.length; i++){
-            markers.add(Marker(position: LatLng(farmsWithCoordinates[i].data['coordinates'][0], farmsWithCoordinates[i].data['coordinates'][1]), markerId: MarkerId((i+1).toString())));
+            markers.add(Marker(position: LatLng(farmsWithCoordinates[i]['coordinates'][0], farmsWithCoordinates[i]['coordinates'][1]), markerId: MarkerId((i+1).toString())));
           }
         }
         else{
@@ -157,12 +159,14 @@ class _ExplorePageState extends State<ExplorePage> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
-    });
+        .doc(uid)
+        .get().then((DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists) {
+              user.firstName = documentSnapshot.get('firstName');
+              user.lastName = documentSnapshot.get('lastName');
+              user.middleName = documentSnapshot.get('middleName');
+            }
+          });
   }
 
   Widget makeCategory({isActive, title}) {
