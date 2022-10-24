@@ -18,6 +18,7 @@ import 'package:simple_speed_dial/simple_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bantay_sarai/screens/sarai_store/buyer_sceen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -184,6 +185,16 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => OtherApps()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('STORE', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BuyerScreen()),
                 );
               },
             ),
