@@ -1,3 +1,4 @@
+import 'package:bantay_sarai/screens/sarai_store/seller_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/services/auth_service.dart';
 import 'package:bantay_sarai/screens/home_view.dart';
@@ -195,6 +196,16 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => BuyerScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('STORE ADMIN', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+              onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SellerScreen()),
                 );
               },
             ),
