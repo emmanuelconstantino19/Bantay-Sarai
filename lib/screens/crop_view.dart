@@ -819,7 +819,7 @@ class _CropViewState extends State<CropView> {
   }
 
   _getRecordData(uid,farmId) async {
-    var result = await Provider.of(context).db.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').orderBy('plantedDate',descending: true).limit(1).getDocuments();
+    var result = await Provider.of(context).db.collection('userData').doc(uid).collection('farms').doc(farmId).collection('records').orderBy('plantedDate',descending: true).limit(1).get();
     return result.docs;
   }
 

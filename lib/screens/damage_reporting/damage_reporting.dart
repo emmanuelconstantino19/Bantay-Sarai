@@ -150,7 +150,7 @@ class _DamageReportingState extends State<DamageReporting> {
       var imageRef = await FirebaseStorage.instance.refFromURL(report['urls'][index]);
       imageRef.delete();
     }
-    await Provider.of(context).db.collection('userData').doc(uid).collection('damageReporting').doc(report.docID).delete();
+    await Provider.of(context).db.collection('userData').doc(uid).collection('damageReporting').doc(report.id).delete();
   }
 
   Widget refreshBg() {
@@ -204,7 +204,7 @@ class _DamageReportingState extends State<DamageReporting> {
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
                 return Dismissible(
-                  key: Key(snapshot.data.docs[index].docID),
+                  key: Key(snapshot.data.docs[index].id),
                   onDismissed: (direction) {
                     deleteReport(snapshot.data.docs[index]);
                     showToast('Successfully deleted report.', Colors.green);

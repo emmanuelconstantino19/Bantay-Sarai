@@ -234,7 +234,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
     var rdata = await Provider.of(context)
         .db
         .collection('saraiAlerts')
-        .document('rainfallOutlook').get();
+        .doc('rainfallOutlook').get();
     setState(() {
       allRainfallData = rdata;
       rainfallData = fetchRainfallOutlookData('IPB, UP Los Baños, Laguna');
@@ -245,7 +245,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
     var ddata = await Provider.of(context)
         .db
         .collection('saraiAlerts')
-        .document('droughtForecast').get();
+        .doc('droughtForecast').get();
     setState(() {
       allDroughtData = ddata;
       dcafData = fetchDCAFData('IPB, UP Los Baños, Laguna');
@@ -256,7 +256,7 @@ class _SaraiAlertsState extends State<SaraiAlerts> {
     var icmfData = await Provider.of(context)
         .db
         .collection('saraiAlerts')
-        .document('icmfBulletin').get();
+        .doc('icmfBulletin').get();
     setState(() {
       allICMFData = icmfData;
     });

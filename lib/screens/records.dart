@@ -46,7 +46,7 @@ class _RecordsState extends State<Records> {
     }
     else if(choice==DeleteRecord){
         final uid = await Provider.of(context).auth.getCurrentUID();
-        await _deleteRecordData(uid, widget.farmData.docID,recordData.id);
+        await _deleteRecordData(uid, widget.farmData.id,recordData.id);
         showToast('Successfully deleted entry.', Colors.green);
 
     }
@@ -286,7 +286,7 @@ class _RecordsState extends State<Records> {
         elevation: 1,
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: getRecordStreamSnapshots(context,widget.farmData.docID),
+          stream: getRecordStreamSnapshots(context,widget.farmData.id),
           builder: (context,recordSnapshot){
             if(!recordSnapshot.hasData) return Center(child: CircularProgressIndicator());
             if(recordSnapshot.data.docs.length==0){
@@ -392,7 +392,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
+                                                      MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.id , record: recordSnapshot.data.docs[index])),
                                                     );
                                                   },
                                                 )
@@ -405,7 +405,7 @@ class _RecordsState extends State<Records> {
                                       if(recordSnapshot.data.docs[index]['plantedDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
+                                          MaterialPageRoute(builder: (context) => AddPlantingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.id , record: recordSnapshot.data.docs[index])),
                                         );
                                       }
                                     },
@@ -469,7 +469,7 @@ class _RecordsState extends State<Records> {
                                                     Navigator.of(context).pop();
                                                     Navigator.push(
                                                       context,
-                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
+                                                      MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.id , record: recordSnapshot.data.docs[index])),
                                                     );
                                                   },
                                                 )
@@ -482,7 +482,7 @@ class _RecordsState extends State<Records> {
                                       if(recordSnapshot.data.docs[index]['harvestDate'] == null){
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.docID , record: recordSnapshot.data.docs[index])),
+                                          MaterialPageRoute(builder: (context) => AddHarvestingDataInner(farmName:widget.farmData['farmName'],cropPlanted:widget.farmData['cropsPlanted'], farmID: widget.farmData.id , record: recordSnapshot.data.docs[index])),
                                         );
                                       }
                                     },
@@ -501,7 +501,7 @@ class _RecordsState extends State<Records> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF369d34),
         onPressed: (){
-          buildAddRecordDialog(context, widget.farmData['farmName'], widget.farmData['cropsPlanted'], widget.farmData.docID);
+          buildAddRecordDialog(context, widget.farmData['farmName'], widget.farmData['cropsPlanted'], widget.farmData.id);
         },
         tooltip: 'Add Record',
         child: Icon(Icons.add),

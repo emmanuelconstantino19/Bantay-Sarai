@@ -5,6 +5,7 @@ import 'package:bantay_sarai/models/Farm.dart';
 import 'package:bantay_sarai/screens/add_farm_view.dart';
 import 'package:bantay_sarai/screens/crop_view.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FarmView extends StatefulWidget {
   @override
@@ -271,10 +272,10 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-      result.documents.forEach((f) => (map1.containsKey(f['cropsPlanted'])) ? map1[f['cropsPlanted']] += double.parse(f['farmSize']) : map1[f['cropsPlanted']] = double.parse(f['farmSize']));
-    });
+        .doc(uid)
+        .collection('farms').get().then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((f) => (map1.containsKey(f['cropsPlanted'])) ? map1[f['cropsPlanted']] += double.parse(f['farmSize']) : map1[f['cropsPlanted']] = double.parse(f['farmSize']));
+        });
 
 //    var doc_ref = await Provider.of(context)
 //        .db
@@ -293,22 +294,22 @@ class _FarmViewState extends State<FarmView> {
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .get().then((result) {
-      user.firstName = result.data['firstName'];
-      user.lastName = result.data['lastName'];
-      user.middleName = result.data['middleName'];
+        .doc(uid)
+        .get().then((DocumentSnapshot documentSnapshot) {
+      user.firstName = documentSnapshot['firstName'];
+      user.lastName = documentSnapshot['lastName'];
+      user.middleName = documentSnapshot['middleName'];
     });
 
     await Provider.of(context)
         .db
         .collection('userData')
-        .document(uid)
-        .collection('farms').getDocuments().then((result) {
-            result.documents.forEach((f) => cropList.add(f['cropsPlanted']));
+        .doc(uid)
+        .collection('farms').get().then((QuerySnapshot querySnapshot) {
+            querySnapshot.docs.forEach((f) => cropList.add(f['cropsPlanted']));
             noOfCrops = cropList.toSet().toList().length.toString();
-            noOfFarms = result.documents.length.toString();
-            loc = result.documents[0]['location'];
+            noOfFarms = querySnapshot.docs.length.toString();
+            loc = querySnapshot.docs[0]['location'];
         });
 
   }
