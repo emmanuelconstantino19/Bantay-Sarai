@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/ethereum_utils.dart';
 import 'categories.dart';
-import 'popular_products.dart';
 
 import '../../../constants.dart';
 import 'product_card.dart';
 import 'section_title.dart';
 import 'details_screen.dart';
+import 'checkout_screen.dart';
 
 import 'package:badges/badges.dart';
 
@@ -22,6 +22,7 @@ class BuyerScreen extends StatefulWidget {
 
 class _BuyerScreenState extends State<BuyerScreen> {
   EthereumUtils ethUtils = EthereumUtils();
+  List<Product> cart = [];
 
   @override
   void initState() {
@@ -37,6 +38,26 @@ class _BuyerScreenState extends State<BuyerScreen> {
   Stream<QuerySnapshot> getItemsStreamSnapshotsBySold(BuildContext context) async* {
     //final uid = await Provider.of(context).auth.getCurrentUID();
     yield* FirebaseFirestore.instance.collection('storeItems').orderBy('sold',descending: true).snapshots();
+  }
+
+  void addToCart(Product record, int itemCount){
+    setState((){
+      bool present = false;
+
+      for(var i=0;i<cart.length;i++) {
+          // you may have to check the equality operator
+          if(cart[i].id == record.id) {
+            cart[i].toBuy = itemCount;
+            present=true;
+            break;
+          }
+      }
+
+      if(!present)
+        cart.add(record);
+      else
+        print("Record already in cart");
+    });
   }
 
   @override
@@ -56,14 +77,21 @@ class _BuyerScreenState extends State<BuyerScreen> {
             ),
           actions: [
             Badge(
-              position: BadgePosition.topEnd(top: 0, end: 3),
+              position: BadgePosition.topEnd(top: 20, end: 0),
               animationDuration: Duration(milliseconds: 300),
               animationType: BadgeAnimationType.slide,
               badgeContent: Text(
-                "5",
+                cart.length.toString(),
                 style: TextStyle(color: Colors.white),
               ),
-              child: IconButton(icon: Icon(Icons.shopping_cart,color: Colors.black54,), onPressed: () {}),
+              child: IconButton(icon: Icon(Icons.shopping_cart,color: Colors.black54,), onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                    CheckoutScreen(cart: cart)
+                ));
+              }),
             )
             // IconButton(
             //   icon: const Icon(
@@ -128,15 +156,26 @@ class _BuyerScreenState extends State<BuyerScreen> {
                               padding: const EdgeInsets.only(right: defaultPadding),
                               child: ProductCard(
                                 title: snapshot.data.docs[index]['name'],
-                                image: demo_product[index].image,
+                                image: null,
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
                                 press: () {
+                                  Product product = new Product(
+                                    snapshot.data.docs[index].id,
+                                    null,
+                                    snapshot.data.docs[index]['name'],
+                                    snapshot.data.docs[index]['description'],
+                                    snapshot.data.docs[index]['stock'],
+                                    snapshot.data.docs[index]['address'],
+                                    snapshot.data.docs[index]['price'],
+                                    snapshot.data.docs[index]['category'],
+                                    0
+                                  );
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailsScreen(product: demo_product[index]),
+                                            DetailsScreen(product: product, customFunction: addToCart),
                                       ));
                                 },
                               ),
@@ -179,7 +218,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                               padding: const EdgeInsets.only(right: defaultPadding),
                               child: ProductCard(
                                 title: snapshot.data.docs[index]['name'],
-                                image: demo_product[index].image,
+                                image: null,
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
                                 press: () {

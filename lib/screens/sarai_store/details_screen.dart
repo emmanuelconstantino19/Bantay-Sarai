@@ -1,17 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import 'package:bantay_sarai/models/Product.dart';
 
 class DetailsScreen extends StatefulWidget {
   final Product product;
+  final customFunction;
 
-  const DetailsScreen({ Key key, @required this.product}) : super(key: key);
+  const DetailsScreen({ Key key, @required this.product, @required this.customFunction}) : super(key: key);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  int itemCount = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +39,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       body: Column(
         children: [
-          Image.asset(
-            widget.product.image,
-            height: MediaQuery.of(context).size.height * 0.4,
-            fit: BoxFit.cover,
-          ),
+          // Image.asset(
+          //   widget.product.image,
+          //   height: MediaQuery.of(context).size.height * 0.4,
+          //   fit: BoxFit.cover,
+          // ),
           const SizedBox(height: defaultPadding * 1.5),
           Expanded(
             child: Container(
@@ -59,28 +63,76 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.product.title,
+                          widget.product.name,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                       const SizedBox(width: defaultPadding),
                       Text(
-                        "\$" + widget.product.price.toString(),
+                        widget.product.price.toString() + " SRB / KG",
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: defaultPadding),
                     child: Text(
-                      "A Henley shirt is a collarless pullover shirt, by a round neckline and a placket about 3 to 5 inches (8 to 13 cm) long and usually having 2–5 buttons.",
+                      widget.product.description,
                     ),
                   ),
-                  Text(
-                    "Colors",
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
+                  // Text(
+                  //   "Colors",
+                  //   style: Theme.of(context).textTheme.subtitle2,
+                  // ),
                   const SizedBox(height: defaultPadding / 2),
+                  Container(
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            if (itemCount <= 0) {
+                              setState(() {
+                              itemCount = 0;
+                            });
+                            } else {
+                              setState(() {
+                              itemCount--;
+                            });
+                            }
+                          },
+                          child: Icon(
+                            Icons.remove,
+                            size: 19.0,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 10.0, top: 1.0, right: 10.0),
+                          child: Text(
+                            itemCount.toString(),
+                            style: TextStyle(
+                                color: Colors.black
+                            ),
+                          ),
+                        ),
+
+                        // Add count button
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              itemCount++;
+                            });
+                          },
+                          child: Icon(
+                            Icons.add,
+                            size: 19.0,
+                          ),
+                        ),
+
+                      ],
+                    )
+                ),
                   // Row(
                   //   children: const [
                   //     ColorDot(
@@ -104,6 +156,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       height: 48,
                       child: ElevatedButton(
                         onPressed: () {
+                          widget.product.toBuy = itemCount;
+                          widget.customFunction(widget.product, itemCount);
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,

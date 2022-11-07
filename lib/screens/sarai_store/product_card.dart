@@ -29,18 +29,18 @@ class ProductCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: bgColor,
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(defaultBorderRadius)),
-              ),
-              child: Image.asset(
-                image,
-                height: 132,
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   decoration: BoxDecoration(
+            //     color: bgColor,
+            //     borderRadius: const BorderRadius.all(
+            //         Radius.circular(defaultBorderRadius)),
+            //   ),
+            //   child: Image.asset(
+            //     image,
+            //     height: 132,
+            //   ),
+            // ),
             const SizedBox(height: defaultPadding / 2),
             Row(
               children: [
