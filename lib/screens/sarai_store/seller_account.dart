@@ -1,3 +1,4 @@
+import 'package:bantay_sarai/screens/sarai_store/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'section_title.dart';
 import '../../../constants.dart';
@@ -149,20 +150,20 @@ class CustomListItemTwo extends StatelessWidget {
   }
 }
 
-class Account extends StatefulWidget {
-  const Account({ Key key }) : super(key: key);
+class SellerAccount extends StatefulWidget {
+  const SellerAccount({ Key key }) : super(key: key);
 
   @override
-  _AccountState createState() => _AccountState();
+  _SellerAccountState createState() => _SellerAccountState();
 }
 
-class _AccountState extends State<Account> {
+class _SellerAccountState extends State<SellerAccount> {
   EthereumUtils ethUtils = EthereumUtils();
   var _data;
   @override
   void initState() {
     ethUtils.initial();
-    ethUtils.getBalance().then((value) {
+    ethUtils.getBalanceSeller().then((value) {
       setState(() {
         _data = value;
       });
@@ -231,7 +232,7 @@ class _AccountState extends State<Account> {
                           ),
                           SizedBox(width:15),
                           Text(
-                            "Purchases",
+                            "Transactions",
                             style: Theme.of(context).textTheme.subtitle1.copyWith(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
@@ -256,16 +257,24 @@ class _AccountState extends State<Account> {
                                 return ListView.builder(
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (context, index) {
-                                    return CustomListItemTwo(
-                                      //thumbnail: Image.network(snapshot.data.docs[index]['urls'][0]),
-                                      thumbnail: null,
-                                      title: snapshot.data.docs[index]['status'],
-                                      subtitle: "Total: " + snapshot.data.docs[index]['total'].toString() + " SRB",
-                                      author: snapshot.data.docs[index]['items'].length.toString() + " items",
-                                      publishDate: "Purchased: " + DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['createdAt'].toDate()),
-                                      // readDuration: DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['updatedAt'].toDate()),
-                                      //readDuration: snapshot.data.docs[index]['price'],
-                                    );
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => TransactionScreen(transaction: snapshot.data.docs[index])),
+                                        );
+                                      },
+                                      child: CustomListItemTwo(
+                                          //thumbnail: Image.network(snapshot.data.docs[index]['urls'][0]),
+                                          thumbnail: null,
+                                          title: snapshot.data.docs[index]['status'],
+                                          subtitle: "Total: " + snapshot.data.docs[index]['total'].toString() + " SRB",
+                                          author: snapshot.data.docs[index]['items'].length.toString() + " items",
+                                          publishDate: "Purchased: " + DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['createdAt'].toDate()),
+                                          // readDuration: DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['updatedAt'].toDate()),
+                                          //readDuration: snapshot.data.docs[index]['price'],
+                                        ),
+                                      );
                                   }
                                 );
                               }

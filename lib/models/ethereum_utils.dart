@@ -22,6 +22,14 @@ class EthereumUtils {
     return res[0];
   }
 
+  Future getBalanceSeller() async {
+    final contract = await getDeployedContract();
+    final etherFunction = contract.function("balanceOf");
+    final result = await web3client.call(contract: contract, function: etherFunction, params: [EthereumAddress.fromHex("0xD8656D09eD56b632af530863838287a022103f5B")]);
+    List<dynamic> res = result;
+    return res[0];
+  }
+
   Future<String> sendEth(int amount) async {
   var bigAmount = BigInt.from(amount);
     EthPrivateKey privateKeyCred = EthPrivateKey.fromHex('97ead9dfd690c6ea839fe258fbe9a44e92470c1ab3177a4bc0d09ed25bc16c06');

@@ -199,15 +199,20 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            ListTile(
-              title: Text('STORE ADMIN', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
-              onTap: (){
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SellerScreen()),
-                );
-              },
+            FutureBuilder(
+            future: _getProfileData(),
+            builder: (context, snapshot) {
+                return (contactNumber=="+639999999999") ? ListTile(
+                  title: Text('STORE ADMIN', style: TextStyle(color:Colors.black,fontWeight:FontWeight.bold,fontSize: 18)),
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SellerScreen()),
+                    );
+                  },
+                ) : Container();
+            }
             ),
 //            ListTile(
 //              title: Text('Log Out'),

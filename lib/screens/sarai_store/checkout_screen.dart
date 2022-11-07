@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/models/ethereum_utils.dart';
+import 'package:bantay_sarai/widgets/provider_widget.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<Product> cart;
@@ -102,6 +103,7 @@ class LunchState extends State<CheckoutScreen> {
                     margin: EdgeInsets.only(top: 30.0),
                     child: RaisedButton(
                       onPressed: () async {
+                        var uid = await Provider.of(context).auth.getCurrentUID();
                         List cartItems = [];
                         for(var item in widget.cart){
                           cartItems.add(item.toJson());
@@ -112,7 +114,8 @@ class LunchState extends State<CheckoutScreen> {
                           'items': cartItems,
                           'total': total,
                           'createdAt': FieldValue.serverTimestamp(),
-                          'updatedAt': FieldValue.serverTimestamp()
+                          'updatedAt': FieldValue.serverTimestamp(),
+                          'buyer': uid,
                         }).then((value) async {
                           await ethUtils.sendEth(total);
                             print("Successful!");

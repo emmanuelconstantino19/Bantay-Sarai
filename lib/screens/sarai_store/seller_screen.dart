@@ -1,4 +1,5 @@
 import 'package:bantay_sarai/screens/sarai_store/add_item.dart';
+import 'package:bantay_sarai/screens/sarai_store/seller_account.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/widgets/provider_widget.dart';
@@ -194,7 +195,21 @@ class _SellerScreenState extends State<SellerScreen> {
           title: Text('Seller Dashboard'),
           centerTitle: true,
           elevation: 0,
+          leading: IconButton(
+              onPressed:(){
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                    SellerAccount()
+                ));
+              },
+              icon: const Icon(
+                Icons.menu,
+              ),
+            ),
         ),
+        
         body: StreamBuilder(
           stream: getReportsStreamSnapshots(context),
           builder: (content, snapshot){
