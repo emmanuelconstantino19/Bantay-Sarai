@@ -7,6 +7,7 @@ import 'product_card.dart';
 import 'section_title.dart';
 import 'details_screen.dart';
 import 'checkout_screen.dart';
+import 'account.dart';
 
 import 'package:badges/badges.dart';
 
@@ -40,6 +41,12 @@ class _BuyerScreenState extends State<BuyerScreen> {
     yield* FirebaseFirestore.instance.collection('storeItems').orderBy('sold',descending: true).snapshots();
   }
 
+  void removeFromCart(int index){
+    setState((){
+      cart.removeAt(index);
+    });
+  }
+
   void addToCart(Product record, int itemCount){
     setState((){
       bool present = false;
@@ -49,6 +56,10 @@ class _BuyerScreenState extends State<BuyerScreen> {
           if(cart[i].id == record.id) {
             cart[i].toBuy = itemCount;
             present=true;
+
+            if(itemCount==0){
+              cart.removeAt(i);
+            }
             break;
           }
       }
@@ -69,7 +80,14 @@ class _BuyerScreenState extends State<BuyerScreen> {
           centerTitle: true,
           elevation: 0,
           leading: IconButton(
-              onPressed:(){},
+              onPressed:(){
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                    Account()
+                ));
+              },
               icon: const Icon(
                 Icons.menu,
                 color: Colors.black54,
@@ -89,7 +107,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                    CheckoutScreen(cart: cart)
+                    CheckoutScreen(cart: cart, customFunction: removeFromCart)
                 ));
               }),
             )
@@ -160,6 +178,16 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
                                 press: () {
+                                  int toBuy = 1;
+
+                                  for(var i=0;i<cart.length;i++) {
+                                      // you may have to check the equality operator
+                                      if(cart[i].id == snapshot.data.docs[index].id) {
+                                        toBuy = cart[i].toBuy;
+                                        break;
+                                      }
+                                  }
+
                                   Product product = new Product(
                                     snapshot.data.docs[index].id,
                                     null,
@@ -169,7 +197,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                     snapshot.data.docs[index]['address'],
                                     snapshot.data.docs[index]['price'],
                                     snapshot.data.docs[index]['category'],
-                                    0
+                                    toBuy
                                   );
                                   Navigator.push(
                                       context,

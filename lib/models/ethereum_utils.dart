@@ -32,7 +32,7 @@ class EthereumUtils {
         Transaction.callContract(
           contract: contract,
           function: etherFunction,
-          parameters: [EthereumAddress.fromHex("0xD8656D09eD56b632af530863838287a022103f5B"),bigAmount],
+          parameters: [EthereumAddress.fromHex("0xe5D4E0683ef0c66581928D253F6CC7c3d010eBCc"),bigAmount],
           maxGas: 100000,
         ),chainId: 5,
         fetchChainIdFromNetworkId: false);

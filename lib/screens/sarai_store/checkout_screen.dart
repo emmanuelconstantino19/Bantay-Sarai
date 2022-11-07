@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bantay_sarai/models/ethereum_utils.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<Product> cart;
+  final customFunction;
 
-  const CheckoutScreen({ Key key, @required this.cart}) : super(key: key);
+  const CheckoutScreen({ Key key, @required this.cart, @required this.customFunction}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => LunchState();
@@ -13,10 +16,13 @@ class CheckoutScreen extends StatefulWidget {
 
 class LunchState extends State<CheckoutScreen> {
   int total = 0;
+  final db = FirebaseFirestore.instance;
+  EthereumUtils ethUtils = EthereumUtils();
 
   @override
   void initState() {
     getTotal();
+    ethUtils.initial();
     super.initState();
   }
 
@@ -61,7 +67,8 @@ class LunchState extends State<CheckoutScreen> {
           Expanded(
             child: ListView(
                 children: <Widget>[
-                  for(var item in widget.cart) dummyDataOfListView(item),
+                  for(var i=0;i<widget.cart.length;i++) dummyDataOfListView(widget.cart[i],i),
+                  //for(var item in widget.cart) dummyDataOfListView(item),
                 ],
               ),
           ),
@@ -94,8 +101,23 @@ class LunchState extends State<CheckoutScreen> {
                 child: Container(
                     margin: EdgeInsets.only(top: 30.0),
                     child: RaisedButton(
-                      onPressed: () {
-                        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyOrdersScreen()));
+                      onPressed: () async {
+                        List cartItems = [];
+                        for(var item in widget.cart){
+                          cartItems.add(item.toJson());
+                        }
+
+                        await db.collection("transactions").add({
+                          'status':"To Prepare",
+                          'items': cartItems,
+                          'total': total,
+                          'createdAt': FieldValue.serverTimestamp(),
+                          'updatedAt': FieldValue.serverTimestamp()
+                        }).then((value) async {
+                          await ethUtils.sendEth(total);
+                            print("Successful!");
+                        });
+                        Navigator.of(context).pop();
                       }, // When Click on Button goto Login Screen
 
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
@@ -127,7 +149,7 @@ class LunchState extends State<CheckoutScreen> {
     );
   }
 
-  dummyDataOfListView(Product item) {
+  dummyDataOfListView(Product item, int index) {
     return Container(
         child: Card(
           elevation: 4.0,
@@ -192,9 +214,13 @@ class LunchState extends State<CheckoutScreen> {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
-                        if (item.toBuy <= 0) {
+                        if (item.toBuy <= 1) {
                           setState(() {
+                            // if(item.toBuy==0){
+                            //   widget.cart.removeAt(index);
+                            // }
                             item.toBuy = 0;
+                            widget.customFunction(index);
                             getTotal();
                           });
                         } else {
@@ -239,9 +265,17 @@ class LunchState extends State<CheckoutScreen> {
             ),
 
             // trailing shows the widget on the right corner of the list item
-            trailing: Icon(
-                Icons.cancel
-            ),
+            trailing: GestureDetector(
+                onTap: () {
+                  setState(() {
+                      widget.customFunction(index);
+                      getTotal();
+                  });
+                },
+                child: Icon(
+                  Icons.cancel
+                ),
+              ),
           ),
         )
     );

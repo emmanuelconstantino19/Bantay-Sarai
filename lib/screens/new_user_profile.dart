@@ -3,6 +3,7 @@ import 'package:bantay_sarai/widgets/provider_widget.dart';
 import 'package:bantay_sarai/models/User.dart';
 import 'package:bantay_sarai/main.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewUserProfile extends StatefulWidget {
   @override
@@ -182,11 +183,11 @@ class _NewUserProfileState extends State<NewUserProfile> {
                             });
                             final uid =
                             await Provider.of(context).auth.getCurrentUID();
-                            await Provider.of(context)
+                            var ref = await Provider.of(context)
                                 .db
                                 .collection('userData')
-                                .document(uid)
-                                .setData(user.toJson());
+                                .doc(uid);
+                                ref.set(user.toJson());
                             Navigator.pushReplacement(
                                 context, MaterialPageRoute(builder: (BuildContext context) => HomeController()));
                           }

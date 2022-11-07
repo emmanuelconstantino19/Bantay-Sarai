@@ -14,7 +14,12 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  int itemCount = 1;
+  int itemCount;
+
+  void initState() {
+    itemCount = (widget.product.toBuy==0) ? 1 : widget.product.toBuy;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

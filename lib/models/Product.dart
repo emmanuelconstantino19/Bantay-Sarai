@@ -15,4 +15,16 @@ class Product {
     this.category,
     this.toBuy,
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'image': image,
+    'name': name,
+    'description': description,
+    'stock': stock,
+    'address': address,
+    'price': price,
+    'category': category,
+    'toBuy': toBuy,
+  };
 }
