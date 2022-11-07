@@ -81,6 +81,11 @@ flutter:
     - .env
     - assets/abi.json
     - assets/hvc/
+    - assets/fonts/
+    - assets/images/product_0.png
+    - assets/images/product_1.png
+    - assets/images/product_2.png
+    - assets/images/product_3.png
     - assets/damage_reporting/
     - assets/logos/half_lady_sarai.png
     - assets/images/placeholder.jpg
@@ -111,7 +116,7 @@ flutter:
     - assets/images/tomato1_light.png
     - assets/images/other crop1.png
     - assets/images/other crop1_light.png
-    - assets/icons/raindrop.png
+    - assets/icons/
     - assets/weather_underground/0.png
     - assets/weather_underground/1.png
     - assets/weather_underground/2.png

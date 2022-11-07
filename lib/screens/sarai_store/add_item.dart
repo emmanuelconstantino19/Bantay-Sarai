@@ -10,11 +10,13 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
+  String category;
   final db = FirebaseFirestore.instance;
   TextEditingController _itemNameController = new TextEditingController();
   TextEditingController _itemDescController = new TextEditingController();
   TextEditingController _itemStockController = new TextEditingController();
   TextEditingController _itemPriceController = new TextEditingController();
+  TextEditingController _addressController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -65,6 +67,39 @@ class _AddItemState extends State<AddItem> {
                     controller: _itemStockController,
                   ),
                   SizedBox(height:10),
+                  DropdownButtonFormField<String>(
+                    validator: (value) => value == null ? 'field required' : null,
+                    value: category,
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Crop Planted'),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        category = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'Banana',
+                      'Cacao',
+                      'Coconut',
+                      'Coffee',
+                      'Corn',
+                      'Rice',
+                      'Soybean',
+                      'Sugarcane',
+                      'Tomato',
+                      'Other Crop'
+                    ]
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(height:10),
                   TextFormField(
                     validator: (val) => val.isEmpty ? 'field required' : null,
                     keyboardType: TextInputType.number,
@@ -75,6 +110,18 @@ class _AddItemState extends State<AddItem> {
                         filled: true,
                         labelText: 'Price'),
                     controller: _itemPriceController,
+                  ),
+                  SizedBox(height:10),
+                  TextFormField(
+                    validator: (val) => val.isEmpty ? 'field required' : null,
+                    keyboardType: TextInputType.number,
+                    //autofocus: true,
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Address'),
+                    controller: _addressController,
                   ),
                   SizedBox(height:10),
                   Row(
@@ -92,8 +139,11 @@ class _AddItemState extends State<AddItem> {
                               await db.collection("storeItems").add({
                                 'name':_itemNameController.text,
                                 'description':_itemDescController.text,
+                                'category': category,
                                 'stock':_itemStockController.text,
                                 'price':_itemPriceController.text,
+                                'address':_addressController.text,
+                                'sold':0,
                                 'createdAt': FieldValue.serverTimestamp(),
                                 'updatedAt': FieldValue.serverTimestamp()
                               });
