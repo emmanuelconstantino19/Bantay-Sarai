@@ -107,6 +107,10 @@ class LunchState extends State<CheckoutScreen> {
                         List cartItems = [];
                         for(var item in widget.cart){
                           cartItems.add(item.toJson());
+                          await db.collection("storeItems").doc(item.id).update({
+                                'stock': (int.parse(item.stock) - item.toBuy).toString(),
+                                'sold' : item.toBuy
+                              });
                         }
 
                         await db.collection("transactions").add({

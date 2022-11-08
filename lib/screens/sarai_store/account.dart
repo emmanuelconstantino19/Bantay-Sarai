@@ -4,150 +4,7 @@ import '../../../constants.dart';
 import 'package:bantay_sarai/models/ethereum_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-
-class _ArticleDescription extends StatelessWidget {
-  const _ArticleDescription({
-    Key key,
-    @required this.title,
-    @required this.subtitle,
-    @required this.author,
-    @required this.publishDate,
-    @required this.readDuration,
-  }) : super(key: key);
-
-  final String title;
-  final String subtitle;
-  final String author;
-  final String publishDate;
-  final String readDuration;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: (title=="Unavailable") ? Colors.red : Colors.green,
-                ),
-              ),
-              const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-              Text(
-                subtitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black54,
-                ),
-              ),
-              Text(
-                publishDate,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black54,
-                ),
-              ),
-              Text(
-                author,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
-        ),
-        // Expanded(
-        //   flex: 1,
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     mainAxisAlignment: MainAxisAlignment.end,
-        //     children: <Widget>[
-        //       Text(
-        //         author,
-        //         style: const TextStyle(
-        //           fontSize: 12.0,
-        //           color: Colors.black87,
-        //         ),
-        //       ),
-        //       // Text(
-        //       //   '$readDuration',
-        //       //   style: const TextStyle(
-        //       //     fontSize: 12.0,
-        //       //     color: Colors.black54,
-        //       //   ),
-        //       // ),
-        //     ],
-        //   ),
-        // ),
-      ],
-    );
-  }
-}
-
-class CustomListItemTwo extends StatelessWidget {
-  const CustomListItemTwo({
-    Key key,
-    @required this.thumbnail,
-    @required this.title,
-    @required this.subtitle,
-    @required this.author,
-    @required this.publishDate,
-    @required this.readDuration,
-  }) : super(key: key);
-
-  final Widget thumbnail;
-  final String title;
-  final String subtitle;
-  final String author;
-  final String publishDate;
-  final String readDuration;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: SizedBox(
-        height: 100,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: 1.0,
-              child: thumbnail,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
-                child: _ArticleDescription(
-                  title: title,
-                  subtitle: subtitle,
-                  author: author,
-                  publishDate: publishDate,
-                  readDuration: readDuration,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Account extends StatefulWidget {
   const Account({ Key key }) : super(key: key);
@@ -158,6 +15,8 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   EthereumUtils ethUtils = EthereumUtils();
+  final db = FirebaseFirestore.instance;
+
   var _data;
   @override
   void initState() {
@@ -187,7 +46,7 @@ class _AccountState extends State<Account> {
           child: Column(children: [
             Card(
                   elevation: 4.0,
-                  margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 5.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
                   color: Color(0xffFFFFFF),
                   child: Padding(
                     padding: const EdgeInsets.all(defaultPadding),
@@ -217,7 +76,7 @@ class _AccountState extends State<Account> {
                 ),
                 Card(
                   elevation: 4.0,
-                  margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 5.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
                   color: Color(0xffFFFFFF),
                   child: Padding(
                     padding: const EdgeInsets.all(defaultPadding),
@@ -256,15 +115,124 @@ class _AccountState extends State<Account> {
                                 return ListView.builder(
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (context, index) {
-                                    return CustomListItemTwo(
-                                      //thumbnail: Image.network(snapshot.data.docs[index]['urls'][0]),
-                                      thumbnail: null,
-                                      title: snapshot.data.docs[index]['status'],
-                                      subtitle: "Total: " + snapshot.data.docs[index]['total'].toString() + " SRB",
-                                      author: snapshot.data.docs[index]['items'].length.toString() + " items",
-                                      publishDate: "Purchased: " + DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['createdAt'].toDate()),
-                                      // readDuration: DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['updatedAt'].toDate()),
-                                      //readDuration: snapshot.data.docs[index]['price'],
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                      child: SizedBox(
+                                        height: 120,
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            // AspectRatio(
+                                            //   aspectRatio: 0.1,
+                                            //   child: thumbnail,
+                                            // ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: <Widget>[
+                                                          Text(
+                                                            snapshot.data.docs[index]['status'],
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              color: (snapshot.data.docs[index]['status']=="Unavailable" || snapshot.data.docs[index]['status']=="Order Declined") ? Colors.red : Colors.green,
+                                                            ),
+                                                          ),
+                                                          (snapshot.data.docs[index]['status']=="Order Declined") ? Text("Please contact admin to resolve issue", style: TextStyle(color: Colors.red)) : Container(),
+                                                          const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+                                                          Text(
+                                                            "Total: " + snapshot.data.docs[index]['total'].toString() + " SRB",
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: const TextStyle(
+                                                              fontSize: 12.0,
+                                                              color: Colors.black54,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "Purchased: " + DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['createdAt'].toDate()),
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: const TextStyle(
+                                                              fontSize: 12.0,
+                                                              color: Colors.black54,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            snapshot.data.docs[index]['items'].length.toString() + " item/s",
+                                                            maxLines: 2,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            style: const TextStyle(
+                                                              fontSize: 12.0,
+                                                              color: Colors.black54,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    (snapshot.data.docs[index]['status']=="Ready for pick up") ? Expanded(
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        ElevatedButton(
+                                                                      child: Padding(
+                                                                        padding: EdgeInsets.all(16.0),
+                                                                        child: Text('Order Received'),
+                                                                      ),
+                                                                      onPressed: () async {
+                                                                        // save data to firebase
+                                                                          await db.collection("transactions").doc(snapshot.data.docs[index].id).update({
+                                                                            'status': 'Order Completed'
+                                                                          }).then((value) async {
+                                                                            await ethUtils.sendEthTo('0xD8656D09eD56b632af530863838287a022103f5B',snapshot.data.docs[index]['total']);
+                                                                              print("Successful!");
+                                                                          });
+                                                                          Navigator.of(context).pop();
+                                                                        }
+                                                                    ),
+                                                                    SizedBox(width:20),
+                                                                    OutlinedButton(
+                                                                      child: Padding(
+                                                                        padding: EdgeInsets.all(16.0),
+                                                                        child: Text('Return/Refund'),
+                                                                      ),
+                                                                      onPressed: () async {
+                                                                        // for(var item in snapshot.data.docs[index]['items']){
+                                                                        //   print(item);
+                                                                        //   var itemRecord = await db.collection("storeItems").doc(item['id']).get();
+                                                                        //   print(item['stock']);
+                                                                        //   await db.collection("storeItems").doc(itemRecord.id).update({
+                                                                        //     'stock': (int.parse(itemRecord['stock']) + item['toBuy']).toString(),
+                                                                        //     'sold' : itemRecord['sold'] - item['toBuy']
+                                                                        //   });
+                                                                        // }
+                                                                        await db.collection("transactions").doc(snapshot.data.docs[index].id).update({
+                                                                            'status': 'Order Declined'
+                                                                          }).then((value) async {
+                                                                            //await ethUtils.sendEthTo('0x117B981aDf15C784a671A863031154f8fbe84647',snapshot.data.docs[index]['total']);
+                                                                              print("Order Declined!");
+                                                                          });;
+                                                                          Navigator.of(context).pop();
+                                                                      },
+                                                                    ),
+                                                      ],
+                                                    ),
+                                                    ) : Container(),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     );
                                   }
                                 );

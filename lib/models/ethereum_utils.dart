@@ -30,6 +30,7 @@ class EthereumUtils {
     return res[0];
   }
 
+  //transfer from buyer to middle man
   Future<String> sendEth(int amount) async {
   var bigAmount = BigInt.from(amount);
     EthPrivateKey privateKeyCred = EthPrivateKey.fromHex('97ead9dfd690c6ea839fe258fbe9a44e92470c1ab3177a4bc0d09ed25bc16c06');
@@ -41,6 +42,24 @@ class EthereumUtils {
           contract: contract,
           function: etherFunction,
           parameters: [EthereumAddress.fromHex("0xe5D4E0683ef0c66581928D253F6CC7c3d010eBCc"),bigAmount],
+          maxGas: 100000,
+        ),chainId: 5,
+        fetchChainIdFromNetworkId: false);
+    return result;
+  }
+
+  //transfer from middle man to seller
+  Future<String> sendEthTo(String toAddress, int amount) async {
+  var bigAmount = BigInt.from(amount);
+    EthPrivateKey privateKeyCred = EthPrivateKey.fromHex('4d40fd117d374ea627ad77d4ebc136d30f48951c8493a635362f8b9e5a8fbaf3');
+    DeployedContract contract = await getDeployedContract();
+    final etherFunction = contract.function("transfer");
+    final result = await web3client.sendTransaction(
+        privateKeyCred,
+        Transaction.callContract(
+          contract: contract,
+          function: etherFunction,
+          parameters: [EthereumAddress.fromHex(toAddress),bigAmount],
           maxGas: 100000,
         ),chainId: 5,
         fetchChainIdFromNetworkId: false);

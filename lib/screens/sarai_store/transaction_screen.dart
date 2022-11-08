@@ -12,10 +12,21 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   String status;
   final db = FirebaseFirestore.instance;
+  List<String> statuses;
+  bool isDisabled;
 
   @override
   void initState() {
+    isDisabled = false;
     status = widget.transaction['status'];
+    statuses = [];
+    if(status == "Order Declined" || status == "Order Completed"){
+      statuses.add(status);
+      isDisabled = true;
+    }
+    statuses.add('To Prepare');
+    statuses.add('Ready for pick up');
+    statuses.add('Unavailable');
     super.initState();
   }
 
@@ -39,17 +50,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   fillColor: Colors.white,
                   filled: true,
                   labelText: 'Status'),
-              onChanged: (String newValue) {
+              onChanged: (isDisabled) ? null : (String newValue) {
                 setState(() {
                   status = newValue;
                 });
               },
-              items: <String>[
-                'To Prepare',
-                'Ready for pick up',
-                'Unavailable',
-              ]
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: statuses.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -69,7 +75,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             padding: EdgeInsets.all(16.0),
                             child: Text('Update'),
                           ),
-                          onPressed: () async {
+                          onPressed: (isDisabled) ? null : () async {
                               // save data to firebase
                               await db.collection("transactions").doc(widget.transaction.id).update({
                                 'status': status

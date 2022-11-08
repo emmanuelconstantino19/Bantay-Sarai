@@ -38,9 +38,10 @@ class _ArticleDescription extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: (title=="Unavailable") ? Colors.red : Colors.green,
+                  color: (title=="Unavailable" || title=="Order Declined") ? Colors.red : Colors.green,
                 ),
               ),
+              (title=="Order Declined") ? Text("Please contact admin to resolve issue", style: TextStyle(color: Colors.red)) : Container(),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
               Text(
                 subtitle,
