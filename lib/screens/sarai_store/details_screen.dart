@@ -44,11 +44,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       body: Column(
         children: [
-          // Image.asset(
-          //   widget.product.image,
-          //   height: MediaQuery.of(context).size.height * 0.4,
-          //   fit: BoxFit.cover,
-          // ),
+          Image.network(
+            widget.product.image,
+            height: MediaQuery.of(context).size.height * 0.4,
+            fit: BoxFit.cover,
+          ),
           const SizedBox(height: defaultPadding * 1.5),
           Expanded(
             child: Container(

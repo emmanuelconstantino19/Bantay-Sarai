@@ -289,8 +289,7 @@ class _SellerScreenState extends State<SellerScreen> {
                           );
                       },
                       child: CustomListItemTwo(
-                        //thumbnail: Image.network(snapshot.data.docs[index]['urls'][0]),
-                        thumbnail: null,
+                        thumbnail: Image.network(snapshot.data.docs[index]['imageUrl']),
                         title: snapshot.data.docs[index]['name'],
                         subtitle: snapshot.data.docs[index]['description'],
                         author: snapshot.data.docs[index]['stock'],

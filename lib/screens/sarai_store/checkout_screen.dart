@@ -166,13 +166,13 @@ class LunchState extends State<CheckoutScreen> {
             // on ListItem clicked
             onTap: () {},
 
-            // Image of ListItem
-            // leading: Container(
-            //   child: Image(
-            //     fit: BoxFit.fitHeight,
-            //     image: AssetImage(imgSrc),
-            //   ),
-            // ),
+            //Image of ListItem
+            leading: Container(
+              child: Image.network(
+                item.image,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
 
             // Lists of titles
             title: Container(

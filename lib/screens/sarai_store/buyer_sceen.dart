@@ -174,7 +174,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                               padding: const EdgeInsets.only(right: defaultPadding),
                               child: ProductCard(
                                 title: snapshot.data.docs[index]['name'],
-                                image: null,
+                                image: snapshot.data.docs[index]['imageUrl'],
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
                                 press: () {
@@ -190,7 +190,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
 
                                   Product product = new Product(
                                     snapshot.data.docs[index].id,
-                                    null,
+                                    snapshot.data.docs[index]['imageUrl'],
                                     snapshot.data.docs[index]['name'],
                                     snapshot.data.docs[index]['description'],
                                     snapshot.data.docs[index]['stock'],
@@ -246,16 +246,37 @@ class _BuyerScreenState extends State<BuyerScreen> {
                               padding: const EdgeInsets.only(right: defaultPadding),
                               child: ProductCard(
                                 title: snapshot.data.docs[index]['name'],
-                                image: null,
+                                image: snapshot.data.docs[index]['imageUrl'],
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
                                 press: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           DetailsScreen(product: demo_product[index]),
-                                  //     ));
+                                  int toBuy = 1;
+
+                                  for(var i=0;i<cart.length;i++) {
+                                      // you may have to check the equality operator
+                                      if(cart[i].id == snapshot.data.docs[index].id) {
+                                        toBuy = cart[i].toBuy;
+                                        break;
+                                      }
+                                  }
+
+                                  Product product = new Product(
+                                    snapshot.data.docs[index].id,
+                                    snapshot.data.docs[index]['imageUrl'],
+                                    snapshot.data.docs[index]['name'],
+                                    snapshot.data.docs[index]['description'],
+                                    snapshot.data.docs[index]['stock'],
+                                    snapshot.data.docs[index]['address'],
+                                    snapshot.data.docs[index]['price'],
+                                    snapshot.data.docs[index]['category'],
+                                    toBuy
+                                  );
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailsScreen(product: product, customFunction: addToCart),
+                                      ));
                                 },
                               ),
                             ),

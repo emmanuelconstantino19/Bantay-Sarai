@@ -85,7 +85,7 @@ class _AccountState extends State<Account> {
                         Row(
                         children: [
                           const Icon(
-                            Icons.account_balance_wallet,
+                            Icons.shopping_cart,
                             color: Colors.green,
                           ),
                           SizedBox(width:15),
