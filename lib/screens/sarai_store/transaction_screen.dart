@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bantay_sarai/models/ethereum_utils.dart';
 
 class TransactionScreen extends StatefulWidget {
   final transaction;
@@ -14,9 +15,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
   final db = FirebaseFirestore.instance;
   List<String> statuses;
   bool isDisabled;
+  EthereumUtils ethUtils = EthereumUtils();
 
   @override
   void initState() {
+    ethUtils.initial();
     isDisabled = false;
     status = widget.transaction['status'];
     statuses = [];
@@ -80,6 +83,22 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               await db.collection("transactions").doc(widget.transaction.id).update({
                                 'status': status
                               });
+                              if(status == "Unavailable"){
+                                await ethUtils.sendEthTo('0x117B981aDf15C784a671A863031154f8fbe84647',widget.transaction['total']);
+                              }
+                              final snackBar = SnackBar(
+                                content: const Text('Updated status successfully!'),
+                                action: SnackBarAction(
+                                  label: 'Close',
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
+
+                              // Find the ScaffoldMessenger in the widget tree
+                              // and use it to show a SnackBar.
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               Navigator.of(context).pop();
                           },
                         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  String image, name, description, price, stock, id, address, category;
+  String image, name, description, price, stock, id, address, category, unit;
   int sold, toBuy;
 
   Product(
@@ -13,6 +13,7 @@ class Product {
     this.address,
     this.price,
     this.category,
+    this.unit,
     this.toBuy,
   );
 
@@ -25,6 +26,7 @@ class Product {
     'address': address,
     'price': price,
     'category': category,
+    'unit': unit,
     'toBuy': toBuy,
   };
 }

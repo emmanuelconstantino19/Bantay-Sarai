@@ -103,7 +103,7 @@ class LunchState extends State<CheckoutScreen> {
                 child: Container(
                     margin: EdgeInsets.only(top: 30.0),
                     child: RaisedButton(
-                      onPressed: () async {
+                      onPressed: (widget.cart.length==0) ? null : () async {
                         var uid = await Provider.of(context).auth.getCurrentUID();
                         List cartItems = [];
                         for(var item in widget.cart){

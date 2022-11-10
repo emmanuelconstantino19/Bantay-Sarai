@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import 'package:bantay_sarai/models/Product.dart';
 
+
 class DetailsScreen extends StatefulWidget {
   final Product product;
   final customFunction;
+  final bool isSeller;
 
-  const DetailsScreen({ Key key, @required this.product, @required this.customFunction}) : super(key: key);
+  const DetailsScreen({ Key key, @required this.product, @required this.isSeller, @required this.customFunction}) : super(key: key);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -74,7 +76,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                       const SizedBox(width: defaultPadding),
                       Text(
-                        widget.product.price.toString() + " SRB / KG",
+                        widget.product.price.toString() + " SRB / " + widget.product.unit,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ],
@@ -160,9 +162,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       width: 200,
                       height: 48,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: (widget.isSeller) ? null : () {
                           widget.product.toBuy = itemCount;
                           widget.customFunction(widget.product, itemCount);
+                          final snackBar = SnackBar(
+                            content: const Text('Added to cart successfully!'),
+                            action: SnackBarAction(
+                              label: 'Close',
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                              },
+                            ),
+                          );
+
+                          // Find the ScaffoldMessenger in the widget tree
+                          // and use it to show a SnackBar.
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green,

@@ -14,6 +14,8 @@ import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bantay_sarai/models/Product.dart';
 
+import 'package:bantay_sarai/widgets/provider_widget.dart';
+
 class BuyerScreen extends StatefulWidget {
   const BuyerScreen({Key key}) : super(key: key);
 
@@ -39,6 +41,22 @@ class _BuyerScreenState extends State<BuyerScreen> {
   Stream<QuerySnapshot> getItemsStreamSnapshotsBySold(BuildContext context) async* {
     //final uid = await Provider.of(context).auth.getCurrentUID();
     yield* FirebaseFirestore.instance.collection('storeItems').orderBy('sold',descending: true).snapshots();
+  }
+
+  checkIfNumberIsSeller() async {
+    bool isAccountSeller;
+
+    await Provider
+        .of(context)
+        .auth
+        .getCurrentUser().then((result){
+          if(result.phoneNumber=="+639999999999"){
+            isAccountSeller = true;
+          }else{
+            isAccountSeller = false;
+          }
+    });
+    return isAccountSeller;
   }
 
   void removeFromCart(int index){
@@ -80,12 +98,13 @@ class _BuyerScreenState extends State<BuyerScreen> {
           centerTitle: true,
           elevation: 0,
           leading: IconButton(
-              onPressed:(){
+              onPressed:() async {
+                bool isSeller = await checkIfNumberIsSeller();
                 Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                    Account()
+                    Account(isSeller:isSeller)
                 ));
               },
               icon: const Icon(
@@ -144,7 +163,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                     text: TextSpan(
                       style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
                       children: [
-                        TextSpan(text:'Bumili na!\n', style: TextStyle(fontSize:13)),
+                        TextSpan(text:'Bili na!\n', style: TextStyle(fontSize:13)),
                         TextSpan(text:'Welcome to SARAi Store!', style: TextStyle(fontSize:16)),
                       ]
                     ),
@@ -217,7 +236,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                 image: snapshot.data.docs[index]['imageUrl'],
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
-                                press: () {
+                                press: () async {
                                   int toBuy = 1;
 
                                   for(var i=0;i<cart.length;i++) {
@@ -237,13 +256,15 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                     snapshot.data.docs[index]['address'],
                                     snapshot.data.docs[index]['price'],
                                     snapshot.data.docs[index]['category'],
+                                    snapshot.data.docs[index]['unit'],
                                     toBuy
                                   );
+                                  bool isSeller = await checkIfNumberIsSeller();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailsScreen(product: product, customFunction: addToCart),
+                                            DetailsScreen(product: product, isSeller: isSeller, customFunction: addToCart),
                                       ));
                                 },
                               ),
@@ -291,7 +312,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                 image: snapshot.data.docs[index]['imageUrl'],
                                 price: int.parse(snapshot.data.docs[index]['price']),
                                 bgColor: Colors.white,
-                                press: () {
+                                press: () async {
                                   int toBuy = 1;
 
                                   for(var i=0;i<cart.length;i++) {
@@ -311,13 +332,15 @@ class _BuyerScreenState extends State<BuyerScreen> {
                                     snapshot.data.docs[index]['address'],
                                     snapshot.data.docs[index]['price'],
                                     snapshot.data.docs[index]['category'],
+                                    snapshot.data.docs[index]['unit'],
                                     toBuy
                                   );
+                                  bool isSeller = await checkIfNumberIsSeller();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            DetailsScreen(product: product, customFunction: addToCart),
+                                            DetailsScreen(product: product, isSeller: isSeller, customFunction: addToCart),
                                       ));
                                 },
                               ),

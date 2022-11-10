@@ -16,7 +16,7 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  String category;
+  String category, unit;
   final db = FirebaseFirestore.instance;
   TextEditingController _itemNameController = new TextEditingController();
   TextEditingController _itemDescController = new TextEditingController();
@@ -229,7 +229,7 @@ class _AddItemState extends State<AddItem> {
                         border: OutlineInputBorder(),
                         fillColor: Colors.white,
                         filled: true,
-                        labelText: 'Crop Planted'),
+                        labelText: 'Category'),
                     onChanged: (String newValue) {
                       setState(() {
                         category = newValue;
@@ -265,6 +265,31 @@ class _AddItemState extends State<AddItem> {
                         filled: true,
                         labelText: 'Price'),
                     controller: _itemPriceController,
+                  ),
+                  SizedBox(height:10),
+                  DropdownButtonFormField<String>(
+                    validator: (value) => value == null ? 'field required' : null,
+                    value: unit,
+                    decoration: new InputDecoration(
+                        border: OutlineInputBorder(),
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: 'Unit'),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        unit = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'kg',
+                      'cavan'
+                    ]
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                   SizedBox(height:10),
                   TextFormField(
@@ -328,13 +353,26 @@ class _AddItemState extends State<AddItem> {
                                 'category': category,
                                 'stock':_itemStockController.text,
                                 'price':_itemPriceController.text,
+                                'unit': unit,
                                 'address':_addressController.text,
                                 'sold':0,
                                 'imageUrl': fileUrl,
                                 'createdAt': FieldValue.serverTimestamp(),
                                 'updatedAt': FieldValue.serverTimestamp()
                               });
-                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              final snackBar = SnackBar(
+                                content: const Text('Added to items list successfully!'),
+                                action: SnackBarAction(
+                                  label: 'Close',
+                                  onPressed: () {
+                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
+                              // Find the ScaffoldMessenger in the widget tree
+                              // and use it to show a SnackBar.
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              Navigator.of(context).pop();
                             }
                           },
                         ),

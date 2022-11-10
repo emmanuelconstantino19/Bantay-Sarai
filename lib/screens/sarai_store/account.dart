@@ -1,3 +1,4 @@
+import 'package:bantay_sarai/screens/sarai_store/add_tokens.dart';
 import 'package:flutter/material.dart';
 import 'section_title.dart';
 import '../../../constants.dart';
@@ -7,7 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Account extends StatefulWidget {
-  const Account({ Key key }) : super(key: key);
+  final bool isSeller;
+
+  const Account({ Key key, @required this.isSeller }) : super(key: key);
 
   @override
   _AccountState createState() => _AccountState();
@@ -21,11 +24,21 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
     ethUtils.initial();
-    ethUtils.getBalance().then((value) {
+    if(widget.isSeller){
+      ethUtils.getBalanceSeller().then((value) {
+        setState(() {
+          _data = value;
+        });
+      });
+    }
+    else{
+      ethUtils.getBalance().then((value) {
       setState(() {
         _data = value;
       });
     });
+    }
+    
     super.initState();
   }
 
@@ -65,7 +78,40 @@ class _AccountState extends State<Account> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                 ),
-                          )
+                          ),
+                          Expanded(child: Container(),),
+                          IconButton(
+                            icon: const Icon(Icons.refresh,color: Colors.green,),
+                            tooltip: 'Refresh',
+                            onPressed: () {
+                              if(widget.isSeller){
+                                ethUtils.getBalanceSeller().then((value) {
+                                  setState(() {
+                                    _data = value;
+                                  });
+                                });
+                              }
+                              else{
+                                ethUtils.getBalance().then((value) {
+                                setState(() {
+                                  _data = value;
+                                });
+                              });
+                              }
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add,color: Colors.green,),
+                            tooltip: 'Cash In',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AddTokens(isSeller : widget.isSeller),
+                                ));
+                            },
+                          ),
                         ],
                       ),
                       SizedBox(height:20),
@@ -104,7 +150,7 @@ class _AccountState extends State<Account> {
                 ),
                 Expanded(
                   child: StreamBuilder(
-                              stream: getReportsStreamSnapshots(context),
+                              stream: (widget.isSeller) ? null : getReportsStreamSnapshots(context),
                               builder: (content, snapshot){
                                 if (!snapshot.hasData) {
                                   return Center(child: CircularProgressIndicator());

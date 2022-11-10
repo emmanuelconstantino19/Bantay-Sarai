@@ -267,7 +267,7 @@ class _SellerScreenState extends State<SellerScreen> {
                                   height: 50,
                                   color: Colors.white,
                                   child: ElevatedButton(
-                                    child: const Text('EDIT DAMAGE REPORT'),
+                                    child: const Text('EDIT ITEM'),
                                     style: ButtonStyle(
                                         backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
