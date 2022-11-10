@@ -65,9 +65,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 );
               }).toList(),
             ),
-            Text(
-              "Sample sample sample"
-            ),
+            Expanded(
+            child: ListView(
+                children: <Widget>[
+                  for(var i=0;i<widget.transaction['items'].length;i++) dummyDataOfListView(widget.transaction['items'][i]),
+                  //for(var item in widget.cart) dummyDataOfListView(item),
+                ],
+              ),
+          ),
             SizedBox(height:10),
                   Row(
                     children: [
@@ -107,6 +112,68 @@ class _TransactionScreenState extends State<TransactionScreen> {
                   ),
           ])
       )
+    );
+  }
+
+  dummyDataOfListView(var item) {
+    return Container(
+        child: Card(
+          elevation: 4.0,
+          margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 5.0),
+          color: Color(0xffFFFFFF),
+          child: ListTile(
+            // on ListItem clicked
+            onTap: () {},
+
+            //Image of ListItem
+            leading: Container(
+              child: Image.network(
+                item['image'],
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+
+            // Lists of titles
+            title: Container(
+              margin: EdgeInsets.only(top: 10.0),
+              height: 80.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom: 2.0),
+                    child: Text(
+                      item['name'],
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      item['category'],
+                      style: TextStyle(
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.only(bottom: 3.0),
+                    child: Text(
+                      (int.parse(item['price']) * item['toBuy']).toString() + " SRB",
+                      style: TextStyle(
+                          color: Color(0xff374ABE)
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
     );
   }
 }

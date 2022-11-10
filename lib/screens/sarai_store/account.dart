@@ -230,12 +230,11 @@ class _AccountState extends State<Account> {
                                                     ),
                                                     (snapshot.data.docs[index]['status']=="Ready for pick up") ? Expanded(
                                                       child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         ElevatedButton(
                                                                       child: Padding(
                                                                         padding: EdgeInsets.all(16.0),
-                                                                        child: Text('Order Received'),
+                                                                        child: Text('Received'),
                                                                       ),
                                                                       onPressed: () async {
                                                                         // save data to firebase
@@ -244,15 +243,27 @@ class _AccountState extends State<Account> {
                                                                           }).then((value) async {
                                                                             await ethUtils.sendEthTo('0xD8656D09eD56b632af530863838287a022103f5B',snapshot.data.docs[index]['total']);
                                                                               print("Successful!");
+                                                                              final snackBar = SnackBar(
+                                                                              content: const Text('Order Completed!'),
+                                                                              action: SnackBarAction(
+                                                                                label: 'Close',
+                                                                                onPressed: () {
+                                                                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                                                                },
+                                                                              ),
+                                                                            );
+                                                                            // Find the ScaffoldMessenger in the widget tree
+                                                                            // and use it to show a SnackBar.
+                                                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                                            Navigator.of(context).pop();
                                                                           });
-                                                                          Navigator.of(context).pop();
                                                                         }
                                                                     ),
                                                                     SizedBox(width:20),
                                                                     OutlinedButton(
                                                                       child: Padding(
                                                                         padding: EdgeInsets.all(16.0),
-                                                                        child: Text('Return/Refund'),
+                                                                        child: Text('Return'),
                                                                       ),
                                                                       onPressed: () async {
                                                                         // for(var item in snapshot.data.docs[index]['items']){
@@ -269,8 +280,20 @@ class _AccountState extends State<Account> {
                                                                           }).then((value) async {
                                                                             //await ethUtils.sendEthTo('0x117B981aDf15C784a671A863031154f8fbe84647',snapshot.data.docs[index]['total']);
                                                                               print("Order Declined!");
-                                                                          });;
-                                                                          Navigator.of(context).pop();
+                                                                              final snackBar = SnackBar(
+                                                                              content: const Text('Order Declined!'),
+                                                                              action: SnackBarAction(
+                                                                                label: 'Close',
+                                                                                onPressed: () {
+                                                                                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                                                                },
+                                                                              ),
+                                                                            );
+                                                                            // Find the ScaffoldMessenger in the widget tree
+                                                                            // and use it to show a SnackBar.
+                                                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                                            Navigator.of(context).pop();
+                                                                          });
                                                                       },
                                                                     ),
                                                       ],

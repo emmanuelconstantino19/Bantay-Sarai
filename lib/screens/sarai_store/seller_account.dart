@@ -1,3 +1,4 @@
+import 'package:bantay_sarai/screens/sarai_store/add_tokens.dart';
 import 'package:bantay_sarai/screens/sarai_store/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'section_title.dart';
@@ -189,7 +190,7 @@ class _SellerAccountState extends State<SellerAccount> {
           child: Column(children: [
             Card(
                   elevation: 4.0,
-                  margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 5.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
                   color: Color(0xffFFFFFF),
                   child: Padding(
                     padding: const EdgeInsets.all(defaultPadding),
@@ -208,7 +209,31 @@ class _SellerAccountState extends State<SellerAccount> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                 ),
-                          )
+                          ),
+                          Expanded(child: Container(),),
+                          IconButton(
+                            icon: const Icon(Icons.refresh,color: Colors.green,),
+                            tooltip: 'Refresh',
+                            onPressed: () {
+                              ethUtils.getBalanceSeller().then((value) {
+                                setState(() {
+                                  _data = value;
+                                });
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add,color: Colors.green,),
+                            tooltip: 'Cash In',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AddTokens(isSeller : true),
+                                ));
+                            },
+                          ),
                         ],
                       ),
                       SizedBox(height:20),
@@ -219,7 +244,7 @@ class _SellerAccountState extends State<SellerAccount> {
                 ),
                 Card(
                   elevation: 4.0,
-                  margin: EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0, bottom: 5.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
                   color: Color(0xffFFFFFF),
                   child: Padding(
                     padding: const EdgeInsets.all(defaultPadding),
@@ -266,11 +291,10 @@ class _SellerAccountState extends State<SellerAccount> {
                                         );
                                       },
                                       child: CustomListItemTwo(
-                                          //thumbnail: Image.network(snapshot.data.docs[index]['urls'][0]),
-                                          thumbnail: null,
+                                          thumbnail: Image.network(snapshot.data.docs[index]['items'][0]['image']),
                                           title: snapshot.data.docs[index]['status'],
                                           subtitle: "Total: " + snapshot.data.docs[index]['total'].toString() + " SRB",
-                                          author: snapshot.data.docs[index]['items'].length.toString() + " items",
+                                          author: snapshot.data.docs[index]['items'].length.toString() + " item/s",
                                           publishDate: "Purchased: " + DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['createdAt'].toDate()),
                                           // readDuration: DateFormat('MMMM dd, yyyy').format(snapshot.data.docs[index]['updatedAt'].toDate()),
                                           //readDuration: snapshot.data.docs[index]['price'],
