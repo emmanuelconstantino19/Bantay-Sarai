@@ -1,3 +1,4 @@
+import 'package:bantay_sarai/screens/sarai_store/success.dart';
 import 'package:flutter/material.dart';
 import 'package:bantay_sarai/models/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,7 +67,7 @@ class LunchState extends State<CheckoutScreen> {
       child: Column(
         children: [
           Expanded(
-            child: ListView(
+            child: (widget.cart.length==0) ? Center(child: Text("No items added yet", style: TextStyle(fontSize: 18),),) : ListView(
                 children: <Widget>[
                   for(var i=0;i<widget.cart.length;i++) dummyDataOfListView(widget.cart[i],i),
                   //for(var item in widget.cart) dummyDataOfListView(item),
@@ -122,9 +123,17 @@ class LunchState extends State<CheckoutScreen> {
                           'buyer': uid,
                         }).then((value) async {
                           await ethUtils.sendEth(total);
-                            print("Successful!");
+                          print("Successful!");
+                          for(var i=0;i<widget.cart.length;i++){
+                            widget.customFunction(i);
+                          }
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                Success(),
+                          ));
                         });
-                        Navigator.of(context).pop();
                       }, // When Click on Button goto Login Screen
 
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),

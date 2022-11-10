@@ -74,9 +74,9 @@ class _BuyerScreenState extends State<BuyerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text("SARAi Store",style: TextStyle(color: Colors.black54),),
+          title: Text("SARAi Store"),
           centerTitle: true,
           elevation: 0,
           leading: IconButton(
@@ -90,7 +90,6 @@ class _BuyerScreenState extends State<BuyerScreen> {
               },
               icon: const Icon(
                 Icons.menu,
-                color: Colors.black54,
               ),
             ),
           actions: [
@@ -102,7 +101,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 cart.length.toString(),
                 style: TextStyle(color: Colors.white),
               ),
-              child: IconButton(icon: Icon(Icons.shopping_cart,color: Colors.black54,), onPressed: () {
+              child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {
                 Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -123,36 +122,77 @@ class _BuyerScreenState extends State<BuyerScreen> {
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
-          padding: const EdgeInsets.all(16.0),
+          //padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Explore",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4
-                    .copyWith(fontWeight: FontWeight.w500, color: Colors.black),
-              ),
-              const Text(
-                "best Crops for you",
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 30),
-              // const Padding(
-              //   padding: EdgeInsets.symmetric(vertical: defaultPadding),
-              //   child: SearchForm(),
-              // ),
-              const Categories(),
-              // New Arrival
-              Column(
+              Container(
+                color: Colors.green[200],
+                child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-                    child: SectionTitle(
+                    padding: EdgeInsets.only(top:8.0,left:28.0),
+                    child: Image.asset(
+                      'assets/logos/half_lady_sarai.png',
+                      fit: BoxFit.contain,
+                      height: 60,
+                    ),
+                  ),
+                  SizedBox(width:10),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+                      children: [
+                        TextSpan(text:'Bumili na!\n', style: TextStyle(fontSize:13)),
+                        TextSpan(text:'Welcome to SARAi Store!', style: TextStyle(fontSize:16)),
+                      ]
+                    ),
+                  ),
+//                          Text('Mabuhay,', style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: Colors.black)),
+//                          Text(user.firstName + ' ' + user.lastName + '!', style: TextStyle(fontSize:20,fontWeight: FontWeight.bold,color: Color(0xFF369d34))),
+                ],
+              ),
+              ),
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:32, left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Explore",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(fontWeight: FontWeight.w500, color: Colors.green[800]),
+                    ),
+                    const Text(
+                      "best Crops for you",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 30),
+                    // const Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: defaultPadding),
+                    //   child: SearchForm(),
+                    // ),
+                    const Categories(),
+                  ],
+                ),
+                ),
+              ),
+              SizedBox(height:10),
+              // New Arrival
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom:16.0,left:16.0,right:16.0),
+                  child: Column(
+                children: [
+                  SectionTitle(
                       title: "New Arrival",
                       pressSeeAll: () {},
-                    ),
                   ),
                   StreamBuilder(
                     stream: getItemsStreamSnapshotsByDate(context),
@@ -215,17 +255,19 @@ class _BuyerScreenState extends State<BuyerScreen> {
                   ),
                 ],
               ),
-
-              // Popular products
-              Column(
+                ),
+              ),
+              SizedBox(height:10),
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom:16.0,left:16.0,right:16.0),
+                  child:Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-                    child: SectionTitle(
+                  SectionTitle(
                       title: "Popular",
                       pressSeeAll: () {},
                     ),
-                  ),
                   StreamBuilder(
                     stream: getItemsStreamSnapshotsBySold(context),
                     builder: (content, snapshot){
@@ -287,6 +329,9 @@ class _BuyerScreenState extends State<BuyerScreen> {
                   ),
                 ],
               ),
+                )
+              ),
+              // Popular products
             ],
           ),
         ),

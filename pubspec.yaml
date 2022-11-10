@@ -82,6 +82,7 @@ flutter:
     - assets/abi.json
     - assets/hvc/
     - assets/fonts/
+    - assets/images/success.png
     - assets/images/product_0.png
     - assets/images/product_1.png
     - assets/images/product_2.png

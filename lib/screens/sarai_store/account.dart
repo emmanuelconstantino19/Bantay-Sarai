@@ -76,7 +76,7 @@ class _AccountState extends State<Account> {
                 ),
                 Card(
                   elevation: 4.0,
-                  margin: EdgeInsets.only(top: 10.0, bottom: 5.0),
+                  margin: EdgeInsets.only(top: 10.0,bottom:1.0),
                   color: Color(0xffFFFFFF),
                   child: Padding(
                     padding: const EdgeInsets.all(defaultPadding),
@@ -115,17 +115,21 @@ class _AccountState extends State<Account> {
                                 return ListView.builder(
                                   itemCount: snapshot.data.docs.length,
                                   itemBuilder: (context, index) {
-                                    return Padding(
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border(bottom: BorderSide(color: Colors.grey[300]))),
+                                      child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                                       child: SizedBox(
                                         height: 120,
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            // AspectRatio(
-                                            //   aspectRatio: 0.1,
-                                            //   child: thumbnail,
-                                            // ),
+                                            AspectRatio(
+                                              aspectRatio: 1.0,
+                                              child: Image.network(snapshot.data.docs[index]['items'][0]['image']),
+                                            ),
                                             Expanded(
                                               child: Padding(
                                                 padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
@@ -233,6 +237,7 @@ class _AccountState extends State<Account> {
                                           ],
                                         ),
                                       ),
+                                    ),
                                     );
                                   }
                                 );

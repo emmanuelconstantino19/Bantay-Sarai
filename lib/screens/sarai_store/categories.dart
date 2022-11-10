@@ -44,6 +44,7 @@ class CategoryCard extends StatelessWidget {
     return OutlinedButton(
       onPressed: press,
       style: OutlinedButton.styleFrom(
+        backgroundColor: Colors.white,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(defaultBorderRadius)),
         ),
